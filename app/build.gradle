@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        renderscriptTargetApi 21
+        renderscriptSupportModeEnabled true
+        applicationId "kz.voxpopuli.voxapplication"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    mavenCentral()  // GPUImage for Android
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.mcxiaoke.volley:library:1.0.6'
+    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.github.bumptech.glide:okhttp-integration:1.2.2'
+    compile 'com.github.bumptech.glide:volley-integration:1.2.2'
+    compile 'com.felipecsl.asymmetricgridview:library:1.1.0'
+    compile 'com.github.nirhart:parallaxscroll:1.0'
+    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.google.code.gson:gson:2.3.+'
+    compile 'com.github.asne:asne-vk:0.3.3'
+    compile 'com.github.asne:asne-twitter:0.3.3'
+    compile 'com.github.asne:asne-googleplus:0.3.3'
+    compile 'com.github.asne:asne-facebook:0.3.3'
+
+    compile 'jp.wasabeef:glide-transformations:1.0.5@aar'
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3@aar'
+}

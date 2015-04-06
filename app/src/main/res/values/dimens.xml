@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="news_card_big_width">480dp</dimen>
+    <dimen name="news_card_big_height">620dp</dimen>
+    <dimen name="news_card_small_width">480dp</dimen>
+    <dimen name="news_card_small_height">72dp</dimen>
+
+    <dimen name="news_card_big_text_height">372dp</dimen>
+    <dimen name="news_card_big_image_height">248dp</dimen>
+
+    <dimen name="padding_5dp">5dp</dimen>
+    <dimen name="padding_10dp">10dp</dimen>
+
+    <!--action bar values-->
+    <dimen name="action_bar_title_felt_padding">25dp</dimen>
+    <dimen name="action_bar_title_text_size">15dp</dimen>
+
+    <!--right side bar values-->
+    <dimen name="blured_photo_height">100dp</dimen>
+    <dimen name="user_avatar_diameter">35dp</dimen>
+    <dimen name="rubrics_image_height">75dp</dimen>
+</resources>

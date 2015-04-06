@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/rubric_image_back"
+        android:layout_width="75dp"
+        android:layout_height="75dp"/>
+    <ImageView
+        android:id="@+id/rubric_text_back_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/ab_background"/>
+    <TextView
+        android:id="@+id/rubric_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:textColor="@color/vox_white"
+
+        android:text="asdfsdfasdfasd"/>
+</FrameLayout>

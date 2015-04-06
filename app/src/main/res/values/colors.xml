@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="vox_red">#ffff0a11</color>
+    <color name="vox_white">#ffffffff</color>
+
+    <item name="blue" type="color">#FF33B5E5</item>
+</resources>

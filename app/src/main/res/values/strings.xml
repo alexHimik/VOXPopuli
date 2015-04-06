@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VoxApplication</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="drawer_menu_items">
+        <item>Main Stream</item>
+        <item>Rubrics</item>
+        <item>Test Fragment</item>
+    </string-array>
+
+    <string name="big_test_string">Some very interesting</string>
+
+    <!--keys for social networks-->
+    <string name="facebook_app_id"></string>
+    <string name="twitter_consumer_key"></string>
+    <string name="twitter_consumer_secret"></string>
+
+</resources>
