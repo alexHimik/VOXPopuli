@@ -36,12 +36,11 @@ import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
+import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,
         FragmentManager.OnBackStackChangedListener {
-
-    public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
 
     private DrawerLayout drawerLayout;
     private FrameLayout contentLayout;
@@ -54,8 +53,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 //    private CharSequence drawerTitle;
 
     private String[] titles;
-
-    private SocialNetworkManager socialNetworkManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +148,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(
+                SocialNetworkUtils.SOCIAL_NETWORK_TAG);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
@@ -270,32 +268,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         setTitle(titles[position]);
         drawerLayout.closeDrawer(drawerList);
-    }
-
-    private void initSocialManager(Fragment fragment) {
-        socialNetworkManager = (SocialNetworkManager)getSupportFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
-        if(socialNetworkManager == null) {
-            socialNetworkManager = new SocialNetworkManager();
-
-            ArrayList<String> fbScope = new ArrayList<>();
-            fbScope.addAll(Arrays.asList("public_profile, email, user_location"));
-
-            String[] vkScope = new String[] {
-                    VKScope.NOHTTPS,
-                    VKScope.STATUS,
-                    VKScope.WALL
-            };
-
-            FacebookSocialNetwork facebookSocialNetwork = new FacebookSocialNetwork(fragment, fbScope);
-            socialNetworkManager.addSocialNetwork(facebookSocialNetwork);
-
-            VkSocialNetwork vkSocialNetwork = new VkSocialNetwork(fragment, "vk_key", vkScope);
-            socialNetworkManager.addSocialNetwork(vkSocialNetwork);
-
-            GooglePlusSocialNetwork googlePlusSocialNetwork = new GooglePlusSocialNetwork(fragment);
-            socialNetworkManager.addSocialNetwork(googlePlusSocialNetwork);
-
-            TwitterSocialNetwork twitterSocialNetwork = new TwitterSocialNetwork(fragment, "sonsumer_key", "consumer_secret", "redirect_url");
-        }
     }
 }

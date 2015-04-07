@@ -14,8 +14,13 @@
     <string name="big_test_string">Some very interesting</string>
 
     <!--keys for social networks-->
-    <string name="facebook_app_id"></string>
-    <string name="twitter_consumer_key"></string>
-    <string name="twitter_consumer_secret"></string>
+    <string name="facebook_app_id">832927450084182</string>
+    <string name="facebook_secret">d3fa8e1af8adc849af05ef4a2158d811</string>
+    <string name="twitter_consumer_key">7SkPxD6MromT2s6i6qd5XUt6A</string>
+    <string name="twitter_consumer_secret">w5Dlfg6kAhOhT6S6ik8txW5HNyLJVxWTMFAxBq3S7gnjatLRHR</string>
+    <string name="vk_app_id">4653112</string>
+    <string name="vk_secret">Dtw5IiS6cE1LrNJ2Nw0m</string>
 
+
+    <string name="vox_url">http://voxpopuli.kz</string>
 </resources>
