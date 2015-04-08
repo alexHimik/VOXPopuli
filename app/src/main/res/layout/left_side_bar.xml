@@ -48,6 +48,26 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|left"/>
             </FrameLayout>
+            <include
+                android:id="@+id/left_bar_category_all"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_vox_populi"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_history"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_business"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_interview"
+                layout="@layout/category_item">
+            </include>
             <kz.voxpopuli.voxapplication.view.RowHoster
                 android:id="@+id/left_bar_rubrics_hoster"
                 android:layout_width="match_parent"
