@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/padding_4dp">
+    android:paddingBottom="@dimen/padding_4dp"
+    android:paddingRight="@dimen/padding_4dp">
     <ImageView
         android:id="@+id/rubric_image_back"
         android:layout_width="@dimen/rubrics_image_height"
@@ -13,7 +14,7 @@
         android:layout_height="@dimen/rubric_black_shadow_height"
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/rubric_black_shadow_height"
-        android:background="@drawable/ab_background"/>
+        android:background="@drawable/black_transparent_gradient"/>
     <ImageView
         android:id="@+id/rubric_text_back_shadow2"
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        style="@style/side_bar_text.category"
+        style="@style/side_bar_text.white"
         android:layout_marginLeft="@dimen/padding_12dp"
         android:layout_marginBottom="@dimen/padding_12dp"
         android:layout_marginRight="@dimen/padding_12dp"

@@ -3,7 +3,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="@dimen/category_item_height">
-
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/padding_4dp"
@@ -20,6 +19,6 @@
         android:layout_marginLeft="@dimen/padding_16dp"
         app:fontFamily="roboto"
         app:textWeight="normal"
-        android:text="rubrics"
+        android:text="@string/rubrics_header_text"
         />
 </LinearLayout>

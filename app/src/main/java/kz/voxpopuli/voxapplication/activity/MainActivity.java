@@ -1,5 +1,6 @@
 package kz.voxpopuli.voxapplication.activity;
 
+import android.graphics.Rect;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +17,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -182,12 +184,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         contentLayout.addView(child, 0);
 
-        drawerLayout.findViewById(R.id.drawer_layout).setPadding(0,
-                ViewTools.getStatusBarHeight(this), 0, 0);
         decor.addView(drawerLayout);
 
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
         drawerList = (RelativeLayout)drawerLayout.findViewById(R.id.left_drawer);
+        drawerList.setPadding(0, ViewTools.getStatusBarHeight(this), 0, 0);
         rightDrawer = (ListView)drawerLayout.findViewById(R.id.right_drawer);
     }
 
