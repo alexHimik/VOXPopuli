@@ -54,7 +54,7 @@ public class LeftSideBarFragment extends Fragment {
 
         BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
         Glide.with(this).load("http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg").
-                bitmapTransform(new BlurTransformation(getActivity(), pool, 7)).into(bluredBackImage);
+                centerCrop().bitmapTransform(new BlurTransformation(getActivity(), pool, 7)).into(bluredBackImage);
         Glide.with(this).load("http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg").
                 centerCrop().bitmapTransform(new CropCircleTransformation(pool)).into(userAvatar);
 

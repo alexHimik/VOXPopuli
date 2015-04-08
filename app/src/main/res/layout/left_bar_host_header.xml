@@ -2,18 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/category_item_height">
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/vox_red">
+        android:layout_height="@dimen/padding_4dp"
+        android:background="@color/side_bar_divider_color">
         </View>
-    <TextView
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/left_bar_host_header_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="35dp"
+        style="@style/side_bar_text.cat_header"
+        android:layout_marginBottom="@dimen/padding_20dp"
+        android:layout_marginTop="@dimen/padding_16dp"
+        android:layout_marginLeft="@dimen/padding_16dp"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
         android:text="rubrics"
         />
 </LinearLayout>
