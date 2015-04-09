@@ -1,9 +1,11 @@
 package kz.voxpopuli.voxapplication.events;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 07.04.15.
  */
-public class SuccessPostToSocialEvent {
+public class SuccessPostToSocialEvent implements Serializable {
 
     private int socialNetworkId;
 

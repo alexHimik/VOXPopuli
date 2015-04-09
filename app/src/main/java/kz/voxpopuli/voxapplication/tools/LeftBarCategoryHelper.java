@@ -11,7 +11,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 
 /**
  * Created by user on 07.04.15.
@@ -76,6 +78,10 @@ public class LeftBarCategoryHelper {
         lastSelectedText = categoryNameTextViews.get(categoryId);
     }
 
+    private void postCategorySelectedEvent(int categoryId) {
+        EventBus.getDefault().post(new CategorySelectedEvent(categoryId,
+                context.getString(categoryNames.get(categoryId))));
+    }
 
     private class CategoriesOnClickListener implements View.OnClickListener {
         @Override
@@ -83,22 +89,27 @@ public class LeftBarCategoryHelper {
             switch (v.getId()) {
                 case R.id.left_bar_category_all: {
                     setCategorySelected(v.getId());
+                    postCategorySelectedEvent(R.id.left_bar_category_all);
                     break;
                 }
                 case R.id.left_bar_category_business: {
                     setCategorySelected(v.getId());
+                    postCategorySelectedEvent(R.id.left_bar_category_business);
                     break;
                 }
                 case R.id.left_bar_category_history: {
                     setCategorySelected(v.getId());
+                    postCategorySelectedEvent(R.id.left_bar_category_history);
                     break;
                 }
                 case R.id.left_bar_category_interview: {
                     setCategorySelected(v.getId());
+                    postCategorySelectedEvent(R.id.left_bar_category_interview);
                     break;
                 }
                 case R.id.left_bar_category_vox_populi: {
                     setCategorySelected(v.getId());
+                    postCategorySelectedEvent(R.id.left_bar_category_vox_populi);
                     break;
                 }
             }

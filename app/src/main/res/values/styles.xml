@@ -4,10 +4,10 @@
     <style name="Widget" />
 
     <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <!--<item name="android:background">@android:color/transparent</item>-->
-        <!--<item name="background">@android:color/transparent</item>-->
-        <item name="android:background">@color/vox_red</item>
-        <item name="background">@color/vox_red</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+        <!--<item name="android:background">@color/vox_red</item>-->
+        <!--<item name="background">@color/vox_red</item>-->
         <item name="contentInsetStart">0dp</item>
     </style>
 
