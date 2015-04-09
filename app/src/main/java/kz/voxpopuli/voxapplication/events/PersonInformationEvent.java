@@ -2,10 +2,12 @@ package kz.voxpopuli.voxapplication.events;
 
 import com.github.gorbin.asne.core.persons.SocialPerson;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 07.04.15.
  */
-public class PersonInformationEvent {
+public class PersonInformationEvent implements Serializable {
 
     private int socialNetworkId;
     private String userId;

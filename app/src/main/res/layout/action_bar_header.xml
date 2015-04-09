@@ -5,31 +5,38 @@
 
     <ImageButton
         android:id="@+id/left_drawer_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/action_bar_icons_size"
+        android:layout_height="@dimen/action_bar_icons_size"
+        android:layout_marginLeft="@dimen/padding_16dp"
+        android:layout_marginTop="@dimen/padding_16dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_drawer"
+        android:background="@drawable/vox_ic_white_hamburger"
         />
 
-    <TextView
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/action_bar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/action_bar_red_title"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/action_bar_title_felt_padding"
         android:layout_toRightOf="@id/left_drawer_item"
-        android:textSize="@dimen/action_bar_title_text_size"
-        android:text="sdfsdfasdf"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
+        android:text="Title"
         />
 
     <ImageButton
         android:id="@+id/right_drawer_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/action_bar_icons_size"
+        android:layout_height="@dimen/action_bar_icons_size"
+        android:layout_marginRight="@dimen/padding_16dp"
+        android:layout_marginTop="@dimen/padding_16dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_drawer"
+        android:background="@drawable/vox_ic_white_search"
         />
 
 </RelativeLayout>

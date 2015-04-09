@@ -134,9 +134,6 @@ public abstract class FadingActionBarHelperBase {
         ListView listView = (ListView) mContentView.findViewById(android.R.id.list);
         View root;
         if (listView != null) {
-//            if(listView.getParent() != null) {
-//                ((ViewGroup)listView.getParent()).removeView(listView);
-//            }
             root = createListView(listView);
         } else if (mContentView instanceof ObservableWebViewWithHeader){
             root = createWebView();

@@ -21,6 +21,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.model.rows.IRowItemModel;
 import kz.voxpopuli.voxapplication.model.rows.RubricRowItem;
+import kz.voxpopuli.voxapplication.tools.LeftBarCategoryHelper;
 import kz.voxpopuli.voxapplication.view.RowHoster;
 
 /**
@@ -33,14 +34,16 @@ public class LeftSideBarFragment extends Fragment {
     private TextView userName;
     private RowHoster rowHoster;
     private LinearLayout settingsLayout;
-
+    private LeftBarCategoryHelper categoryHelper;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parent = inflater.inflate(R.layout.left_side_bar, container);
+        categoryHelper = new LeftBarCategoryHelper(getActivity());
         initViews(parent);
+        categoryHelper.initCategories(parent);
         fillHosterWithData();
         return parent;
     }
@@ -52,11 +55,11 @@ public class LeftSideBarFragment extends Fragment {
         rowHoster = (RowHoster)parent.findViewById(R.id.left_bar_rubrics_hoster);
         settingsLayout = (LinearLayout)parent.findViewById(R.id.left_bar_settings);
 
-        BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
-        Glide.with(this).load("http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg").
-                centerCrop().bitmapTransform(new BlurTransformation(getActivity(), pool, 7)).into(bluredBackImage);
-        Glide.with(this).load("http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg").
-                centerCrop().bitmapTransform(new CropCircleTransformation(pool)).into(userAvatar);
+//        BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
+//        Glide.with(this).load("http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg").
+//                centerCrop().bitmapTransform(new BlurTransformation(getActivity(), pool, 7)).into(bluredBackImage);
+//        Glide.with(this).load("http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg").
+//                centerCrop().bitmapTransform(new CropCircleTransformation(pool)).into(userAvatar);
 
         userName.setText("User name!!!!");
     }

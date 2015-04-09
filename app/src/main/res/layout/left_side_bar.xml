@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/vox_white"
-    android:layout_marginTop="?android:attr/actionBarSize">
+    android:background="@color/vox_white">
     <LinearLayout
         android:id="@+id/left_bar_settings"
         android:layout_width="fill_parent"
@@ -13,14 +12,21 @@
         <ImageView
             android:layout_width="@dimen/settings_icon_size"
             android:layout_height="@dimen/settings_icon_size"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/ic_launcher"/>
-        <TextView
+            android:layout_marginLeft="@dimen/padding_16dp"
+            android:layout_marginTop="@dimen/padding_12dp"
+            android:layout_marginBottom="@dimen/padding_12dp"
+            android:src="@drawable/vox_ic_grey_settings"/>
+        <com.devspark.robototextview.widget.RobotoTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/vox_app_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/side_bar_text.category"
             android:layout_marginLeft="@dimen/settings_text_margin"
+            app:fontFamily="roboto"
+            app:textWeight="normal"
             android:layout_gravity="center_vertical"
+            android:text="@string/settings_string"
             />
     </LinearLayout>
     <ScrollView
@@ -40,14 +46,17 @@
                 <ImageView
                     android:id="@+id/left_bar_user_photo_blured"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@color/vox_red"/>
                 <ImageView
                     android:id="@+id/left_bar_user_avatar"
                     android:layout_width="@dimen/user_avatar_diameter"
                     android:layout_marginLeft="@dimen/padding_16dp"
                     android:layout_marginTop="@dimen/padding_16dp"
                     android:layout_gravity="top|left"
-                    android:layout_height="@dimen/user_avatar_diameter"/>
+                    android:layout_height="@dimen/user_avatar_diameter"
+                    android:background="@drawable/vox_upic_sidebar"/>
                 <com.devspark.robototextview.widget.RobotoTextView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/left_bar_user_name"
@@ -55,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/padding_20dp"
                     android:layout_marginLeft="@dimen/padding_16dp"
+                    style="@style/side_bar_text.white"
                     app:fontFamily="roboto"
                     app:textWeight="normal"
                     android:layout_gravity="bottom|left"/>

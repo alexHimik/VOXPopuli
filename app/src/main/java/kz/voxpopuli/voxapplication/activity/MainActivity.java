@@ -5,13 +5,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,17 +19,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.gorbin.asne.core.SocialNetworkManager;
-import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
-import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
-import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
-import com.github.gorbin.asne.vk.VkSocialNetwork;
-import com.vk.sdk.VKScope;
+import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
+import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
+import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
@@ -48,12 +42,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private RelativeLayout drawerList;
     private ListView rightDrawer;
     private TextView barTitle;
-//    private ActionBarDrawerToggle drawerToggle;
 
     private CharSequence title;
-//    private CharSequence drawerTitle;
-
-//    private String[] titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,29 +52,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         initViews();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        if(drawerToggle.onOptionsItemSelected(item)) {
-//            return true;
-//        }
-//        int id = item.getItemId();
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_search) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
 
     @Override
     public void setTitle(CharSequence title) {
@@ -92,27 +70,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if(barTitle != null) {
             barTitle.setText(this.title);
         }
-//        getSupportActionBar().setTitle(this.title);
     }
-
-//    /**
-//     * When using the ActionBarDrawerToggle, you must call it during
-//     * onPostCreate() and onConfigurationChanged()...
-//     */
-//
-//    @Override
-//    protected void onPostCreate(Bundle savedInstanceState) {
-//        super.onPostCreate(savedInstanceState);
-//        // Sync the toggle state after onRestoreInstanceState has occurred.
-//        drawerToggle.syncState();
-//    }
-//
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        // Pass any configuration change to the drawer toggles
-//        drawerToggle.onConfigurationChanged(newConfig);
-//    }
 
     @Override
     public void onBackPressed() {
@@ -126,11 +84,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.left_drawer_item) {
-            if(drawerLayout.isDrawerOpen(drawerList)) {
-                drawerLayout.closeDrawer(drawerList);
-            } else {
-                drawerLayout.openDrawer(drawerList);
-            }
+            togleLeftDrawer();
         } else if(v.getId() == R.id.right_drawer_item) {
             if(drawerLayout.isDrawerOpen(rightDrawer)) {
                 drawerLayout.closeDrawer(rightDrawer);
@@ -182,12 +136,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         contentLayout.addView(child, 0);
 
-        drawerLayout.findViewById(R.id.drawer_layout).setPadding(0,
-                ViewTools.getStatusBarHeight(this), 0, 0);
         decor.addView(drawerLayout);
 
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
         drawerList = (RelativeLayout)drawerLayout.findViewById(R.id.left_drawer);
+        drawerList.setPadding(0, ViewTools.getStatusBarHeight(this), 0, 0);
         rightDrawer = (ListView)drawerLayout.findViewById(R.id.right_drawer);
     }
 
@@ -199,31 +152,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void initDrawer() {
-//        drawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout,
-//                R.string.action_settings, R.string.action_settings) {
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                getSupportActionBar().setTitle(drawerTitle);
-//                invalidateOptionsMenu();
-//            }
-//
-//            @Override
-//            public void onDrawerClosed(View drawerView) {
-//                super.onDrawerClosed(drawerView);
-//                getSupportActionBar().setTitle(title);
-//                invalidateOptionsMenu();
-//            }
-//        };
-
-//        titles = getResources().getStringArray(R.array.drawer_menu_items);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-//        drawerLayout.setDrawerListener(drawerToggle);
     }
 
     private void showNewFragment(Fragment fragment, String fragmentTag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_content, fragment, fragmentTag);
+        transaction.replace(R.id.content_frame, fragment, fragmentTag);
         if(getFragmentManager().findFragmentByTag(fragmentTag) == null) {
             transaction.addToBackStack(fragmentTag);
         }
@@ -234,6 +168,32 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         moveDrawerToTop();
         initActionBar();
         initDrawer();
+    }
+
+    /** handlers for events from EventBus */
+    public void onEvent(CategorySelectedEvent categorySelectedEvent) {
+        handleCategoryOrRubricSelection(CategoryFragment.FRAGMENT_ID,
+                CategorySelectedEvent.CATEGORY_DATA, categorySelectedEvent);
+    }
+
+    public void onEvent(RubricSelectedEvent rubricSelectedEvent) {
+        handleCategoryOrRubricSelection(RubricsFragment.FRAGMENT_ID,
+                RubricSelectedEvent.RUBRIC_DATA, rubricSelectedEvent);
+    }
+
+    private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(dataKey, data);
+        togleLeftDrawer();
+        handleFragmentSwitching(fragmentId, bundle);
+    }
+
+    private void togleLeftDrawer() {
+        if(drawerLayout.isDrawerOpen(drawerList)) {
+            drawerLayout.closeDrawer(drawerList);
+        } else {
+            drawerLayout.openDrawer(drawerList);
+        }
     }
 
     /** Swaps fragments in the main content view */
@@ -257,8 +217,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 break;
             }
         }
-
-//        setTitle(titles[position]);
         drawerLayout.closeDrawer(drawerList);
     }
 }

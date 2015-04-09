@@ -6,6 +6,8 @@
     <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@android:color/transparent</item>
         <item name="background">@android:color/transparent</item>
+        <!--<item name="android:background">@color/vox_red</item>-->
+        <!--<item name="background">@color/vox_red</item>-->
         <item name="contentInsetStart">0dp</item>
     </style>
 
@@ -39,4 +41,9 @@
         <item name="android:textColor">@color/side_bar_rubrics_header_color</item>
     </style>
 
+    <!--action bar styles-->
+    <style name="action_bar_red_title">
+        <item name="android:textSize">@dimen/action_bar_title_text_size</item>
+        <item name="android:textColor">@color/vox_white</item>
+    </style>
 </resources>
