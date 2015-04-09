@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:paddingLeft="@dimen/padding_frame"
+    android:paddingTop="@dimen/padding_frame"
+    android:paddingRight="@dimen/padding_frame"
+    android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/imv"
+        android:layout_width="128dp"
+        android:layout_height="96dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/muler">
+    </ImageView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:background="#999999"
+        android:paddingRight="1dp"
+        android:paddingBottom="2dp"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/bg_white"
+            android:paddingLeft="@dimen/padding_frame_little"
+            android:paddingRight="@dimen/padding_frame_little">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra = "@dimen/leding_title"
+                android:text="Соцопрос. Как алматинцы знают историю Казахстана Хорошо знают"
+                android:textSize="@dimen/ts_title_little"
+                android:textColor="@color/color_text_title_white"
+                android:password="false">
+            </TextView>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.32"
+                android:id="@+id/other"
+                android:gravity="bottom"
+                android:paddingBottom="@dimen/padding_frame_little">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 апреля 13:53"
+                    android:textColor="@color/color_text_other_white"
+                    android:textSize="@dimen/ts_other">
+                </TextView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/im_views"
+                    android:src="@drawable/vox_ic_sm_grey_eye"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="329"
+                    android:id="@+id/txt_views"
+                    android:textColor="@color/color_text_other_white"
+                    android:textSize="@dimen/ts_other" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/im_comment"
+                    android:src="@drawable/vox_ic_sm_grey_comment"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="115"
+                    android:id="@+id/txt_comment"
+                    android:textColor="@color/color_text_other_white"
+                    android:textSize="@dimen/ts_other" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
