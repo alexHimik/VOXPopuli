@@ -12,15 +12,32 @@
     <dimen name="news_card_big_text_height">372dp</dimen>
     <dimen name="news_card_big_image_height">248dp</dimen>
 
+    <!--paddinds-->
     <dimen name="padding_5dp">5dp</dimen>
+    <dimen name="padding_4dp">4dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
     <dimen name="padding_10dp">10dp</dimen>
+    <dimen name="padding_12dp">12dp</dimen>
+    <dimen name="padding_16dp">16dp</dimen>
+    <dimen name="padding_20dp">20dp</dimen>
 
     <!--action bar values-->
     <dimen name="action_bar_title_felt_padding">25dp</dimen>
     <dimen name="action_bar_title_text_size">15dp</dimen>
 
-    <!--right side bar values-->
-    <dimen name="blured_photo_height">100dp</dimen>
-    <dimen name="user_avatar_diameter">35dp</dimen>
-    <dimen name="rubrics_image_height">75dp</dimen>
+    <!--left side bar values-->
+    <dimen name="blured_photo_height">164dp</dimen>
+    <dimen name="user_avatar_diameter">64dp</dimen>
+    <dimen name="rubrics_image_height">146dp</dimen>
+    <dimen name="category_item_height">48dp</dimen>
+    <dimen name="user_avatar_margin_up_left">16dp</dimen>
+    <dimen name="user_avatar_margin_bottom">28dp</dimen>
+    <dimen name="rubrics_divider_height">4dp</dimen>
+    <dimen name="settings_text_margin">72dp</dimen>
+    <dimen name="settings_icon_size">24dp</dimen>
+    <dimen name="rubric_black_shadow_height">28dp</dimen>
+
+
+    <!--text sizes-->
+    <dimen name="left_side_bar_text_size">14sp</dimen>
 </resources>

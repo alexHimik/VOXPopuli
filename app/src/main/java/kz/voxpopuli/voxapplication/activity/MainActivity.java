@@ -36,12 +36,12 @@ import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
+import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
+import kz.voxpopuli.voxapplication.tools.ViewTools;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,
         FragmentManager.OnBackStackChangedListener {
-
-    public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
 
     private DrawerLayout drawerLayout;
     private FrameLayout contentLayout;
@@ -53,9 +53,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private CharSequence title;
 //    private CharSequence drawerTitle;
 
-    private String[] titles;
-
-    private SocialNetworkManager socialNetworkManager;
+//    private String[] titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +149,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(
+                SocialNetworkUtils.SOCIAL_NETWORK_TAG);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
@@ -183,7 +182,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         contentLayout.addView(child, 0);
 
-        drawerLayout.findViewById(R.id.drawer_layout).setPadding(0, getStatusBarHeight(), 0, 0);
+        drawerLayout.findViewById(R.id.drawer_layout).setPadding(0,
+                ViewTools.getStatusBarHeight(this), 0, 0);
         decor.addView(drawerLayout);
 
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
@@ -192,11 +192,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void initActionBar() {
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
     }
 
     private void initDrawer() {
@@ -217,18 +216,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 //            }
 //        };
 
-        titles = getResources().getStringArray(R.array.drawer_menu_items);
+//        titles = getResources().getStringArray(R.array.drawer_menu_items);
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 //        drawerLayout.setDrawerListener(drawerToggle);
-    }
-
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
     }
 
     private void showNewFragment(Fragment fragment, String fragmentTag) {
@@ -268,34 +258,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         }
 
-        setTitle(titles[position]);
+//        setTitle(titles[position]);
         drawerLayout.closeDrawer(drawerList);
-    }
-
-    private void initSocialManager(Fragment fragment) {
-        socialNetworkManager = (SocialNetworkManager)getSupportFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
-        if(socialNetworkManager == null) {
-            socialNetworkManager = new SocialNetworkManager();
-
-            ArrayList<String> fbScope = new ArrayList<>();
-            fbScope.addAll(Arrays.asList("public_profile, email, user_location"));
-
-            String[] vkScope = new String[] {
-                    VKScope.NOHTTPS,
-                    VKScope.STATUS,
-                    VKScope.WALL
-            };
-
-            FacebookSocialNetwork facebookSocialNetwork = new FacebookSocialNetwork(fragment, fbScope);
-            socialNetworkManager.addSocialNetwork(facebookSocialNetwork);
-
-            VkSocialNetwork vkSocialNetwork = new VkSocialNetwork(fragment, "vk_key", vkScope);
-            socialNetworkManager.addSocialNetwork(vkSocialNetwork);
-
-            GooglePlusSocialNetwork googlePlusSocialNetwork = new GooglePlusSocialNetwork(fragment);
-            socialNetworkManager.addSocialNetwork(googlePlusSocialNetwork);
-
-            TwitterSocialNetwork twitterSocialNetwork = new TwitterSocialNetwork(fragment, "sonsumer_key", "consumer_secret", "redirect_url");
-        }
     }
 }

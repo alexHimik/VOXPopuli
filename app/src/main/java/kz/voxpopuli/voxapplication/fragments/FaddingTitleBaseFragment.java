@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 import kz.voxpopuli.voxapplication.R;
 
@@ -22,7 +22,7 @@ public abstract class FaddingTitleBaseFragment extends Fragment implements BackS
     protected FadingActionBarHelper mFadingHelper;
     protected Bundle mArguments;
     protected ImageView faddingHeader;
-    protected ParallaxListView fragmentList;
+    protected ListView fragmentList;
 
     @Override
     public void onAttach(Activity activity) {
@@ -40,7 +40,7 @@ public abstract class FaddingTitleBaseFragment extends Fragment implements BackS
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = mFadingHelper.createView(inflater);
         faddingHeader = (ImageView)view.findViewById(R.id.image_header);
-        fragmentList = (ParallaxListView)view.findViewById(android.R.id.list);
+        fragmentList = (ListView)view.findViewById(android.R.id.list);
         return view;
     }
 

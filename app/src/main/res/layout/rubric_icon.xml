@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/padding_4dp">
     <ImageView
         android:id="@+id/rubric_image_back"
-        android:layout_width="75dp"
-        android:layout_height="75dp"/>
+        android:layout_width="@dimen/rubrics_image_height"
+        android:layout_height="@dimen/rubrics_image_height"/>
     <ImageView
         android:id="@+id/rubric_text_back_shadow"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/rubric_black_shadow_height"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/rubric_black_shadow_height"
         android:background="@drawable/ab_background"/>
-    <TextView
+    <ImageView
+        android:id="@+id/rubric_text_back_shadow2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/rubric_black_shadow_height"
+        android:layout_gravity="bottom"
+        android:background="#46000000"/>
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rubric_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:textColor="@color/vox_white"
+        android:singleLine="true"
+        style="@style/side_bar_text.category"
+        android:layout_marginLeft="@dimen/padding_12dp"
+        android:layout_marginBottom="@dimen/padding_12dp"
+        android:layout_marginRight="@dimen/padding_12dp"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
 
+        android:layout_gravity="bottom|left"
         android:text="asdfsdfasdfasd"/>
 </FrameLayout>

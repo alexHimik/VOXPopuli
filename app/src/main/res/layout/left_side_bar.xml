@@ -2,21 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/vox_white">
+    android:background="@color/vox_white"
+    android:layout_marginTop="?android:attr/actionBarSize">
     <LinearLayout
         android:id="@+id/left_bar_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:minWidth="@dimen/news_card_small_width"
+        android:layout_height="@dimen/category_item_height"
         android:layout_alignParentBottom="true">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/settings_icon_size"
+            android:layout_height="@dimen/settings_icon_size"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_launcher"/>
+            android:src="@mipmap/ic_launcher"/>
         <TextView
             android:id="@+id/vox_app_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/settings_text_margin"
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>
@@ -32,7 +35,8 @@
             android:orientation="vertical">
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/blured_photo_height">
+                android:layout_height="@dimen/blured_photo_height"
+                android:layout_marginBottom="@dimen/padding_8dp">
                 <ImageView
                     android:id="@+id/left_bar_user_photo_blured"
                     android:layout_width="match_parent"
@@ -40,14 +44,41 @@
                 <ImageView
                     android:id="@+id/left_bar_user_avatar"
                     android:layout_width="@dimen/user_avatar_diameter"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="@dimen/user_avatar_diameter" />
-                <TextView
+                    android:layout_marginLeft="@dimen/padding_16dp"
+                    android:layout_marginTop="@dimen/padding_16dp"
+                    android:layout_gravity="top|left"
+                    android:layout_height="@dimen/user_avatar_diameter"/>
+                <com.devspark.robototextview.widget.RobotoTextView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/left_bar_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_20dp"
+                    android:layout_marginLeft="@dimen/padding_16dp"
+                    app:fontFamily="roboto"
+                    app:textWeight="normal"
                     android:layout_gravity="bottom|left"/>
             </FrameLayout>
+            <include
+                android:id="@+id/left_bar_category_all"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_vox_populi"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_history"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_business"
+                layout="@layout/category_item">
+            </include>
+            <include
+                android:id="@+id/left_bar_category_interview"
+                layout="@layout/category_item">
+            </include>
             <kz.voxpopuli.voxapplication.view.RowHoster
                 android:id="@+id/left_bar_rubrics_hoster"
                 android:layout_width="match_parent"

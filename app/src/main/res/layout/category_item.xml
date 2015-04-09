@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="@dimen/category_item_height"
+android:orientation="horizontal">
+<com.devspark.robototextview.widget.RobotoTextView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/left_bar_category_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/side_bar_text.category"
+    android:layout_marginBottom="@dimen/padding_20dp"
+    android:layout_marginTop="@dimen/padding_16dp"
+    android:layout_marginLeft="@dimen/padding_16dp"
+    app:fontFamily="roboto"
+    app:textWeight="normal"
+    android:text="category"
+
+    android:background="@color/vox_red"
+    />
+</LinearLayout>

@@ -53,15 +53,15 @@ public class TestFragmet extends FaddingTitleBaseFragment {
         Glide.with(this).load(data.getString(
                 PARALAX_IMAGE_HEADER_KEY)).centerCrop().into(faddingHeader);
         items.clear();
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.big_test_string),
+        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
                 "http://jpx.responsejp.com/jpx/images/2012/04/17/173075_8.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.big_test_string),
+        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
                 "http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.big_test_string),
+        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
                 "http://i.ytimg.com/vi/6klq1aVtZLM/maxresdefault.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.big_test_string),
+        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
                 "http://www.motoplanete.com/honda/zoom-700px/Honda-NC-700-S-2013-700px.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.big_test_string),
+        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
                 "http://www.motorrad-testbericht.at/magazin/honda/naked/nc700s/honda_nc700s_7.jpg"));
     }
 }

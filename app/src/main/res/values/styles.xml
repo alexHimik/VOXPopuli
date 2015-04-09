@@ -3,7 +3,10 @@
 
     <style name="Widget" />
 
-    <style name="Widget.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+    <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="contentInsetStart">0dp</item>
     </style>
 
     <style name="Widget.Light" />
@@ -19,7 +22,21 @@
     </style>
 
     <style name="StyleOverflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_launcher</item>
+        <item name="android:src">@mipmap/ic_launcher</item>
+    </style>
+
+    <!--styles for left side bar-->
+    <style name="side_bar_text">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="side_bar_text.white" parent="side_bar_text">
+        <item name="android:textColor">@color/vox_white</item>
+    </style>
+    <style name="side_bar_text.category" parent="side_bar_text">
+        <item name="android:textColor">@color/side_bar_category_text</item>
+    </style>
+    <style name="side_bar_text.cat_header" parent="side_bar_text">
+        <item name="android:textColor">@color/side_bar_rubrics_header_color</item>
     </style>
 
 </resources>

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="vox_red">#ffff0a11</color>
+    <color name="vox_red">#FFD10A00</color>
     <color name="vox_white">#ffffffff</color>
 
     <item name="blue" type="color">#FF33B5E5</item>
+
+    <color name="side_bar_category_text">#FF333333</color>
+    <color name="side_bar_rubrics_header_color">#FF999999</color>
+    <color name="side_bar_divider_color">#FFDCDCDC</color>
+    <color name="side_bar_category_selected_color">#14999999</color>
 </resources>
