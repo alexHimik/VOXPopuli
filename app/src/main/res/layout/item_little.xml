@@ -14,8 +14,7 @@
         android:id="@+id/imv_l"
         android:layout_width="@dimen/img_w_l"
         android:layout_height="@dimen/img_h_l"
-        android:scaleType="fitXY"
-        android:src="@drawable/muler">
+        android:scaleType="fitXY">
     </ImageView>
 
     <LinearLayout

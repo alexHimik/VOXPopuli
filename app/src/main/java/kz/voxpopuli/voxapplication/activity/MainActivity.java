@@ -20,6 +20,9 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import java.io.Serializable;
 
 import de.greenrobot.event.EventBus;
@@ -30,13 +33,14 @@ import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
+import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 import kz.voxpopuli.voxapplication.tools.ViewTools;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,
-        FragmentManager.OnBackStackChangedListener {
+        Response.ErrorListener {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -51,7 +55,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID,null);
+        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID, null);
     }
 
     @Override
@@ -106,11 +110,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
-    public void onBackStackChanged() {
-
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -133,7 +132,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private void moveDrawerToTop() {
         LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-//        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerLayout = (DrawerLayout)inflater.inflate(R.layout.drawer_decor, null);
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
 
@@ -206,6 +204,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onEvent(RubricSelectedEvent rubricSelectedEvent) {
         handleCategoryOrRubricSelection(RubricsFragment.FRAGMENT_ID,
                 RubricSelectedEvent.RUBRIC_DATA, rubricSelectedEvent);
+    }
+
+    /** error handler for network responses from the Volley */
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
     }
 
     private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {
