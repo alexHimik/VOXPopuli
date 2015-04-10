@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:paddingLeft="@dimen/padding_frame"
+    android:paddingTop="@dimen/padding_frame"
+    android:paddingRight="@dimen/padding_frame"
+    android:background="#ffffff">
+
+    <ImageView
+        android:id="@+id/imv"
+        android:layout_width="wrap_content"
+        android:layout_height="202dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/mid">
+    </ImageView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_red"
+        android:padding="@dimen/padding_text">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra = "@dimen/leding_title"
+            android:text="Путь к мечте"
+            android:textSize="@dimen/ts_title"
+            android:textColor="@color/color_text_title_red">
+        </TextView>
+
+        <TextView
+            android:id="@+id/descr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Сегодня многие казахстанцы живут мечтой открыть собственный бизнес. Основной причиной, почему задумки остаются всего лишь мечтой."
+            android:textSize="@dimen/ts_descr"
+            android:lineSpacingExtra = "@dimen/leding_descr"
+            android:textColor="@color/color_text_descr_red"
+            android:paddingTop="@dimen/padding_between_text"
+            android:paddingBottom="@dimen/padding_between_text">
+        </TextView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.32"
+            android:id="@+id/other">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 апреля 13:53"
+                android:textColor="@color/color_text_other_red"
+                android:textSize="@dimen/ts_other">
+            </TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/im_views"
+                android:src="@drawable/vox_ic_sm_pink_eye"
+                android:paddingLeft="12dp"
+                android:paddingRight="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="329"
+                android:id="@+id/txt_views"
+                android:textColor="@color/color_text_other_red"
+                android:textSize="@dimen/ts_other" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/im_comment"
+                android:src="@drawable/vox_ic_sm_pink_comment"
+                android:paddingLeft="12dp"
+                android:paddingRight="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="115"
+                android:id="@+id/txt_comment"
+                android:textColor="@color/color_text_other_red"
+                android:textSize="@dimen/ts_other" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

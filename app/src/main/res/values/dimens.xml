@@ -21,6 +21,25 @@
     <dimen name="padding_16dp">16dp</dimen>
     <dimen name="padding_20dp">20dp</dimen>
 
+
+    <!--Список категорий, рубрик-->
+    <dimen name="padding_frame">8dp</dimen>
+    <dimen name="padding_text">16dp</dimen>between
+    <dimen name="padding_between_text">20dp</dimen>
+    <dimen name="padding_frame_little">12dp</dimen>
+
+    <dimen name="ts_title">24sp</dimen>
+    <dimen name="ts_title_white">16sp</dimen>
+    <dimen name="ts_descr">14sp</dimen>
+    <dimen name="ts_other">10sp</dimen>
+    <dimen name="ts_title_little">12sp</dimen>
+    <dimen name="leding_descr">4sp</dimen>
+    <dimen name="leding_title">4sp</dimen>
+    <dimen name="leding_title_white">8sp</dimen>
+
+    <dimen name="img_w_l">128dp</dimen>
+    <dimen name="img_h_l">96dp</dimen>
+
     <!--action bar values-->
     <dimen name="action_bar_title_felt_padding">32dp</dimen>
     <dimen name="action_bar_title_text_size">20sp</dimen>

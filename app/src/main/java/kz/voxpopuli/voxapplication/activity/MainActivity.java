@@ -51,6 +51,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID,null);
     }
 
     @Override

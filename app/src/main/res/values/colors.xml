@@ -9,4 +9,13 @@
     <color name="side_bar_rubrics_header_color">#FF999999</color>
     <color name="side_bar_divider_color">#FFDCDCDC</color>
     <color name="side_bar_category_selected_color">#14999999</color>
+
+    <!-- Список категорий и рубрик -->
+    <color name="color_text_title_red">#ffffff</color>
+    <color name="color_text_descr_red">#ffffff</color>
+    <color name="color_text_other_red">#ffeeee</color>
+    <color name="color_text_title_white">#333333</color>
+    <color name="color_text_other_white">#999999</color>
+    <color name="bg_red">#D10A00</color>
+    <color name="bg_white">#fafafa</color>
 </resources>
