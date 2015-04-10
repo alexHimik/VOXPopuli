@@ -5,7 +5,7 @@ public class ModelArticle {
     public int comment, views;
 
 
-    public ModelArticle(String title, String image, String image_mid, String image_big, String description, String date, int comment, int views){
+    public ModelArticle(String image, String image_mid, String image_big, String title, String description, String date, int comment, int views){
         this.image = image;
         this.image_big = image_big;
         this.image_mid = image_mid;

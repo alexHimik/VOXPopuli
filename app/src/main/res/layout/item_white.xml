@@ -11,9 +11,9 @@
     android:background="#ffffff">
 
     <ImageView
-        android:id="@+id/imv"
+        android:id="@+id/imv_w"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="202dp"
         android:scaleType="centerCrop"
         android:src="@drawable/sad">
     </ImageView>
@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="#999999"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp"
-        android:paddingBottom="2dp"
+        android:paddingLeft="1px"
+        android:paddingRight="1px"
+        android:paddingBottom="2px"
         android:baselineAligned="true">
 
         <LinearLayout
@@ -37,7 +37,7 @@
             android:padding="@dimen/padding_text">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/title_w"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra = "@dimen/leding_title_white"
@@ -58,7 +58,7 @@
                 android:id="@+id/other">
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/date_w"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2 апреля 13:53"
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="329"
-                    android:id="@+id/txt_views"
+                    android:id="@+id/txt_views_w"
                     android:textColor="@color/color_text_other_white"
                     android:textSize="@dimen/ts_other" />
 
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="115"
-                    android:id="@+id/txt_comment"
+                    android:id="@+id/txt_comment_w"
                     android:textColor="@color/color_text_other_white"
                     android:textSize="@dimen/ts_other" />
 

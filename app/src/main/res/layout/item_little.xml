@@ -11,9 +11,9 @@
     android:background="#ffffff">
 
     <ImageView
-        android:id="@+id/imv"
-        android:layout_width="128dp"
-        android:layout_height="96dp"
+        android:id="@+id/imv_l"
+        android:layout_width="@dimen/img_w_l"
+        android:layout_height="@dimen/img_h_l"
         android:scaleType="fitXY"
         android:src="@drawable/muler">
     </ImageView>
@@ -24,8 +24,8 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center_horizontal"
         android:background="#999999"
-        android:paddingRight="1dp"
-        android:paddingBottom="2dp"
+        android:paddingRight="1px"
+        android:paddingBottom="2px"
         android:baselineAligned="false">
 
         <LinearLayout
@@ -37,7 +37,7 @@
             android:paddingRight="@dimen/padding_frame_little">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/title_l"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra = "@dimen/leding_title"
@@ -48,55 +48,66 @@
             </TextView>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="0.32"
+                android:layout_gravity="bottom"
                 android:id="@+id/other"
+                android:paddingBottom="@dimen/padding_frame_little"
                 android:gravity="bottom"
-                android:paddingBottom="@dimen/padding_frame_little">
+                android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2 апреля 13:53"
-                    android:textColor="@color/color_text_other_white"
-                    android:textSize="@dimen/ts_other">
-                </TextView>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="16dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/im_views"
-                    android:src="@drawable/vox_ic_sm_grey_eye"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="4dp" />
+                    <TextView
+                        android:id="@+id/date_l"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 апреля 13:53"
+                        android:textColor="@color/color_text_other_white"
+                        android:textSize="@dimen/ts_other"
+                        android:layout_gravity="bottom">
+                    </TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="329"
-                    android:id="@+id/txt_views"
-                    android:textColor="@color/color_text_other_white"
-                    android:textSize="@dimen/ts_other" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/im_views"
+                        android:src="@drawable/vox_ic_sm_grey_eye"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="2dp" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/im_comment"
-                    android:src="@drawable/vox_ic_sm_grey_comment"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="4dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="329"
+                        android:id="@+id/txt_views_l"
+                        android:textColor="@color/color_text_other_white"
+                        android:textSize="@dimen/ts_other"
+                        android:gravity="bottom"
+                        android:layout_gravity="bottom" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="115"
-                    android:id="@+id/txt_comment"
-                    android:textColor="@color/color_text_other_white"
-                    android:textSize="@dimen/ts_other" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/im_comment"
+                        android:src="@drawable/vox_ic_sm_grey_comment"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="2dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="115"
+                        android:id="@+id/txt_comment_l"
+                        android:textColor="@color/color_text_other_white"
+                        android:textSize="@dimen/ts_other"
+                        android:gravity="bottom"
+                        android:layout_gravity="bottom" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
