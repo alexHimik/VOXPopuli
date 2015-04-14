@@ -120,4 +120,5 @@ public class ArticlesAdapter extends BaseAdapter {
         }
         return view;
     }
+
 }

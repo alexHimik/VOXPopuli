@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Vox Populi</string>
+    <string name="default_user_name_stub">Войти в личный кабинет</string>
 
     <!--category names-->
     <string name="category_name_all">Все новости</string>

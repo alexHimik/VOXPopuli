@@ -67,7 +67,8 @@
                     style="@style/side_bar_text.white"
                     app:fontFamily="roboto"
                     app:textWeight="normal"
-                    android:layout_gravity="bottom|left"/>
+                    android:layout_gravity="bottom|left"
+                    android:text="@string/default_user_name_stub"/>
             </FrameLayout>
             <include
                 android:id="@+id/left_bar_category_all"
