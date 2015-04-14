@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 
 import kz.voxpopuli.voxapplication.R;
 
@@ -20,6 +21,7 @@ import kz.voxpopuli.voxapplication.R;
 public abstract class FaddingTitleBaseFragment extends Fragment implements BackStackDataDescriber {
 
     protected FadingActionBarHelper mFadingHelper;
+    protected SwipyRefreshLayout swipyRefreshLayout;
     protected Bundle mArguments;
     protected ImageView faddingHeader;
     protected ListView fragmentList;
@@ -39,6 +41,7 @@ public abstract class FaddingTitleBaseFragment extends Fragment implements BackS
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = mFadingHelper.createView(inflater);
+        swipyRefreshLayout = (SwipyRefreshLayout)view.findViewById(R.id.activity_main_swipe_refresh_layout);
         faddingHeader = (ImageView)view.findViewById(R.id.image_header);
         fragmentList = (ListView)view.findViewById(android.R.id.list);
         return view;
