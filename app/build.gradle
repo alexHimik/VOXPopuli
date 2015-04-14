@@ -24,6 +24,9 @@ android {
 repositories {
     jcenter()
     mavenCentral()  // GPUImage for Android
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {

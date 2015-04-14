@@ -29,7 +29,7 @@ public abstract class FaddingTitleBaseFragment extends Fragment implements BackS
         super.onAttach(activity);
         mArguments = getArguments();
         mFadingHelper = new FadingActionBarHelper()
-                .actionBarBackground(R.drawable.ab_background)
+                .actionBarBackground(R.drawable.default_action_bar_color)
                 .headerLayout(R.layout.fadding_fragment_header)
                 .contentLayout(R.layout.fadding_fragment_content);
         mFadingHelper.initActionBar(activity);

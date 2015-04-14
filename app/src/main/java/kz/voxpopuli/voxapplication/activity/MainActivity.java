@@ -1,23 +1,27 @@
 package kz.voxpopuli.voxapplication.activity;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import java.io.Serializable;
 
@@ -29,18 +33,19 @@ import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
+import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 import kz.voxpopuli.voxapplication.tools.ViewTools;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,
-        FragmentManager.OnBackStackChangedListener {
+        Response.ErrorListener {
 
     private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
     private FrameLayout contentLayout;
     private RelativeLayout drawerList;
-    private ListView rightDrawer;
     private TextView barTitle;
 
     private CharSequence title;
@@ -50,7 +55,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID,null);
+        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID, null);
     }
 
     @Override
@@ -74,6 +79,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(Gravity.START|Gravity.LEFT)){
             drawerLayout.closeDrawers();
@@ -87,17 +105,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if(v.getId() == R.id.left_drawer_item) {
             togleLeftDrawer();
         } else if(v.getId() == R.id.right_drawer_item) {
-            if(drawerLayout.isDrawerOpen(rightDrawer)) {
-                drawerLayout.closeDrawer(rightDrawer);
-            } else {
-                drawerLayout.openDrawer(rightDrawer);
-            }
+
         }
-    }
-
-    @Override
-    public void onBackStackChanged() {
-
     }
 
     @Override
@@ -121,7 +130,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void moveDrawerToTop() {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         drawerLayout = (DrawerLayout)inflater.inflate(R.layout.drawer_decor, null);
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
 
@@ -136,13 +146,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         decor.removeView(child);
 
         contentLayout.addView(child, 0);
-
         decor.addView(drawerLayout);
 
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
         drawerList = (RelativeLayout)drawerLayout.findViewById(R.id.left_drawer);
         drawerList.setPadding(0, ViewTools.getStatusBarHeight(this), 0, 0);
-        rightDrawer = (ListView)drawerLayout.findViewById(R.id.right_drawer);
     }
 
     private void initActionBar() {
@@ -150,6 +158,22 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name,
+                R.string.app_name) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                getSupportActionBar().getCustomView().setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().getCustomView().setVisibility(View.INVISIBLE);
+            }
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
     }
 
     private void initDrawer() {
@@ -158,7 +182,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void showNewFragment(Fragment fragment, String fragmentTag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_frame, fragment, fragmentTag);
+        transaction.replace(R.id.main_content, fragment, fragmentTag);
         if(getFragmentManager().findFragmentByTag(fragmentTag) == null) {
             transaction.addToBackStack(fragmentTag);
         }
@@ -180,6 +204,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onEvent(RubricSelectedEvent rubricSelectedEvent) {
         handleCategoryOrRubricSelection(RubricsFragment.FRAGMENT_ID,
                 RubricSelectedEvent.RUBRIC_DATA, rubricSelectedEvent);
+    }
+
+    /** error handler for network responses from the Volley */
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
     }
 
     private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {

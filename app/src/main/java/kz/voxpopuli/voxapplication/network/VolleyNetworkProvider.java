@@ -25,6 +25,7 @@ public class VolleyNetworkProvider {
         if(instance == null) {
             instance = new VolleyNetworkProvider(ctn);
         }
+        context = ctn;
         return instance;
     }
 

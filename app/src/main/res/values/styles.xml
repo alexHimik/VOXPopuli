@@ -4,27 +4,17 @@
     <style name="Widget" />
 
     <style name="Widget.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="background">@android:color/transparent</item>
+        <item name="android:background">@color/vox_red</item>
+        <item name="background">@color/vox_red</item>
         <!--<item name="android:background">@color/vox_red</item>-->
         <!--<item name="background">@color/vox_red</item>-->
         <item name="contentInsetStart">0dp</item>
     </style>
 
-    <style name="Widget.Light" />
-
-    <style name="Widget.Light.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid" />
-
-    <style name="Widget.ActionBar.Transparent">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="Widget.Light.ActionBar.Transparent">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="StyleOverflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
-        <item name="android:src">@mipmap/ic_launcher</item>
+    <style name="Widget.ActionBar.Transparent" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/vox_red</item>
+        <item name="background">@color/vox_red</item>
+        <item name="contentInsetStart">0dp</item>
     </style>
 
     <!--styles for left side bar-->
