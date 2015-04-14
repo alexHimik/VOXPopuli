@@ -10,27 +10,25 @@
     android:paddingRight="@dimen/padding_frame"
     android:background="#ffffff">
 
-    <ImageView
-        android:id="@+id/imv_l"
-        android:layout_width="@dimen/img_w_l"
-        android:layout_height="@dimen/img_h_l"
-        android:scaleType="fitXY"
-        android:src="@drawable/muler">
-    </ImageView>
-
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
         android:background="#999999"
-        android:paddingRight="1px"
-        android:paddingBottom="2px"
-        android:baselineAligned="false">
+        android:paddingBottom="2dp"
+        android:paddingRight="1dp">
+
+        <ImageView
+            android:id="@+id/imv_l"
+            android:layout_width="@dimen/img_w_l"
+            android:layout_height="@dimen/img_h_l"
+            android:scaleType="fitXY"
+            android:src="@drawable/muler">
+        </ImageView>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/bg_white"
             android:paddingLeft="@dimen/padding_frame_little"
