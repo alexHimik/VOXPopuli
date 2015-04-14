@@ -6,9 +6,8 @@
     android:orientation="vertical"
     android:weightSum="1"
     android:paddingLeft="@dimen/padding_frame"
-    android:paddingTop="@dimen/padding_frame"
     android:paddingRight="@dimen/padding_frame"
-    android:background="#ffffff">
+    android:paddingTop="@dimen/padding_frame">
 
     <ImageView
         android:id="@+id/imv"
