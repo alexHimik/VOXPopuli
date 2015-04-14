@@ -13,6 +13,7 @@
     <dimen name="news_card_big_image_height">248dp</dimen>
 
     <!--paddinds-->
+    <dimen name="padding_1dp">1dp</dimen>
     <dimen name="padding_5dp">5dp</dimen>
     <dimen name="padding_4dp">4dp</dimen>
     <dimen name="padding_8dp">8dp</dimen>

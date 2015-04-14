@@ -16,6 +16,7 @@ import kz.voxpopuli.voxapplication.R;
  */
 public class RubricRowItem implements IRowItemModel {
 
+    private String id;
     private String rubricImageUrl;
     private String rubricNameText;
 
@@ -36,6 +37,15 @@ public class RubricRowItem implements IRowItemModel {
 
     public void setRubricNameText(String rubricNameText) {
         this.rubricNameText = rubricNameText;
+    }
+
+    @Override
+    public int getId() {
+        return Integer.parseInt(id);
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

@@ -2,6 +2,7 @@ package kz.voxpopuli.voxapplication.activity;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +56,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().setBackgroundDrawable(new ColorDrawable(
+                getResources().getColor(R.color.vox_white)));
         initViews();
         handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID, null);
     }
@@ -96,6 +100,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if(drawerLayout.isDrawerOpen(Gravity.START|Gravity.LEFT)){
             drawerLayout.closeDrawers();
             return;
+        }
+        if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            getSupportFragmentManager().popBackStack();
+            finish();
         }
         super.onBackPressed();
     }
@@ -209,7 +217,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     /** error handler for network responses from the Volley */
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        Log.e("MianActivity", "Volley error -> " + error.getMessage());
     }
 
     private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {

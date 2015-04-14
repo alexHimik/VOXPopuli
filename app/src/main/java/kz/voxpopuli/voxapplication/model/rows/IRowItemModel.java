@@ -12,4 +12,5 @@ public interface IRowItemModel {
     public int getResourceId();
     public View initModelsViews(LayoutInflater inflater);
     public void setModelDataToViews(Context fragment);
+    public int getId();
 }

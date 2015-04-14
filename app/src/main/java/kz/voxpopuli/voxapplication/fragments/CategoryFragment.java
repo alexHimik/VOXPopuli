@@ -26,9 +26,6 @@ public class CategoryFragment extends FaddingTitleBaseFragment {
 
     private String fragmentTitle = "";
 
-    public static final String PARALAX_IMAGE_HEADER_KEY = "parallax_header";
-    public static final String LIST_DATA_KEY = "list_data";
-
     private SimpleListAdapter listAdapter;
     private List<SimpleListItemModel> items = new LinkedList<SimpleListItemModel>();
 

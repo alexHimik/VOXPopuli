@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/padding_4dp"
     android:layout_height="@dimen/category_item_height">
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/padding_4dp"
+        android:layout_height="@dimen/padding_1dp"
         android:background="@color/side_bar_divider_color">
         </View>
     <com.devspark.robototextview.widget.RobotoTextView

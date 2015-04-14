@@ -6,18 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
 import kz.voxpopuli.voxapplication.model.rows.IRowItemModel;
 
 /**
  * Created by user on 03.04.15.
  */
-public class RowHoster extends LinearLayout {
+public class RowHoster extends LinearLayout implements View.OnClickListener {
 
     public static final int HEADR_VIEW_ID = 123;
 
@@ -74,7 +77,8 @@ public class RowHoster extends LinearLayout {
                 View v = row.findViewById(R.id.hoster_row_left_item);
                 View leftCell = model.initModelsViews(inflater);
                 leftCell.setLayoutParams(v.getLayoutParams());
-                leftCell.setId(HEADR_VIEW_ID * model.getResourceId());
+                leftCell.setId(model.getId());
+                leftCell.setOnClickListener(this);
                 ((ViewGroup)row).removeView(v);
                 ((ViewGroup)row).addView(leftCell, 0);
                 model.setModelDataToViews(context);
@@ -86,7 +90,8 @@ public class RowHoster extends LinearLayout {
                 View v = row.findViewById(R.id.hoster_row_right_item);
                 View rightCell = model.initModelsViews(inflater);
                 rightCell.setLayoutParams(v.getLayoutParams());
-                rightCell.setId(HEADR_VIEW_ID * model.getResourceId());
+                rightCell.setId(model.getId());
+                rightCell.setOnClickListener(this);
                 ((ViewGroup)row).removeView(v);
                 ((ViewGroup)row).addView(rightCell, 1);
                 model.setModelDataToViews(context);
@@ -103,5 +108,12 @@ public class RowHoster extends LinearLayout {
 
     public List<IRowItemModel> getRowItemModels() {
         return itemsForRows;
+    }
+
+    @Override
+    public void onClick(View v) {
+        String rubricName = ((TextView)v.findViewById(R.id.rubric_title)).getText().toString();
+        int rubricId = v.getId();
+        EventBus.getDefault().post(new RubricSelectedEvent(rubricId, rubricName));
     }
 }
