@@ -59,7 +59,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.vox_white)));
         initViews();
-        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID, null);
     }
 
     @Override
@@ -223,7 +222,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(dataKey, data);
-        togleLeftDrawer();
+        if(drawerLayout.isDrawerOpen(drawerList)) {
+            drawerLayout.closeDrawer(drawerList);
+        }
+        clearBackStack();
         handleFragmentSwitching(fragmentId, bundle);
     }
 
@@ -232,6 +234,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             drawerLayout.closeDrawer(drawerList);
         } else {
             drawerLayout.openDrawer(drawerList);
+        }
+    }
+
+    private void clearBackStack() {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
+            manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 

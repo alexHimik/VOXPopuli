@@ -101,12 +101,18 @@ public class LeftSideBarFragment extends Fragment implements View.OnClickListene
 
     public void onEvent(RubricsDataWrapper rubricsDataWrapper) {
         for(RubricsInfo info : rubricsDataWrapper.getRubricsInfo()) {
+            int main = Integer.parseInt(info.getId());
             RubricRowItem item = new RubricRowItem();
             item.setRubricNameText(info.getTitle());
             item.setRubricImageUrl(info.getImage());
             item.setId(info.getId());
-            rubricsModels.add(item);
+            if(main > 0) {
+                categoryHelper.getCategoriesInfo().add(item);
+            } else {
+                rubricsModels.add(item);
+            }
         }
         rowHoster.setRowItemModels(rubricsModels);
+        categoryHelper.selectCategory(R.id.left_bar_category_all);
     }
 }

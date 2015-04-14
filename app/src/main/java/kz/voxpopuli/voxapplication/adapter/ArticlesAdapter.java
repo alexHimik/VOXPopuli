@@ -2,7 +2,6 @@ package kz.voxpopuli.voxapplication.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +46,9 @@ public class ArticlesAdapter extends BaseAdapter {
     }
 
     public int getItemViewType(int position) {
-        int type=0;
-        if (position < 10) type=0;
-        else if ((position%5) == 0) type = 1;
+        int type = 0;
+        if (position < 10) type = 0;
+        else if ((position % 5) == 0) type = 1;
         else type = 2;
         return type;
     }
@@ -120,5 +119,4 @@ public class ArticlesAdapter extends BaseAdapter {
         }
         return view;
     }
-
 }

@@ -5,63 +5,108 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import com.bumptech.glide.Glide;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
-import kz.voxpopuli.voxapplication.adapter.SimpleListAdapter;
+import kz.voxpopuli.voxapplication.adapter.ArticlesAdapter;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
-import kz.voxpopuli.voxapplication.model.SimpleListItemModel;
+import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.MainPageContentRequest;
+import kz.voxpopuli.voxapplication.network.request.RubricContentRequest;
+import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
+import kz.voxpopuli.voxapplication.network.wrappers.mpage.MainPageDataWrapper;
+import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricContentWrapper;
 
 /**
  * Created by user on 09.04.15.
  */
-public class CategoryFragment extends FaddingTitleBaseFragment {
+public class CategoryFragment extends BaseFragment implements Response.ErrorListener,
+        ListView.OnItemClickListener {
 
     public static final String TAG = "CategoryFragment";
     public static final int FRAGMENT_ID = 2;
 
-    private String fragmentTitle = "";
-
-    private SimpleListAdapter listAdapter;
-    private List<SimpleListItemModel> items = new LinkedList<SimpleListItemModel>();
+    private ListView lv;
+    public List<Article> articles = new LinkedList<>();
+    private ArticlesAdapter articlesAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View superView = super.onCreateView(inflater, container, savedInstanceState);
-        //TODO init list view with data and adapter
-        fillScreen(mArguments);
-        listAdapter = new SimpleListAdapter(this, items);
-        fragmentList.setAdapter(listAdapter);
-        return superView;
+        Bundle data = getArguments();
+        CategorySelectedEvent selectedEvent = (CategorySelectedEvent)data.get(
+                CategorySelectedEvent.CATEGORY_DATA);
+
+        Request request;
+        if(getString(R.string.category_name_all).equals(selectedEvent.getCategoryName())) {
+            request = new MainPageContentRequest(this);
+            getActivity().setTitle(getString(R.string.category_name_all));
+        } else {
+            request = new RubricContentRequest(String.valueOf(selectedEvent.getCategoryId()), this);
+            getActivity().setTitle(selectedEvent.getCategoryName());
+        }
+        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
+
+        View parent = inflater.inflate(R.layout.articles, container, false);
+        lv = (ListView) parent.findViewById(R.id.lv_articles);
+        articlesAdapter = new ArticlesAdapter(this, articles);
+        lv.setAdapter(articlesAdapter);
+        lv.setOnItemClickListener(this);
+        return parent;
     }
 
-    private void fillScreen(Bundle data) {
-        Glide.with(this).load(CategorySelectedEvent.TEST_URL).centerCrop().into(faddingHeader);
-        items.clear();
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
-                "http://jpx.responsejp.com/jpx/images/2012/04/17/173075_8.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
-                "http://images.motofan.com/N/9/9/6/mas-accesorios-originales-para-honda-nc700s-nc700x_hd_26838.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
-                "http://i.ytimg.com/vi/6klq1aVtZLM/maxresdefault.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
-                "http://www.motoplanete.com/honda/zoom-700px/Honda-NC-700-S-2013-700px.jpg"));
-        items.add(new SimpleListItemModel(getActivity().getResources().getString(R.string.vk_app_id),
-                "http://www.motorrad-testbericht.at/magazin/honda/naked/nc700s/honda_nc700s_7.jpg"));
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     @Override
     public String getFragmentTag() {
-        return TAG + fragmentTitle;
+        return TAG;
     }
 
     @Override
     public int getFragmentId() {
         return FRAGMENT_ID;
+    }
+
+    //handling events for main page and categories data
+    public void onEvent(MainPageDataWrapper wrapper) {
+        if (!articles.isEmpty()) {
+            articles.clear();
+        }
+        articles.addAll(wrapper.getMain().getArticles());
+        articlesAdapter.notifyDataSetChanged();
+    }
+
+    public void onEvent(RubricContentWrapper rubricContentWrapper) {
+        articles.addAll(rubricContentWrapper.getArticles());
+        articlesAdapter.notifyDataSetChanged();
     }
 }
