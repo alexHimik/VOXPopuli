@@ -6,8 +6,9 @@ package kz.voxpopuli.voxapplication.network.util;
 public interface VoxProviderUrls {
 
     public static final String RUBRIC_ID_IDENTIFIER = "%rubricId%";
+    public static final String RUBRIC_PAGE_IDENTIFIER = "%page%";
 
     public static final String MAIN_PAGE_CONTENT = "http://www.voxpopuli.kz/api/home.json";
     public static final String RUBRICS_INFO = "http://www.voxpopuli.kz/api/rubrics.json";
-    public static final String RUBRIC_CONTENT = "http://www.voxpopuli.kz/api/rubric/%rubricId%.json";
+    public static final String RUBRIC_CONTENT = "http://www.voxpopuli.kz/api/rubric/%rubricId%/%page%.json";
 }

@@ -20,10 +20,15 @@ import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 public class ArticlesAdapter extends BaseAdapter {
     private Fragment context;
     private List<Article> items;
+    private boolean useRedItems;
 
-    public ArticlesAdapter(Fragment context, List<Article> items) {
+    private final int WITH_RED_VIEW_TYPES_COUNT = 3;
+    private final int WITHOUT_RED_VIEW_TYPES_COUNT = 2;
+
+    public ArticlesAdapter(Fragment context, List<Article> items, boolean useRedItems) {
         this.context = context;
         this.items = items;
+        this.useRedItems = useRedItems;
     }
 
     @Override
@@ -32,7 +37,7 @@ public class ArticlesAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Article getItem(int position) {
         return items == null ? null : items.get(position);
     }
 
@@ -40,17 +45,28 @@ public class ArticlesAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public int getViewTypeCount() {
-        return 3;
+        return useRedItems == true ? WITH_RED_VIEW_TYPES_COUNT : WITHOUT_RED_VIEW_TYPES_COUNT;
     }
 
     public int getItemViewType(int position) {
-        int type = 0;
-        if (position < 10) type = 0;
-        else if ((position % 5) == 0) type = 1;
-        else type = 2;
-        return type;
+        if(useRedItems) {
+            if(position < 10) {
+                return 0;
+            } else if((position % 5) == 0) {
+                return 1;
+            } else {
+                return 2;
+            }
+        } else {
+            if((position % 5) == 0) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
     }
 
     @Override
@@ -65,7 +81,13 @@ public class ArticlesAdapter extends BaseAdapter {
 
         View view = convertView;
         Article ma = items.get(position);
-        switch (getItemViewType( position)){
+        int viewType = getItemViewType(position);
+
+        if(!useRedItems) {
+            viewType = viewType + 1;
+        }
+
+        switch(viewType) {
             case 0: view = ((LayoutInflater) context.getActivity().getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_red, null);
                 break;
@@ -76,7 +98,7 @@ public class ArticlesAdapter extends BaseAdapter {
                     Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
         }
 
-        switch (getItemViewType( position)){
+        switch(viewType) {
             case 0:
                 iv = (ImageView) view.findViewById(R.id.imv);
                 title = (TextView) view.findViewById(R.id.title);
@@ -118,5 +140,13 @@ public class ArticlesAdapter extends BaseAdapter {
                 txt_comment.setText(ma.getCommentsAmount());
         }
         return view;
+    }
+
+    public boolean isRedItemUsing() {
+        return useRedItems;
+    }
+
+    public void setRedItemsUsing(boolean flag) {
+        useRedItems  = flag;
     }
 }

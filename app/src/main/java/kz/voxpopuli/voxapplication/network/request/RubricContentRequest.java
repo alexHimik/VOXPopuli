@@ -10,9 +10,10 @@ import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricContentWrapper
  */
 public class RubricContentRequest extends GsonRequest<RubricContentWrapper> {
 
-    public RubricContentRequest(String rubricId, Response.ErrorListener errorListener) {
+    public RubricContentRequest(String rubricId, int page, Response.ErrorListener errorListener) {
         super(Method.GET, VoxProviderUrls.RUBRIC_CONTENT.replaceAll(
-                VoxProviderUrls.RUBRIC_ID_IDENTIFIER, rubricId),
+                VoxProviderUrls.RUBRIC_ID_IDENTIFIER, rubricId).replaceAll(
+                VoxProviderUrls.RUBRIC_PAGE_IDENTIFIER, String.valueOf(page)),
                 RubricContentWrapper.class, null, errorListener);
     }
 }

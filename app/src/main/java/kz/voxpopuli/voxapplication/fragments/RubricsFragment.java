@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -27,22 +29,22 @@ import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricContentWrapper
  * Created by user on 26.03.15.
  */
 public class RubricsFragment extends FaddingTitleBaseFragment implements
-        SwipyRefreshLayout.OnRefreshListener{
+        SwipyRefreshLayout.OnRefreshListener, ListView.OnItemClickListener {
 
     public static final String TAG = "RubricsFragment";
     public static final int FRAGMENT_ID = 1;
 
-    public static final String PARALAX_IMAGE_HEADER_KEY = "parallax_header";
-    public static final String LIST_DATA_KEY = "list_data";
-
     private ArticlesAdapter articlesAdapter;
     private List<Article> articles = new LinkedList<>();
+
+    private int currentPage = 1;
+    private String currentRubricId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parent = super.onCreateView(inflater, container, savedInstanceState);
-        articlesAdapter = new ArticlesAdapter(this, articles);
+        articlesAdapter = new ArticlesAdapter(this, articles, false);
         fragmentList.setAdapter(articlesAdapter);
         swipyRefreshLayout.setOnRefreshListener(this);
         swipyRefreshLayout.setColorSchemeColors(getActivity().getResources().getColor(R.color.vox_red),
@@ -66,6 +68,29 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
 
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection swipyRefreshLayoutDirection) {
+        if(swipyRefreshLayoutDirection == SwipyRefreshLayoutDirection.TOP) {
+            if(currentPage > 1) {
+                currentPage = currentPage - 1;
+                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
+                        (MainActivity)getActivity());
+                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
+            } else {
+                swipyRefreshLayout.setRefreshing(false);
+            }
+        } else {
+            if(currentPage < 10) {
+                currentPage = currentPage + 1;
+                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
+                        (MainActivity)getActivity());
+                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
+            } else {
+                swipyRefreshLayout.setRefreshing(false);
+            }
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
 
@@ -80,9 +105,10 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     }
 
     public void onEvent(RubricContentWrapper rubricContentWrapper) {
-        swipyRefreshLayout.setRefreshing(false);
+        currentRubricId = rubricContentWrapper.getRubricId();
         articles.addAll(rubricContentWrapper.getArticles());
         articlesAdapter.notifyDataSetChanged();
+        swipyRefreshLayout.setRefreshing(false);
         Glide.with(this).load(rubricContentWrapper.getRubricImage()).
                 centerCrop().into(faddingHeader);
     }
@@ -90,7 +116,8 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     private void getRubricData(Bundle data) {
         RubricSelectedEvent event = (RubricSelectedEvent)data.get(RubricSelectedEvent.RUBRIC_DATA);
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                new RubricContentRequest(String.valueOf(event.getRubricId()),
+                new RubricContentRequest(String.valueOf(event.getRubricId()), 1,
                         (MainActivity)getActivity()));
+        getActivity().setTitle(event.getRubricName());
     }
 }

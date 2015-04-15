@@ -25,7 +25,7 @@
         android:layout_toRightOf="@id/left_drawer_item"
         app:fontFamily="roboto"
         app:textWeight="normal"
-        android:text="Title"
+        android:text="@string/category_name_all"
         />
 
     <ImageButton

@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
-import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
 
@@ -20,9 +19,6 @@ public class FragmentFactory {
 
     private static Fragment createFragment(int fragmentId){
         switch (fragmentId){
-            case MainStreamPageFragment.FRAGMENT_ID: {
-                return new MainStreamPageFragment();
-            }
             case RubricsFragment.FRAGMENT_ID: {
                 return new RubricsFragment();
             }

@@ -32,10 +32,8 @@ import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
-import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
-import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 import kz.voxpopuli.voxapplication.tools.ViewTools;
@@ -243,29 +241,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             FragmentManager.BackStackEntry first = manager.getBackStackEntryAt(0);
             manager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-    }
-
-    /** Swaps fragments in the main content view */
-    private void selectItem(int position) {
-        switch (position) {
-            case 0: {
-                handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID, null);
-                break;
-            }
-            case 1: {
-                handleFragmentSwitching(RubricsFragment.FRAGMENT_ID, null);
-                break;
-            }
-            case 2: {
-                Bundle b = new Bundle();
-                b.putString(TestFragmet.PARALAX_IMAGE_HEADER_KEY,
-                        "http://www.motoplanete.com/honda/zoom-700px/Honda-NC-700-S-2013-700px.jpg");
-                handleFragmentSwitching(TestFragmet.FRAGMENT_ID, b);
-            }
-            default: {
-                break;
-            }
-        }
-        drawerLayout.closeDrawer(drawerList);
     }
 }

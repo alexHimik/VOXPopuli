@@ -9,8 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
@@ -43,12 +41,15 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
     private List<Article> articles = new LinkedList<>();
     private ArticlesAdapter articlesAdapter;
 
+    private int currentPage = 1;
+    private String currentRubricId;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         swipeRefreshLayout = (SwipyRefreshLayout)inflater.inflate(R.layout.articles, container, false);
         lv = (ListView) swipeRefreshLayout.findViewById(R.id.lv_articles);
-        articlesAdapter = new ArticlesAdapter(this, articles);
+        articlesAdapter = new ArticlesAdapter(this, articles, true);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeColors(getActivity().getResources().getColor(R.color.vox_red),
@@ -79,7 +80,25 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
 
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection swipyRefreshLayoutDirection) {
-
+        if(swipyRefreshLayoutDirection == SwipyRefreshLayoutDirection.TOP) {
+            if(currentPage > 1) {
+                currentPage = currentPage - 1;
+                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
+                        (MainActivity)getActivity());
+                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
+            } else {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        } else {
+            if(currentPage < 10) {
+                currentPage = currentPage + 1;
+                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
+                        (MainActivity)getActivity());
+                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
+            } else {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }
     }
 
     @Override
@@ -97,15 +116,21 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         if (!articles.isEmpty()) {
             articles.clear();
         }
-        swipeRefreshLayout.setRefreshing(false);
+        articlesAdapter.setRedItemsUsing(true);
         articles.addAll(wrapper.getMain().getArticles());
         articlesAdapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     public void onEvent(RubricContentWrapper rubricContentWrapper) {
-        swipeRefreshLayout.setRefreshing(false);
+        if(!articles.isEmpty() && currentPage == 1) {
+            articles.clear();
+        }
+        currentRubricId = rubricContentWrapper.getRubricId();
+        articlesAdapter.setRedItemsUsing(false);
         articles.addAll(rubricContentWrapper.getArticles());
         articlesAdapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void handleCategoryContentGetting() {
@@ -118,7 +143,7 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
             request = new MainPageContentRequest((MainActivity)getActivity());
             getActivity().setTitle(getString(R.string.category_name_all));
         } else {
-            request = new RubricContentRequest(String.valueOf(selectedEvent.getCategoryId()),
+            request = new RubricContentRequest(String.valueOf(selectedEvent.getCategoryId()), 1,
                     (MainActivity)getActivity());
             getActivity().setTitle(selectedEvent.getCategoryName());
         }

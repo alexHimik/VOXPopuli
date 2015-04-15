@@ -181,7 +181,7 @@ public abstract class FadingActionBarHelperBase {
 
     public void resetActionBarAlfa() {
         if(mActionBarBackgroundDrawable != null) {
-            mActionBarBackgroundDrawable.setAlpha(100);
+            mActionBarBackgroundDrawable.setAlpha(255);
         }
     }
 

@@ -64,19 +64,8 @@ public class LeftSideBarFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.left_bar_user_name) {
-            //TODO redirect to the user profile page
-        }
-    }
-
-    private void initViews(View parent) {
-        bluredBackImage = (ImageView)parent.findViewById(R.id.left_bar_user_photo_blured);
-        userAvatar = (ImageView)parent.findViewById(R.id.left_bar_user_avatar);
-        userName = (TextView)parent.findViewById(R.id.left_bar_user_name);
-        rowHoster = (RowHoster)parent.findViewById(R.id.left_bar_rubrics_hoster);
-        settingsLayout = (LinearLayout)parent.findViewById(R.id.left_bar_settings);
-
+    public void onStart() {
+        super.onStart();
         if(UserInfoTools.isUserLoggedIn(getActivity())) {
             BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
             Glide.with(this).load(UserInfoTools.getUserAvatarUrl(getActivity())).
@@ -91,6 +80,21 @@ public class LeftSideBarFragment extends Fragment implements View.OnClickListene
         } else {
             userName.setOnClickListener(this);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.left_bar_user_name) {
+            //TODO redirect to the user profile page
+        }
+    }
+
+    private void initViews(View parent) {
+        bluredBackImage = (ImageView)parent.findViewById(R.id.left_bar_user_photo_blured);
+        userAvatar = (ImageView)parent.findViewById(R.id.left_bar_user_avatar);
+        userName = (TextView)parent.findViewById(R.id.left_bar_user_name);
+        rowHoster = (RowHoster)parent.findViewById(R.id.left_bar_rubrics_hoster);
+        settingsLayout = (LinearLayout)parent.findViewById(R.id.left_bar_settings);
     }
 
     private void fillHosterWithData() {
