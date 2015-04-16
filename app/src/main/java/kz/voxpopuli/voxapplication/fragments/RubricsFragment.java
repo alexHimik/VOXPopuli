@@ -2,11 +2,13 @@ package kz.voxpopuli.voxapplication.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -95,6 +97,19 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     }
 
     @Override
+    public View getActionBarCustomView(LayoutInflater inflater) {
+        View castomBar = super.getActionBarCustomView(inflater);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setCustomView(castomBar);
+        return castomBar;
+    }
+
+    @Override
+    public void initActionBarItems() {
+        leftbarItem.setOnClickListener(barClickListener);
+        rightBarItem.setOnClickListener(barClickListener);
+    }
+
+    @Override
     public String getFragmentTag() {
         return TAG;
     }
@@ -118,6 +133,13 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
                 new RubricContentRequest(String.valueOf(event.getRubricId()), 1,
                         (MainActivity)getActivity()));
-        getActivity().setTitle(event.getRubricName());
+        ((TextView)centerBatItem).setText(event.getRubricName());
     }
+
+    private View.OnClickListener barClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ((MainActivity)getActivity()).onClick(v);
+        }
+    };
 }

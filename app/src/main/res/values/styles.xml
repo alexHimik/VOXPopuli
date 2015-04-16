@@ -34,4 +34,10 @@
         <item name="android:textSize">@dimen/action_bar_title_text_size</item>
         <item name="android:textColor">@color/vox_white</item>
     </style>
+    <style name="search_action_bar_input">
+        <item name="android:hint">@string/search_bar_input_hint</item>
+        <item name="android:textColorHint">@color/color_text_other_white</item>
+        <item name="android:textSize">@dimen/action_bar_title_text_size</item>
+        <item name="android:textColor">@color/color_text_other_white</item>
+    </style>
 </resources>

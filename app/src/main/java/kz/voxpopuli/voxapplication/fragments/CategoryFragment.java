@@ -2,11 +2,13 @@ package kz.voxpopuli.voxapplication.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -47,6 +49,7 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         swipeRefreshLayout = (SwipyRefreshLayout)inflater.inflate(R.layout.articles, container, false);
         lv = (ListView) swipeRefreshLayout.findViewById(R.id.lv_articles);
         articlesAdapter = new ArticlesAdapter(this, articles, true);
@@ -102,6 +105,19 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
     }
 
     @Override
+    public View getActionBarCustomView(LayoutInflater inflater) {
+        View customBar = super.getActionBarCustomView(inflater);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
+        return customBar;
+    }
+
+    @Override
+    public void initActionBarItems() {
+        rightBarItem.setOnClickListener(barListener);
+        leftbarItem.setOnClickListener(barListener);
+    }
+
+    @Override
     public String getFragmentTag() {
         return TAG;
     }
@@ -141,12 +157,19 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         Request request;
         if(getString(R.string.category_name_all).equals(selectedEvent.getCategoryName())) {
             request = new MainPageContentRequest((MainActivity)getActivity());
-            getActivity().setTitle(getString(R.string.category_name_all));
+            ((TextView)centerBatItem).setText(getString(R.string.category_name_all));
         } else {
             request = new RubricContentRequest(String.valueOf(selectedEvent.getCategoryId()), 1,
                     (MainActivity)getActivity());
-            getActivity().setTitle(selectedEvent.getCategoryName());
+            ((TextView)centerBatItem).setText(selectedEvent.getCategoryName());
         }
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
     }
+
+    private View.OnClickListener barListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ((MainActivity)getActivity()).onClick(v);
+        }
+    };
 }

@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -31,9 +30,10 @@ import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
+import kz.voxpopuli.voxapplication.fragments.BackStackDataDescriber;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
-import kz.voxpopuli.voxapplication.fragments.TestFragmet;
+import kz.voxpopuli.voxapplication.fragments.SearchFragment;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 import kz.voxpopuli.voxapplication.tools.ViewTools;
@@ -46,9 +46,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private ActionBarDrawerToggle drawerToggle;
     private FrameLayout contentLayout;
     private RelativeLayout drawerList;
-    private TextView barTitle;
-
-    private CharSequence title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +54,29 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.vox_white)));
         initViews();
+//        readImageBytes();
     }
+
+//    private void readImageBytes() {
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.raw.splash);
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
+//
+//        String str = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+//
+//        File file = new File(Environment.getExternalStorageDirectory(), "test_img.png");
+//        try {
+//            if(!file.exists()) {
+//                file.createNewFile();
+//            }
+//            FileOutputStream fos = new FileOutputStream(file);
+//            fos.write(Base64.decode(str.getBytes(), Base64.DEFAULT));
+//        } catch (FileNotFoundException ex) {
+//            Log.e("MainActivity", ex.getMessage());
+//        } catch (IOException ex) {
+//            Log.e("MainActivity", ex.getMessage());
+//        }
+//    }
 
     @Override
     protected void onStart() {
@@ -69,14 +88,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     protected void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        this.title = title;
-        if(barTitle != null) {
-            barTitle.setText(this.title);
-        }
     }
 
     @Override
@@ -110,7 +121,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if(v.getId() == R.id.left_drawer_item) {
             togleLeftDrawer();
         } else if(v.getId() == R.id.right_drawer_item) {
-
+            handleFragmentSwitching(SearchFragment.FRAGMENT_ID, null);
         }
     }
 
@@ -140,11 +151,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         drawerLayout = (DrawerLayout)inflater.inflate(R.layout.drawer_decor, null);
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
 
-        RelativeLayout barLayout = (RelativeLayout)inflater.inflate(R.layout.action_bar_header, null);
-        barLayout.findViewById(R.id.left_drawer_item).setOnClickListener(this);
-        barLayout.findViewById(R.id.right_drawer_item).setOnClickListener(this);
-        barTitle = (TextView)barLayout.findViewById(R.id.action_bar_title);
-        getSupportActionBar().setCustomView(barLayout);
+//        RelativeLayout barLayout = (RelativeLayout)inflater.inflate(R.layout.action_bar_header, null);
+//        barLayout.findViewById(R.id.left_drawer_item).setOnClickListener(this);
+//        barLayout.findViewById(R.id.right_drawer_item).setOnClickListener(this);
+//        barTitle = (TextView)barLayout.findViewById(R.id.action_bar_title);
+//        getSupportActionBar().setCustomView(barLayout);
 
         ViewGroup decor = (ViewGroup) getWindow().getDecorView();
         View child = decor.getChildAt(0);
@@ -187,6 +198,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void showNewFragment(Fragment fragment, String fragmentTag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if(((BackStackDataDescriber)fragment).getFragmentId() == SearchFragment.FRAGMENT_ID) {
+            transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
         transaction.replace(R.id.main_content, fragment, fragmentTag);
         if(getFragmentManager().findFragmentByTag(fragmentTag) == null) {
             transaction.addToBackStack(fragmentTag);

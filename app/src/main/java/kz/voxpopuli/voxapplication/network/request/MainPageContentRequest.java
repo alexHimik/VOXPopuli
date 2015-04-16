@@ -11,7 +11,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.mpage.MainPageDataWrapper;
 public class MainPageContentRequest extends GsonRequest<MainPageDataWrapper> {
 
     public MainPageContentRequest(Response.ErrorListener errorListener) {
-        super(Method.GET, VoxProviderUrls.MAIN_PAGE_CONTENT,
+        super(Method.GET, VoxProviderUrls.MAIN_PAGE_CONTENT_REQUEST,
                 MainPageDataWrapper.class, null, errorListener);
     }
 }

@@ -11,8 +11,22 @@
         android:layout_marginTop="@dimen/padding_16dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/vox_ic_white_hamburger"
+        android:background="@drawable/vox_ic_red_arrow"
         />
+
+    <com.devspark.robototextview.widget.RobotoEditText
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/search_input"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:layout_centerVertical="true"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
+        style="@style/search_action_bar_input"
+        android:layout_marginLeft="@dimen/action_bar_title_felt_padding"
+        android:layout_toRightOf="@id/left_drawer_item"
+        android:layout_toLeftOf="@id/right_drawer_item"/>
 
     <ImageButton
         android:id="@+id/right_drawer_item"
@@ -22,23 +36,8 @@
         android:layout_marginTop="@dimen/padding_16dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/vox_ic_white_search"
+        android:background="@drawable/vox_ic_grey_clear"
+        android:visibility="invisible"
         />
 
-    <com.devspark.robototextview.widget.RobotoTextView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/action_bar_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:ellipsize="end"
-        style="@style/action_bar_red_title"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/action_bar_title_felt_padding"
-        android:layout_toRightOf="@id/left_drawer_item"
-        android:layout_toLeftOf="@id/right_drawer_item"
-        app:fontFamily="roboto"
-        app:textWeight="normal"
-        android:text="@string/category_name_all"
-        />
 </RelativeLayout>
