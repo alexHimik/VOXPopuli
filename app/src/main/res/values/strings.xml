@@ -24,5 +24,7 @@
     <string name="settings_string">Настройки</string>
     <string name="rubrics_header_text">Рубрики</string>
 
-    <string name="search_bar_input_hint">поиск</string>
+    <string name="search_bar_input_hint">Поиск</string>
+
+    <string name="most_popular">Самые обсуждаемые</string>
 </resources>
