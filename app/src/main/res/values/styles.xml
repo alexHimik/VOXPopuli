@@ -34,6 +34,26 @@
         <item name="android:textSize">@dimen/action_bar_title_text_size</item>
         <item name="android:textColor">@color/vox_white</item>
     </style>
+    <style name="search_action_bar_input">
+        <item name="android:hint">@string/search_bar_input_hint</item>
+        <item name="android:textColorHint">@color/color_light_grey</item>
+        <item name="android:textSize">@dimen/action_bar_title_text_size</item>
+        <item name="android:textColor">@color/color_light_grey</item>
+    </style>
+
+    <!--article items-->
+    <style name="gray_info_text">
+        <item name="android:textColor">@color/color_light_grey</item>
+    </style>
+    <style name="gray_info_text.size_12sp" parent="gray_info_text">
+        <item name="android:textSize">@dimen/ts_title_little</item>
+    </style>
+    <style name="gray_info_text.size_14sp" parent="gray_info_text">
+        <item name="android:textSize">@dimen/ts_descr</item>
+    </style>
+    <style name="gray_info_text.size_20sp" parent="gray_info_text">
+        <item name="android:textSize">@dimen/text_size_20sp</item>
+    </style>
 
 
     <!--Страница с новостью-->
@@ -65,24 +85,5 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#757575</item>
     </style>
-    <style name="search_action_bar_input">
-        <item name="android:hint">@string/search_bar_input_hint</item>
-        <item name="android:textColorHint">@color/color_light_grey</item>
-        <item name="android:textSize">@dimen/action_bar_title_text_size</item>
-        <item name="android:textColor">@color/color_light_grey</item>
-    </style>
 
-    <!--article items-->
-    <style name="gray_info_text">
-        <item name="android:textColor">@color/color_light_grey</item>
-    </style>
-    <style name="gray_info_text.size_12sp" parent="gray_info_text">
-        <item name="android:textSize">@dimen/ts_title_little</item>
-    </style>
-    <style name="gray_info_text.size_14sp" parent="gray_info_text">
-        <item name="android:textSize">@dimen/ts_descr</item>
-    </style>
-    <style name="gray_info_text.size_20sp" parent="gray_info_text">
-        <item name="android:textSize">@dimen/text_size_20sp</item>
-    </style>
 </resources>

@@ -37,6 +37,7 @@ import de.greenrobot.event.EventBus;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 //import kz.voxpopuli.voxapplication.adapter.ArticlesAdapter;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.PageNewsRequest;
@@ -46,7 +47,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.PageNewsWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Pnews;
 
-public class NewsPageFragment extends BaseFragment {
+public class NewsPageFragment extends FaddingTitleBaseFragment {
     public static final String TAG = "NewsPageFragment";
     public static final int FRAGMENT_ID = 3;
 
@@ -68,6 +69,19 @@ public class NewsPageFragment extends BaseFragment {
 
         return parent;
     }
+
+    @Override
+    public void initActionBarItems() {
+        rightBarItem.setVisibility(View.INVISIBLE);
+        leftbarItem.setOnClickListener(barClickListener);
+    }
+
+    private View.OnClickListener barClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ((MainActivity)getActivity()).onClick(v);
+        }
+    };
 
     public void formPnews(){
         Article article = new Article("281", "Burger King Казахстан: итоги 2014 года и планы на будущее", "http://www.voxpopuli.kz/img/article/117/60_tn.jpg",

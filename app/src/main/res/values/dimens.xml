@@ -43,6 +43,7 @@
     <dimen name="img_w_l">128dp</dimen>
     <dimen name="img_h_l">96dp</dimen>
 
+
     <!--Страница с новостью-->
     <dimen name="news_padding_txt">24dp</dimen>
     <dimen name="news_padding_similar">16dp</dimen>
