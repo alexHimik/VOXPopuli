@@ -33,6 +33,7 @@ import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
+import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
@@ -59,7 +60,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.vox_white)));
         initViews();
-        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID, null);
+//        handleFragmentSwitching(MainStreamPageFragment.FRAGMENT_ID, null);
+        handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID, null);
     }
 
     @Override
@@ -251,6 +253,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 b.putString(TestFragmet.PARALAX_IMAGE_HEADER_KEY,
                         "http://www.motoplanete.com/honda/zoom-700px/Honda-NC-700-S-2013-700px.jpg");
                 handleFragmentSwitching(TestFragmet.FRAGMENT_ID, b);
+            }
+            case 3: {
+                handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID, null);
             }
             default: {
                 break;

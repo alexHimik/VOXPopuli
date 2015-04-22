@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.MainStreamPageFragment;
+import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.TestFragmet;
 
@@ -31,6 +32,9 @@ public class FragmentFactory {
             }
             case TestFragmet.FRAGMENT_ID: {
                 return new TestFragmet();
+            }
+            case NewsPageFragment.FRAGMENT_ID: {
+                return new NewsPageFragment();
             }
             default: {
                 return null;

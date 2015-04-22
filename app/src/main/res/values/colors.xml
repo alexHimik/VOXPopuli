@@ -18,4 +18,16 @@
     <color name="color_text_other_white">#999999</color>
     <color name="bg_red">#D10A00</color>
     <color name="bg_white">#fafafa</color>
+
+    <!--Страница с новостью-->
+    <color name="news_color_title">#333333</color>
+    <color name="news_color_text">#4C4C4C</color>
+    <color name="news_color_line">#DCDCDC</color>
+    <color name="news_color_white">#ffffff</color>
+    <color name="news_color_tag_bg">#cc999999</color>
+    <color name="news_color_tag_txt">#757575</color>
+    <color name="news_color_test">#ffffa0b2</color>
+    <color name="news_color_test1">#ffc3ffb8</color>
+    <color name="news_color_test2">#ffaecaff</color>
+
 </resources>

@@ -32,7 +32,7 @@
     <dimen name="ts_title">24sp</dimen>
     <dimen name="ts_title_white">16sp</dimen>
     <dimen name="ts_descr">14sp</dimen>
-    <dimen name="ts_other">10sp</dimen>
+    <dimen name="ts_other">12sp</dimen>
     <dimen name="ts_title_little">12sp</dimen>
     <dimen name="leding_descr">4sp</dimen>
     <dimen name="leding_title">4sp</dimen>
@@ -40,6 +40,30 @@
 
     <dimen name="img_w_l">128dp</dimen>
     <dimen name="img_h_l">96dp</dimen>
+
+    <!--Страница с новостью-->
+    <dimen name="news_padding_txt">24dp</dimen>
+    <dimen name="news_padding_similar">16dp</dimen>
+    <dimen name="news_pad_title_gallery">16dp</dimen>
+    <dimen name="news_padding_betw_text">20dp</dimen>
+    <dimen name="news_padding_top_title">12dp</dimen>
+    <dimen name="news_padding_img">8dp</dimen>
+    <dimen name="news_pad_comment_l">22dp</dimen>
+    <dimen name="news_pad_comment_r">52dp</dimen>
+    <dimen name="news_pad_comment_t">6dp</dimen>
+    <dimen name="news_pad_author_top">36dp</dimen>
+    <dimen name="news_pad_author_bot">24dp</dimen>
+    <dimen name="news_indent48">48dp</dimen>
+    <dimen name="news_indent12">12dp</dimen>
+    <dimen name="news_thickness_line">1dp</dimen>
+    <dimen name="news_fsize_title">24sp</dimen>
+    <dimen name="news_fsize_text">14sp</dimen>
+    <dimen name="news_fsize_photo">12sp</dimen>
+    <dimen name="news_fsize_subtitle">16sp</dimen>
+    <dimen name="news_video_h">202dp</dimen>
+    <dimen name="news_size_line">1dp</dimen>
+    <dimen name="news_height_tag">32dp</dimen>
+    <dimen name="news_height_gallery">158dp</dimen>
 
     <!--action bar values-->
     <dimen name="action_bar_title_felt_padding">32dp</dimen>
