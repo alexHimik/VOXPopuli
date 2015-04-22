@@ -14,7 +14,7 @@ public class Group {
     @Expose
     private String name;
     @Expose
-    private List<Article> acrticles = new ArrayList<Article>();
+    private List<Article> articles = new ArrayList<Article>();
 
     /**
      *
@@ -42,23 +42,23 @@ public class Group {
     /**
      *
      * @return
-     * The acrticles
+     * The articles
      */
-    public List<Article> getAcrticles() {
-        return acrticles;
+    public List<Article> getArticles() {
+        return articles;
     }
 
     /**
      *
-     * @param acrticles
-     * The acrticles
+     * @param articles
+     * The articles
      */
-    public void setAcrticles(List<Article> acrticles) {
-        this.acrticles = acrticles;
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
-    public Group withAcrticles(List<Article> acrticles) {
-        this.acrticles = acrticles;
+    public Group withArticles(List<Article> articles) {
+        this.articles = articles;
         return this;
     }
 

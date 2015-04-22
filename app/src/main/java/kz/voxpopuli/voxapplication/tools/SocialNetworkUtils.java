@@ -18,6 +18,7 @@ import com.vk.sdk.VKScope;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
@@ -32,6 +33,11 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
         OnLoginCompleteListener, OnRequestSocialPersonCompleteListener, OnRequestDetailedSocialPersonCompleteListener {
 
     public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
+
+    public static final int VK_SOCIAL_NETWORK = 1;
+    public static final int FB_SOCIAL_NETWORK = 2;
+    public static final int GP_SOCIAL_NETWORK = 3;
+    public static final int TW_SOCIAL_NETWORK = 4;
 
     private SocialNetworkManager socialNetworkManager;
 
@@ -71,7 +77,8 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
             socialNetworkManager.setOnInitializationCompleteListener(this);
         } else {
             if(!socialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
-                for(SocialNetwork socialNetwork : socialNetworkManager.getInitializedSocialNetworks()) {
+                List<SocialNetwork> socialNetworks = socialNetworkManager.getInitializedSocialNetworks();
+                for(SocialNetwork socialNetwork : socialNetworks) {
                     socialNetwork.setOnLoginCompleteListener(this);
                     socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
                     socialNetwork.setOnRequestDetailedSocialPersonCompleteListener(this);
@@ -83,7 +90,7 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     public void requestUserLogin(int socialNetworkId) {
         if(socialNetworkManager != null) {
             SocialNetwork network = socialNetworkManager.getSocialNetwork(socialNetworkId);
-            if(network != null && network.isConnected()) {
+            if(network != null) {
                 network.requestLogin();
             }
         }

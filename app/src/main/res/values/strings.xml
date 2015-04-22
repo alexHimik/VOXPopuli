@@ -23,8 +23,33 @@
 
     <string name="settings_string">Настройки</string>
     <string name="rubrics_header_text">Рубрики</string>
+    <string name="login_screen_header_text">Вход</string>
+    <string name="password_restore_screen_header_text">Восстановление</string>
+    <string name="registration_screen_header_text">Регистрация</string>
 
     <string name="search_bar_input_hint">Поиск</string>
 
     <string name="most_popular">Самые обсуждаемые</string>
+    <string name="login_hint">Логин</string>
+    <string name="password_hint">Пароль</string>
+    <string name="forgot_password_text">Забыли пароль?</string>
+    <string name="create_account_btn_text">СОЗДАТЬ АККАУНТ</string>
+    <string name="hide_password_string">Скрыть пароль</string>
+    <string name="show_password_string">Показать пароль</string>
+    <string name="registration_via_social">Регистрация через соцсети</string>
+    <string name="user_name_hint">Имя</string>
+    <string name="user_surname_hint">Фамилия</string>
+    <string name="restore_password_hint">E-mail</string>
+    <string name="restore_password_info_text">Введите ваш адресс электронной почты. \nСистема вышлет на него новый пароль.</string>
+
+    <string name="settings_profile_header">Профиль</string>
+    <string name="settings_profile_enter">Войти</string>
+    <string name="settings_profile_edit_profile">Редактировать профиль</string>
+    <string name="settings_profile_register">Регистрация</string>
+    <string name="settings_profile_logout">Выйти</string>
+    <string name="settings_info_header">Информация</string>
+    <string name="settings_info_version">Версия приложения</string>
+    <string name="settings_info_about">О проекте</string>
+    <string name="settings_info_rules">Правила</string>
+    <string name="settings_info_vacancy">Вакансии</string>
 </resources>

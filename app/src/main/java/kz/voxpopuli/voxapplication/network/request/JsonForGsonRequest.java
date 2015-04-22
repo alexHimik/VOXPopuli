@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import kz.voxpopuli.voxapplication.events.ErrorEvent;
+import kz.voxpopuli.voxapplication.network.util.ServerErrorContainer;
 
 /**
  * Created by user on 15.04.15.
@@ -27,7 +29,9 @@ public class JsonForGsonRequest<T> extends Request<T> {
 
     /** Content type for request. */
     private static final String PROTOCOL_CONTENT_TYPE =
-            String.format("application/json; charset=%s", PROTOCOL_CHARSET);
+            String.format("application/x-www-form-urlencoded; charset=%s", PROTOCOL_CHARSET);
+
+    private static final String ERROR_KEY = "error";
 
     protected final Gson gson = new Gson();
     private final Class<T> clazz;
@@ -49,6 +53,13 @@ public class JsonForGsonRequest<T> extends Request<T> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
+            if(json.contains(ERROR_KEY)) {
+                ServerErrorWrapper error = gson.fromJson(json, ServerErrorWrapper.class);
+                ErrorEvent errorEvent = new ErrorEvent(ServerErrorContainer.getErrorMessage(
+                        error.getError()), Integer.parseInt(error.getError()));
+                EventBus.getDefault().post(errorEvent);
+                return null;
+            }
             return Response.success(
                     gson.fromJson(json, clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
@@ -61,7 +72,9 @@ public class JsonForGsonRequest<T> extends Request<T> {
 
     @Override
     protected void deliverResponse(T response) {
-        EventBus.getDefault().post(response);
+        if(response != null) {
+            EventBus.getDefault().post(response);
+        }
     }
 
     @Override
@@ -92,31 +105,25 @@ public class JsonForGsonRequest<T> extends Request<T> {
         return getBodyContentType();
     }
 
-//    /**
-//     * @deprecated Use {@link #getBody()}.
-//     */
-//    @Override
-//    public byte[] getPostBody() {
-//        return getBody();
-//    }
-
     @Override
     public String getBodyContentType() {
         return PROTOCOL_CONTENT_TYPE;
     }
 
-//    @Override
-//    public byte[] getBody() {
-//        try {
-//            return requestBody == null ? null : gson.toJson(requestBody).getBytes(PROTOCOL_CHARSET);
-//        } catch (UnsupportedEncodingException uee) {
-//            Log.e("Unsupported Encoding", requestBody.toString());
-//            return null;
-//        }
-//    }
-
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         return headers == null ? super.getHeaders() : headers;
+    }
+
+    public class ServerErrorWrapper {
+        private String error;
+
+        public String getError() {
+            return error;
+        }
+
+        public void setError(String error) {
+            this.error = error;
+        }
     }
 }

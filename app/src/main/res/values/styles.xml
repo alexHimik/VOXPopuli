@@ -54,4 +54,34 @@
     <style name="gray_info_text.size_20sp" parent="gray_info_text">
         <item name="android:textSize">@dimen/text_size_20sp</item>
     </style>
+    <style name="dark_grey_info_text" parent="gray_info_text">
+        <item name="android:textSize">@dimen/ts_descr</item>
+        <item name="android:textColor">@color/restore_password_dark_grey</item>
+    </style>
+
+    <!--login screen-->
+    <style name="edit_text_style" parent="search_action_bar_input">
+        <item name="android:textSize">@dimen/ts_title_white</item>
+        <item name="android:hint"></item>
+    </style>
+    <style name="forgot_password_style">
+        <item name="android:textSize">@dimen/ts_title_white</item>
+        <item name="android:textColor">@color/vox_red</item>
+        <item name="android:layout_marginBottom">@dimen/login_forgot_passw_bottom_margin</item>
+        <item name="android:layout_marginTop">@dimen/login_forgot_passw_up_margin</item>
+    </style>
+    <style name="create_account_btn_style">
+        <item name="android:background">@color/vox_white</item>
+        <item name="android:textSize">@dimen/ts_descr</item>
+        <item name="android:textColor">@color/vox_red</item>
+        <item name="android:paddingLeft">@dimen/padding_12dp</item>
+        <item name="android:paddingRight">@dimen/padding_12dp</item>
+        <item name="android:layout_marginBottom">@dimen/create_account_btn_margin</item>
+        <item name="android:layout_marginTop">@dimen/create_account_btn_margin</item>
+        <item name="android:layout_marginLeft">@dimen/login_page_side_padding</item>
+        <item name="android:layout_marginRight">@dimen/login_page_side_padding</item>
+    </style>
+    <style name="action_bar_red_title.settings" parent="action_bar_red_title">
+        <item name="android:textColor">@color/vox_red</item>
+    </style>
 </resources>

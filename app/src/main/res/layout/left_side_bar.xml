@@ -8,7 +8,9 @@
         android:layout_width="fill_parent"
         android:minWidth="@dimen/news_card_small_width"
         android:layout_height="@dimen/category_item_height"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:background="@drawable/category_item_selector">
         <ImageView
             android:layout_width="@dimen/settings_icon_size"
             android:layout_height="@dimen/settings_icon_size"

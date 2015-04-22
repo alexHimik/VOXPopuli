@@ -29,22 +29,6 @@ public class Article {
     @Expose
     private String commentsAmount;
 
-    public Article() {
-    }
-
-    public Article(String id, String title, String image, String imageMid, String imageBig,
-                   String description, String postDate, String viwed, String commentsAmount) {
-        this.id = id;
-        this.title = title;
-        this.image = image;
-        this.imageMid = imageMid;
-        this.imageBig = imageBig;
-        this.description = description;
-        this.postDate = postDate;
-        this.viwed = viwed;
-        this.commentsAmount = commentsAmount;
-    }
-
     /**
      *
      * @return
