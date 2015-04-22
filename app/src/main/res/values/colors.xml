@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="vox_red">#FFD10A00</color>
-    <color name="vox_white">#ffffffff</color>
+    <color name="vox_white">#fffafafa</color>
 
     <item name="blue" type="color">#FF33B5E5</item>
 
@@ -11,6 +11,14 @@
     <color name="side_bar_category_selected_color">#14999999</color>
 
     <!-- Список категорий и рубрик -->
+    <color name="color_text_title_red">#ffffffff</color>
+    <color name="color_text_descr_red">#ffffffff</color>
+    <color name="color_text_other_red">#ffffeeee</color>
+
+    <color name="color_dark_grey">#ff333333</color>
+    <color name="color_light_grey">#ff999999</color>
+    <color name="bg_red">#ffD10A00</color>
+    <color name="bg_white">#fffafafa</color>
     <color name="color_text_title_red">#ffffff</color>
     <color name="color_text_descr_red">#ffffff</color>
     <color name="color_text_other_red">#ffeeee</color>

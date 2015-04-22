@@ -14,6 +14,8 @@ import java.util.Map;
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
+import kz.voxpopuli.voxapplication.model.rows.RubricRowItem;
+import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricsInfo;
 
 /**
  * Created by user on 07.04.15.
@@ -22,6 +24,7 @@ public class LeftBarCategoryHelper {
 
     private static List<Integer> categoryItemIds = new LinkedList<>();
     private static Map<Integer, Integer> categoryNames = new HashMap<>();
+    private List<RubricRowItem> categoriesInfo = new LinkedList<>();
     private Map<Integer, TextView> categoryNameTextViews = new HashMap<>();
     private Map<Integer, LinearLayout> categoryBackgrounds = new HashMap<>();
 
@@ -32,10 +35,10 @@ public class LeftBarCategoryHelper {
 
     static {
         categoryItemIds.add(R.id.left_bar_category_all);
-        categoryItemIds.add(R.id.left_bar_category_business);
-        categoryItemIds.add(R.id.left_bar_category_history);
-        categoryItemIds.add(R.id.left_bar_category_interview);
         categoryItemIds.add(R.id.left_bar_category_vox_populi);
+        categoryItemIds.add(R.id.left_bar_category_history);
+        categoryItemIds.add(R.id.left_bar_category_business);
+        categoryItemIds.add(R.id.left_bar_category_interview);
 
         categoryNames.put(R.id.left_bar_category_all, R.string.category_name_all);
         categoryNames.put(R.id.left_bar_category_business, R.string.category_name_business);
@@ -60,6 +63,18 @@ public class LeftBarCategoryHelper {
         }
     }
 
+    public void selectCategory(int categoryId) {
+        innerOnClickListener.onClick(categoryBackgrounds.get(categoryId));
+    }
+
+    public List<RubricRowItem> getCategoriesInfo() {
+        return categoriesInfo;
+    }
+
+    public void setCategoriesInfo(List<RubricRowItem> categoriesInfo) {
+        this.categoriesInfo = categoriesInfo;
+    }
+
     private void setCategorySelected(int categoryId) {
         if(lastSelectedLayout != null) {
             lastSelectedLayout.setBackgroundColor(
@@ -78,9 +93,9 @@ public class LeftBarCategoryHelper {
         lastSelectedText = categoryNameTextViews.get(categoryId);
     }
 
-    private void postCategorySelectedEvent(int categoryId) {
+    private void postCategorySelectedEvent(int categoryId, int stringId) {
         EventBus.getDefault().post(new CategorySelectedEvent(categoryId,
-                context.getString(categoryNames.get(categoryId))));
+                context.getString(stringId)));
     }
 
     private class CategoriesOnClickListener implements View.OnClickListener {
@@ -89,27 +104,32 @@ public class LeftBarCategoryHelper {
             switch (v.getId()) {
                 case R.id.left_bar_category_all: {
                     setCategorySelected(v.getId());
-                    postCategorySelectedEvent(R.id.left_bar_category_all);
+                    postCategorySelectedEvent(categoriesInfo.get(0).getId(),
+                            R.string.category_name_all);
                     break;
                 }
                 case R.id.left_bar_category_business: {
                     setCategorySelected(v.getId());
-                    postCategorySelectedEvent(R.id.left_bar_category_business);
+                    postCategorySelectedEvent(categoriesInfo.get(3).getId(),
+                            R.string.category_name_business);
                     break;
                 }
                 case R.id.left_bar_category_history: {
                     setCategorySelected(v.getId());
-                    postCategorySelectedEvent(R.id.left_bar_category_history);
+                    postCategorySelectedEvent(categoriesInfo.get(2).getId(),
+                            R.string.category_name_history);
                     break;
                 }
                 case R.id.left_bar_category_interview: {
                     setCategorySelected(v.getId());
-                    postCategorySelectedEvent(R.id.left_bar_category_interview);
+                    postCategorySelectedEvent(categoriesInfo.get(4).getId(),
+                            R.string.category_name_interview);
                     break;
                 }
                 case R.id.left_bar_category_vox_populi: {
                     setCategorySelected(v.getId());
-                    postCategorySelectedEvent(R.id.left_bar_category_vox_populi);
+                    postCategorySelectedEvent(categoriesInfo.get(1).getId(),
+                            R.string.category_name_vox_populi);
                     break;
                 }
             }

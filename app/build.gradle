@@ -48,4 +48,5 @@ dependencies {
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3@aar'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
+    compile 'com.github.OrangeGangsters:SwipyRefreshLayout:4a3f971280'
 }

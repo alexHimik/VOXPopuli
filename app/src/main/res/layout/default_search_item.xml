@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_search_card_img_height"
+        android:minWidth="@dimen/default_search_card_img_width"
+        android:minHeight="@dimen/default_search_card_img_height"
+        android:background="@drawable/splash"
+        />
+    
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_12dp"
+        style="@style/gray_info_text.size_12sp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
+        android:text="fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_12dp"
+        android:layout_marginRight="@dimen/padding_12dp"
+        android:layout_marginBottom="@dimen/padding_12dp"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/default_search_info_icon"
+            android:layout_width="@dimen/default_search_info_icon_size"
+            android:layout_height="@dimen/default_search_info_icon_size"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/vox_ic_sm_grey_comment"
+            />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_viewed_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_2dp"
+            android:layout_marginLeft="@dimen/padding_8dp"
+            android:layout_gravity="center_vertical"
+            style="@style/gray_info_text.size_12sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:fontFamily="roboto"
+            app:textWeight="normal"
+            android:text="4545"
+            />
+        </LinearLayout>
+
+</LinearLayout>

@@ -4,7 +4,6 @@ import com.android.volley.Response;
 
 import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
 import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricsDataWrapper;
-import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricsInfo;
 
 /**
  * Created by user on 10.04.15.
@@ -12,6 +11,6 @@ import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricsInfo;
 public class RubricsInfoRequest extends GsonRequest<RubricsDataWrapper> {
 
     public RubricsInfoRequest(Response.ErrorListener errorListener) {
-        super(Method.GET, VoxProviderUrls.RUBRICS_INFO, RubricsDataWrapper.class, null, errorListener);
+        super(Method.GET, VoxProviderUrls.RUBRICS_INFO_REQUEST, RubricsDataWrapper.class, null, errorListener);
     }
 }

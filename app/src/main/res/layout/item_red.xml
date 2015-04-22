@@ -23,27 +23,35 @@
         android:background="@color/bg_red"
         android:padding="@dimen/padding_text">
 
-        <TextView
+        <com.devspark.robototextview.widget.RobotoTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra = "@dimen/leding_title"
             android:text="Путь к мечте"
             android:textSize="@dimen/ts_title"
+            app:fontFamily="roboto"
+            app:textWeight="normal"
             android:textColor="@color/color_text_title_red">
-        </TextView>
+        </com.devspark.robototextview.widget.RobotoTextView>
 
-        <TextView
+        <com.devspark.robototextview.widget.RobotoTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/descr"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Сегодня многие казахстанцы живут мечтой открыть собственный бизнес. Основной причиной, почему задумки остаются всего лишь мечтой."
             android:textSize="@dimen/ts_descr"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:lineSpacingExtra = "@dimen/leding_descr"
             android:textColor="@color/color_text_descr_red"
             android:paddingTop="@dimen/padding_between_text"
-            android:paddingBottom="@dimen/padding_between_text">
-        </TextView>
+            android:paddingBottom="@dimen/padding_between_text"
+            app:fontFamily="roboto"
+            app:textWeight="normal">
+        </com.devspark.robototextview.widget.RobotoTextView>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -53,14 +61,17 @@
             android:layout_weight="0.32"
             android:id="@+id/other">
 
-            <TextView
+            <com.devspark.robototextview.widget.RobotoTextView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2 апреля 13:53"
                 android:textColor="@color/color_text_other_red"
-                android:textSize="@dimen/ts_other">
-            </TextView>
+                android:textSize="@dimen/ts_other"
+                app:fontFamily="roboto"
+                app:textWeight="normal">
+            </com.devspark.robototextview.widget.RobotoTextView>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -70,13 +81,16 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="4dp" />
 
-            <TextView
+            <com.devspark.robototextview.widget.RobotoTextView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="329"
                 android:id="@+id/txt_views"
                 android:textColor="@color/color_text_other_red"
-                android:textSize="@dimen/ts_other" />
+                android:textSize="@dimen/ts_other"
+                app:fontFamily="roboto"
+                app:textWeight="normal"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -86,13 +100,16 @@
                 android:paddingLeft="12dp"
                 android:paddingRight="4dp" />
 
-            <TextView
+            <com.devspark.robototextview.widget.RobotoTextView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="115"
                 android:id="@+id/txt_comment"
                 android:textColor="@color/color_text_other_red"
-                android:textSize="@dimen/ts_other" />
+                android:textSize="@dimen/ts_other"
+                app:fontFamily="roboto"
+                app:textWeight="normal"/>
 
         </LinearLayout>
     </LinearLayout>

@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="#999999"
+        android:background="@color/side_bar_rubrics_header_color"
         android:paddingBottom="2dp"
         android:paddingRight="1dp">
 
@@ -26,6 +26,20 @@
             >
         </ImageView>
 
+        <com.devspark.robototextview.widget.RobotoTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/left_bar_host_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/side_bar_text.cat_header"
+            android:layout_marginBottom="@dimen/padding_20dp"
+            android:layout_marginTop="@dimen/padding_16dp"
+            android:layout_marginLeft="@dimen/padding_16dp"
+            app:fontFamily="roboto"
+            app:textWeight="normal"
+            android:text="@string/rubrics_header_text"
+            />
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -34,16 +48,21 @@
             android:paddingLeft="@dimen/padding_frame_little"
             android:paddingRight="@dimen/padding_frame_little">
 
-            <TextView
+            <com.devspark.robototextview.widget.RobotoTextView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/title_l"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra = "@dimen/leding_title"
                 android:text="Соцопрос. Как алматинцы знают историю Казахстана Хорошо знают"
                 android:textSize="@dimen/ts_title_little"
-                android:textColor="@color/color_text_title_white"
-                android:password="false">
-            </TextView>
+                android:textColor="@color/color_dark_grey"
+                android:password="false"
+                android:maxLines="3"
+                android:ellipsize="end"
+                app:fontFamily="roboto"
+                app:textWeight="normal">
+            </com.devspark.robototextview.widget.RobotoTextView>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -60,15 +79,18 @@
                     android:layout_width="fill_parent"
                     android:layout_height="16dp">
 
-                    <TextView
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/date_l"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2 апреля 13:53"
-                        android:textColor="@color/color_text_other_white"
+                        android:textColor="@color/color_light_grey"
                         android:textSize="@dimen/ts_other"
-                        android:layout_gravity="bottom">
-                    </TextView>
+                        android:layout_gravity="bottom"
+                        app:fontFamily="roboto"
+                        app:textWeight="normal">
+                    </com.devspark.robototextview.widget.RobotoTextView>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -78,15 +100,18 @@
                         android:paddingLeft="5dp"
                         android:paddingRight="2dp" />
 
-                    <TextView
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="329"
                         android:id="@+id/txt_views_l"
-                        android:textColor="@color/color_text_other_white"
+                        android:textColor="@color/color_light_grey"
                         android:textSize="@dimen/ts_other"
                         android:gravity="bottom"
-                        android:layout_gravity="bottom" />
+                        android:layout_gravity="bottom"
+                        app:fontFamily="roboto"
+                        app:textWeight="normal"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -96,15 +121,18 @@
                         android:paddingLeft="5dp"
                         android:paddingRight="2dp" />
 
-                    <TextView
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="115"
                         android:id="@+id/txt_comment_l"
-                        android:textColor="@color/color_text_other_white"
+                        android:textColor="@color/color_light_grey"
                         android:textSize="@dimen/ts_other"
                         android:gravity="bottom"
-                        android:layout_gravity="bottom" />
+                        android:layout_gravity="bottom"
+                        app:fontFamily="roboto"
+                        app:textWeight="normal"/>
                 </LinearLayout>
 
             </LinearLayout>
