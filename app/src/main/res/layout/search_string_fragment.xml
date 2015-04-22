@@ -3,7 +3,6 @@
     android:id="@+id/search_by_string_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="@dimen/padding_8dp"
-    android:paddingLeft="@dimen/padding_8dp"
+    android:divider="@null"
     >
 </ListView>

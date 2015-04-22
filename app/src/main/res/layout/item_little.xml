@@ -26,20 +26,6 @@
             >
         </ImageView>
 
-        <com.devspark.robototextview.widget.RobotoTextView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/left_bar_host_header_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/side_bar_text.cat_header"
-            android:layout_marginBottom="@dimen/padding_20dp"
-            android:layout_marginTop="@dimen/padding_16dp"
-            android:layout_marginLeft="@dimen/padding_16dp"
-            app:fontFamily="roboto"
-            app:textWeight="normal"
-            android:text="@string/rubrics_header_text"
-            />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"

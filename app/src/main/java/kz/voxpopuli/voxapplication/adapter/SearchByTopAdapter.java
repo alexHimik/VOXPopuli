@@ -113,7 +113,7 @@ public class SearchByTopAdapter extends BaseAdapter {
                 innerItems.add(list);
                 boolean filled = false;
                 List<ArticleAndGroup> twoItems = null;
-                for(Article a : group.getAcrticles()) {
+                for(Article a : group.getArticles()) {
                     ArticleAndGroup atg = new ArticleAndGroup();
                     atg.setGroup(false);
                     atg.setShare(shareFlag);

@@ -34,7 +34,7 @@ import kz.voxpopuli.voxapplication.view.RowHoster;
 /**
  * Created by user on 03.04.15.
  */
-public class LeftSideBarFragment extends Fragment implements View.OnClickListener {
+public class LeftSideBarFragment extends Fragment {
 
     private ImageView bluredBackImage;
     private ImageView userAvatar;
@@ -78,14 +78,7 @@ public class LeftSideBarFragment extends Fragment implements View.OnClickListene
             builder.append(UserInfoTools.getUserLastName(getActivity()));
             userName.setText(builder.toString());
         } else {
-            userName.setOnClickListener(this);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.left_bar_user_name) {
-            //TODO redirect to the user profile page
+            userName.setOnClickListener(clickListener);
         }
     }
 
@@ -95,6 +88,7 @@ public class LeftSideBarFragment extends Fragment implements View.OnClickListene
         userName = (TextView)parent.findViewById(R.id.left_bar_user_name);
         rowHoster = (RowHoster)parent.findViewById(R.id.left_bar_rubrics_hoster);
         settingsLayout = (LinearLayout)parent.findViewById(R.id.left_bar_settings);
+        settingsLayout.setOnClickListener(clickListener);
     }
 
     private void fillHosterWithData() {
@@ -118,4 +112,19 @@ public class LeftSideBarFragment extends Fragment implements View.OnClickListene
         rowHoster.setRowItemModels(rubricsModels);
         categoryHelper.selectCategory(R.id.left_bar_category_all);
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.left_bar_user_name) {
+                ((MainActivity)getActivity()).togleLeftDrawer();
+                ((MainActivity)getActivity()).handleFragmentSwitching(LoginFragment.FRAGMENT_ID, null);
+            } else if(v.getId() == R.id.left_bar_settings) {
+                MainActivity activity = (MainActivity)getActivity();
+                activity.togleLeftDrawer();
+                activity.handleFragmentSwitching(SettingsFragment.FRAGMENT_ID, null);
+            }
+
+        }
+    };
 }

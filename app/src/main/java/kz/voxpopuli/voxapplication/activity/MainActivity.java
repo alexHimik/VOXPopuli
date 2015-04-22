@@ -1,5 +1,6 @@
 package kz.voxpopuli.voxapplication.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
@@ -151,12 +152,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         drawerLayout = (DrawerLayout)inflater.inflate(R.layout.drawer_decor, null);
         contentLayout = (FrameLayout)drawerLayout.findViewById(R.id.content_frame);
 
-//        RelativeLayout barLayout = (RelativeLayout)inflater.inflate(R.layout.action_bar_header, null);
-//        barLayout.findViewById(R.id.left_drawer_item).setOnClickListener(this);
-//        barLayout.findViewById(R.id.right_drawer_item).setOnClickListener(this);
-//        barTitle = (TextView)barLayout.findViewById(R.id.action_bar_title);
-//        getSupportActionBar().setCustomView(barLayout);
-
         ViewGroup decor = (ViewGroup) getWindow().getDecorView();
         View child = decor.getChildAt(0);
         decor.removeView(child);
@@ -228,6 +223,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     /** error handler for network responses from the Volley */
     @Override
     public void onErrorResponse(VolleyError error) {
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setTitle("Error!");
+        errorDialog.setMessage(error.getMessage());
+        errorDialog.create().show();
         Log.e("MianActivity", "Volley error -> " + error.getMessage());
     }
 
@@ -241,7 +240,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         handleFragmentSwitching(fragmentId, bundle);
     }
 
-    private void togleLeftDrawer() {
+    public void togleLeftDrawer() {
         if(drawerLayout.isDrawerOpen(drawerList)) {
             drawerLayout.closeDrawer(drawerList);
         } else {

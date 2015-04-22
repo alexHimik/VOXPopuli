@@ -23,6 +23,8 @@
     <dimen name="padding_16dp">16dp</dimen>
     <dimen name="padding_20dp">20dp</dimen>
 
+    <dimen name="login_page_side_padding">24dp</dimen>
+
 
     <!--Список категорий, рубрик-->
     <dimen name="padding_frame">8dp</dimen>
@@ -93,4 +95,21 @@
 
     <!--text sizes-->
     <dimen name="left_side_bar_text_size">14sp</dimen>
+    
+    <!--login screen-->
+    <dimen name="login_forgot_passw_up_margin">36dp</dimen>
+    <dimen name="login_forgot_passw_bottom_margin">48dp</dimen>
+    <dimen name="login_social_box_bottom_margin">36dp</dimen>
+    <dimen name="create_account_btn_margin">24dp</dimen>
+    <dimen name="social_button_size">64dp</dimen>
+    <dimen name="social_margin_right">18dp</dimen>
+    <dimen name="registration_social_text_top_margin">48dp</dimen>
+    <dimen name="registration_social_block_top_margin">20dp</dimen>
+    <dimen name="registration_social_block_bottom_margin">36dp</dimen>
+    <dimen name="restore_password_edit_text_margin">20dp</dimen>
+    <dimen name="restore_password_upper_text_top_margin">24dp</dimen>
+
+    <dimen name="settings_profile_section_top_margin">16dp</dimen>
+    <dimen name="settings_item_height">56dp</dimen>
+    <dimen name="settings_item_text_upper_margin">20dp</dimen>
 </resources>

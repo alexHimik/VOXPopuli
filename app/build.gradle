@@ -19,6 +19,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+    }
 }
 
 repositories {
@@ -43,10 +47,10 @@ dependencies {
     compile 'com.github.asne:asne-twitter:0.3.3'
     compile 'com.github.asne:asne-googleplus:0.3.3'
     compile 'com.github.asne:asne-facebook:0.3.3'
-
     compile 'jp.wasabeef:glide-transformations:1.0.5@aar'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3@aar'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
     compile 'com.github.OrangeGangsters:SwipyRefreshLayout:4a3f971280'
+    compile 'commons-codec:commons-codec:20041127.091804'
 }

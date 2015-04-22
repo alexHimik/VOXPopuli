@@ -15,6 +15,8 @@ public class UserInfoTools {
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_EMAIL = "user_email";
     private static final String USER_PHOTO_URL = "user_avatar_url";
+    private static final String USER_NICK = "user_nick";
+    private static final String USER_ID = "user_id";
 
 
     public static void saveUserFirstName(Context context, String firstName) {
@@ -63,6 +65,22 @@ public class UserInfoTools {
 
     public static String getUserAvatarUrl(Context context) {
         return getSharedPreferences(context).getString(USER_PHOTO_URL, null);
+    }
+
+    public static void saveUserNick(Context context, String nick) {
+        getEditor(context).putString(USER_NICK, nick).commit();
+    }
+
+    public static String getUserNick(Context context) {
+        return getSharedPreferences(context).getString(USER_NICK, null);
+    }
+
+    public static void saveUserId(Context context, String userId) {
+        getEditor(context).putString(USER_ID, userId).commit();
+    }
+
+    public static String getUSerId(Context context) {
+        return getSharedPreferences(context).getString(USER_ID, null);
     }
 
     public static boolean isUserLoggedIn(Context context) {
