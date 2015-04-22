@@ -1,0 +1,134 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll"
+    android:layout_width="fill_parent"
+    android:scrollbars="none"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/lineLayout_1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="202dp"
+            android:id="@+id/imv"
+            android:src="@drawable/sad" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingTop="@dimen/news_padding_txt"
+            android:paddingLeft="@dimen/news_padding_txt"
+            android:paddingRight="@dimen/news_padding_txt">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Burger King Казахстан: итоги 2014 года и планы на будущее "
+                android:id="@+id/title"
+                android:lineSpacingExtra = "@dimen/leding_title"
+                android:textSize="@dimen/news_fsize_title"
+                android:textColor="@color/news_color_title" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="1dp"
+                    android:background="#dcdcdc">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="0.32"
+                        android:id="@+id/other"
+                        android:paddingTop="@dimen/news_padding_betw_text"
+                        android:paddingBottom="@dimen/news_padding_betw_text"
+                        android:background="@android:color/white">
+
+                        <TextView
+                            android:id="@+id/date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2 апреля 13:53"
+                            android:textColor="@color/color_text_other_white"
+                            android:textSize="@dimen/ts_other">
+                        </TextView>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/im_views"
+                            android:src="@drawable/vox_ic_sm_grey_eye"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="4dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="329"
+                            android:id="@+id/txt_views"
+                            android:textColor="@color/color_text_other_white"
+                            android:textSize="@dimen/ts_other" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/im_comment"
+                            android:src="@drawable/vox_ic_sm_grey_comment"
+                            android:paddingLeft="12dp"
+                            android:paddingRight="4dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="115"
+                            android:id="@+id/txt_comment"
+                            android:textColor="@color/color_text_other_white"
+                            android:textSize="@dimen/ts_other" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp"
+                android:background="#dcdcdc">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/white"
+                    android:paddingTop="@dimen/news_padding_txt"
+                    android:paddingBottom="@dimen/news_padding_txt">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="17 февраля 2015 г. состоялось очередное заседание медиа-клуба, посвященное результатам деятельности Бургер Кинг® в Казахстане за 2014 г., а также дальнейшим планам Компании по завоеванию рынка в условиях ужесточения конкуренции."
+                        android:id="@+id/descr"
+                        android:textSize="@dimen/news_fsize_text"
+                        android:textColor="@color/news_color_title"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

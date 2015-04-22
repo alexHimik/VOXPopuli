@@ -3,6 +3,8 @@
     <color name="vox_red">#FFD10A00</color>
     <color name="vox_white">#fffafafa</color>
 
+    <item name="blue" type="color">#FF33B5E5</item>
+
     <color name="side_bar_category_text">#FF333333</color>
     <color name="side_bar_rubrics_header_color">#FF999999</color>
     <color name="side_bar_divider_color">#FFDCDCDC</color>
@@ -17,6 +19,25 @@
     <color name="color_light_grey">#ff999999</color>
     <color name="bg_red">#ffD10A00</color>
     <color name="bg_white">#fffafafa</color>
+    <color name="color_text_title_red">#ffffff</color>
+    <color name="color_text_descr_red">#ffffff</color>
+    <color name="color_text_other_red">#ffeeee</color>
+    <color name="color_text_title_white">#333333</color>
+    <color name="color_text_other_white">#999999</color>
+    <color name="bg_red">#D10A00</color>
+    <color name="bg_white">#fafafa</color>
+
+    <!--Страница с новостью-->
+    <color name="news_color_title">#333333</color>
+    <color name="news_color_text">#4C4C4C</color>
+    <color name="news_color_line">#DCDCDC</color>
+    <color name="news_color_white">#ffffff</color>
+    <color name="news_color_tag_bg">#cc999999</color>
+    <color name="news_color_tag_txt">#757575</color>
+    <color name="news_color_test">#ffffa0b2</color>
+    <color name="news_color_test1">#ffc3ffb8</color>
+    <color name="news_color_test2">#ffaecaff</color>
+
 
     <color name="restore_password_dark_grey">#ff4c4c4c</color>
 </resources>

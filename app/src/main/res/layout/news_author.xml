@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@color/news_color_line"
+    android:paddingBottom="@dimen/news_size_line">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="@dimen/news_padding_txt"
+        android:paddingRight="@dimen/news_padding_txt"
+        android:paddingTop="@dimen/news_pad_author_top"
+        android:background="@color/news_color_white"
+        android:paddingBottom="@dimen/news_pad_author_bot">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/news_color_white">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:weightSum="1"
+                android:layout_weight="1"
+                android:paddingRight="5dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
+                    android:background="@color/news_color_line"
+                    android:paddingBottom="@dimen/news_size_line">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/news_color_white"></LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imv"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:scaleType="fitXY">
+            </ImageView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:background="@color/news_color_white"
+                android:layout_weight="1"
+                android:paddingLeft="5dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
+                    android:background="@color/news_color_line"
+                    android:paddingBottom="@dimen/news_size_line">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/news_color_white"></LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:background="@color/news_color_white"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/name"
+                style="@style/news_author"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/post"
+                style="@style/photo_author"
+                android:gravity="center"
+                android:paddingTop="@dimen/news_padding_img" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

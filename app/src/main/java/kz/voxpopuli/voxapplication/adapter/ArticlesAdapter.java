@@ -133,7 +133,7 @@ public class ArticlesAdapter extends BaseAdapter {
                 date = (TextView) view.findViewById(R.id.date_l);
                 txt_views = (TextView) view.findViewById(R.id.txt_views_l);
                 txt_comment = (TextView) view.findViewById(R.id.txt_comment_l);
-                Glide.with(context).load(ma.getImageMid()).centerCrop().into(iv);
+                Glide.with(context).load(ma.getImage()).centerCrop().into(iv);
                 title.setText(ma.getTitle());
                 date.setText(ma.getPostDate());
                 txt_views.setText(ma.getViwed());
