@@ -19,13 +19,8 @@
     <color name="color_light_grey">#ff999999</color>
     <color name="bg_red">#ffD10A00</color>
     <color name="bg_white">#fffafafa</color>
-    <color name="color_text_title_red">#ffffff</color>
-    <color name="color_text_descr_red">#ffffff</color>
-    <color name="color_text_other_red">#ffeeee</color>
     <color name="color_text_title_white">#333333</color>
     <color name="color_text_other_white">#999999</color>
-    <color name="bg_red">#D10A00</color>
-    <color name="bg_white">#fafafa</color>
 
     <!--Страница с новостью-->
     <color name="news_color_title">#333333</color>

@@ -7,7 +7,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.pnews.PageNewsWrapper;
 public class PageNewsRequest extends GsonRequest<PageNewsWrapper> {
 
     public PageNewsRequest(Response.ErrorListener errorListener) {
-        super(Method.GET, VoxProviderUrls.PAGE_NEWS,
+        super(Method.GET, VoxProviderUrls.MAIN_PAGE_CONTENT_REQUEST,
                 PageNewsWrapper.class, null, errorListener);
     }
 }
