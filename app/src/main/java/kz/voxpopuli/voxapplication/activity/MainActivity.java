@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.vox_white)));
         initViews();
-        handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,null);
+//        handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,null);
 //        readImageBytes();
     }
 

@@ -113,7 +113,7 @@ public class LeftSideBarFragment extends Fragment {
             }
         }
         rowHoster.setRowItemModels(rubricsModels);
-//        categoryHelper.selectCategory(R.id.left_bar_category_all);
+        categoryHelper.selectCategory(R.id.left_bar_category_all);
     }
 
     public void onEvent(UserDataClearedEvent clearedEvent) {
