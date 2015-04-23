@@ -37,6 +37,7 @@ import de.greenrobot.event.EventBus;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 //import kz.voxpopuli.voxapplication.adapter.ArticlesAdapter;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.PageNewsRequest;
@@ -46,7 +47,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.PageNewsWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Pnews;
 
-public class NewsPageFragment extends BaseFragment {
+public class NewsPageFragment extends FaddingTitleBaseFragment {
     public static final String TAG = "NewsPageFragment";
     public static final int FRAGMENT_ID = 3;
 
@@ -71,15 +72,29 @@ public class NewsPageFragment extends BaseFragment {
 
     @Override
     public void initActionBarItems() {
-
+        rightBarItem.setVisibility(View.INVISIBLE);
+        leftbarItem.setOnClickListener(barClickListener);
     }
 
+    private View.OnClickListener barClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ((MainActivity)getActivity()).onClick(v);
+        }
+    };
+
     public void formPnews(){
-//        Article article = new Article("281", "Burger King Казахстан: итоги 2014 года и планы на будущее", "http://www.voxpopuli.kz/img/article/117/60_tn.jpg",
-//                "http://www.voxpopuli.kz/img/article/117/60_mid.jpg", "http://www.voxpopuli.kz/img/article/117/60_mid.jpg",
-//                "17 февраля 2015 г. состоялось очередное заседание медиа-клуба, посвященное результатам деятельности Бургер Кинг® в Казахстане за 2014 г., а также дальнейшим планам Компании по завоеванию рынка в условиях ужесточения конкуренции.",
-//                "19 февраля, 2015", "20", "10");
-//        pn.setArticle(article);
+        Article article = new Article();
+        article.setId("281");
+        article.setTitle("Burger King Казахстан: итоги 2014 года и планы на будущее");
+        article.setImage("http://www.voxpopuli.kz/img/article/117/60_tn.jpg");
+        article.setImageMid("http://www.voxpopuli.kz/img/article/117/60_mid.jpg");
+        article.setImageBig("http://www.voxpopuli.kz/img/article/117/60_big.jpg");
+        article.setDescription("17 февраля 2015 г. состоялось очередное заседание медиа-клуба, посвященное результатам деятельности Бургер Кинг® в Казахстане за 2014 г., а также дальнейшим планам Компании по завоеванию рынка в условиях ужесточения конкуренции.");
+        article.setPostDate("19 февраля, 2015");
+        article.setViwed("20");
+        article.setCommentsAmount("10");
+        pn.setArticle(article);
         List<Content> cont = new ArrayList<Content>();
         Content c = new Content();
         c.setType("txt");
@@ -134,22 +149,43 @@ public class NewsPageFragment extends BaseFragment {
 
         List<Article> similar = new ArrayList<Article>();
 
-//        Article ar = new Article("281", "Белый цвет надежды", "http://www.voxpopuli.kz/img/article/117/99_tn.jpg",
-//                "http://www.voxpopuli.kz/img/article/117/99_tn.jpg", "http://www.voxpopuli.kz/img/article/117/99_tn.jpg",
-//                "",
-//                "26 февраля 14:00", "20", "10");
-//        similar.add(ar);
-//        ar = new Article("281", "Pictor – бизнес на живописи", "http://www.voxpopuli.kz/img/article/117/87_tn.jpg",
-//                "http://www.voxpopuli.kz/img/article/117/87_tn.jpg", "http://www.voxpopuli.kz/img/article/117/87_tn.jpg",
-//                "",
-//                "24 февраля 14:00", "50", "7");
-//        similar.add(ar);
-//        ar = new Article("281", "BeSmart – бизнес на скидках", "http://www.voxpopuli.kz/img/article/117/74_tn.jpg",
-//                "http://www.voxpopuli.kz/img/article/117/74_tn.jpg", "http://www.voxpopuli.kz/img/article/117/74_tn.jpg",
-//                "",
-//                "20 марта 15:00", "120", "17");
-//        similar.add(ar);
-//        pn.setSimilar(similar);
+        Article ar = new Article();
+        ar.setId("281");
+        ar.setTitle("Белый цвет надежды");
+        ar.setImage("http://www.voxpopuli.kz/img/article/117/99_tn.jpg");
+        ar.setImageMid("http://www.voxpopuli.kz/img/article/117/99_mid.jpg");
+        ar.setImageBig("http://www.voxpopuli.kz/img/article/117/99_big.jpg");
+        ar.setDescription("");
+        ar.setPostDate("26 февраля 14:00");
+        ar.setViwed("20");
+        ar.setCommentsAmount("10");
+        similar.add(ar);
+
+        ar = new Article();
+        ar.setId("282");
+        ar.setTitle("Pictor – бизнес на живописи");
+        ar.setImage("http://www.voxpopuli.kz/img/article/117/87_tn.jpg");
+        ar.setImageMid("http://www.voxpopuli.kz/img/article/117/87_mid.jpg");
+        ar.setImageBig("http://www.voxpopuli.kz/img/article/117/87_big.jpg");
+        ar.setDescription("");
+        ar.setPostDate("24 февраля 14:00");
+        ar.setViwed("50");
+        ar.setCommentsAmount("7");
+        similar.add(ar);
+
+        ar = new Article();
+        ar.setId("283");
+        ar.setTitle("BeSmart – бизнес на скидках");
+        ar.setImage("http://www.voxpopuli.kz/img/article/117/74_tn.jpg");
+        ar.setImageMid("http://www.voxpopuli.kz/img/article/117/74_mid.jpg");
+        ar.setImageBig("http://www.voxpopuli.kz/img/article/117/74_big.jpg");
+        ar.setDescription("");
+        ar.setPostDate("20 марта 15:00");
+        ar.setViwed("120");
+        ar.setCommentsAmount("17");
+        similar.add(ar);
+
+        pn.setSimilar(similar);
     }
 
     @Override

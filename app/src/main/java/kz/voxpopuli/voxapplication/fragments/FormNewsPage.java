@@ -51,10 +51,17 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         lpWrap = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setArticle();
         setContent();
-        ll.addView(setAuthor(pn.getAuthor()));
+        setAuthor(pn.getAuthor());
+//        ll.addView(setAuthor(pn.getAuthor()));
         setTags(ll,pn.getTags());
         setSimilar(pn.getSimilar());
+        setBottom(pn.getArticle().getCommentsAmount());
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        TextView t = (TextView)v;
     }
 
     public void setArticle(){
@@ -121,6 +128,10 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         linerL.addView(lt1);
     }
 
+    public void setBottom(String com){
+
+    }
+
     public LinearLayout newLayout(Context context, ViewGroup.LayoutParams lp){
         LinearLayout line1 = new LinearLayout(context);
         line1.setLayoutParams(lp);
@@ -131,12 +142,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     }
 
 
-    @Override
-    public void onClick(View v) {
-        TextView t = (TextView)v;
-    }
-
-    public void setContent(){
+     public void setContent(){
         List<Content> content = pn.getContent();
         int iMax = content.size();
         View v;
@@ -363,7 +369,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         return author;
     }
 
-    public View setAuthor(Author a){
+    public void setAuthor(Author a){
         View view = ((LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.news_author, null);
         ImageView iv = (ImageView) view.findViewById(R.id.imv);
@@ -373,7 +379,8 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         Glide.with(context).load(a.getAvatar()).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
         name.setText(a.getName());
         post.setText(a.getPost());
-        return view;
+        ll.addView(view);
+//        return view;
     }
 
 
