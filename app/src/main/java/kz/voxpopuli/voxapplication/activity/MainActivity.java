@@ -30,6 +30,7 @@ import java.io.Serializable;
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
+import kz.voxpopuli.voxapplication.events.ErrorEvent;
 import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
 import kz.voxpopuli.voxapplication.fragments.BackStackDataDescriber;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
@@ -218,6 +219,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onEvent(RubricSelectedEvent rubricSelectedEvent) {
         handleCategoryOrRubricSelection(RubricsFragment.FRAGMENT_ID,
                 RubricSelectedEvent.RUBRIC_DATA, rubricSelectedEvent);
+    }
+
+    public void onEventMainThread(ErrorEvent errorEvent) {
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setTitle("Error!");
+        errorDialog.setMessage(errorEvent.getMessage());
+        errorDialog.create().show();
+        Log.e("MianActivity", "Volley error -> " + errorEvent.getMessage());
     }
 
     /** error handler for network responses from the Volley */

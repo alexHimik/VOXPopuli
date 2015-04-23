@@ -69,12 +69,17 @@ public class NewsPageFragment extends BaseFragment {
         return parent;
     }
 
+    @Override
+    public void initActionBarItems() {
+
+    }
+
     public void formPnews(){
-        Article article = new Article("281", "Burger King Казахстан: итоги 2014 года и планы на будущее", "http://www.voxpopuli.kz/img/article/117/60_tn.jpg",
-                "http://www.voxpopuli.kz/img/article/117/60_mid.jpg", "http://www.voxpopuli.kz/img/article/117/60_mid.jpg",
-                "17 февраля 2015 г. состоялось очередное заседание медиа-клуба, посвященное результатам деятельности Бургер Кинг® в Казахстане за 2014 г., а также дальнейшим планам Компании по завоеванию рынка в условиях ужесточения конкуренции.",
-                "19 февраля, 2015", "20", "10");
-        pn.setArticle(article);
+//        Article article = new Article("281", "Burger King Казахстан: итоги 2014 года и планы на будущее", "http://www.voxpopuli.kz/img/article/117/60_tn.jpg",
+//                "http://www.voxpopuli.kz/img/article/117/60_mid.jpg", "http://www.voxpopuli.kz/img/article/117/60_mid.jpg",
+//                "17 февраля 2015 г. состоялось очередное заседание медиа-клуба, посвященное результатам деятельности Бургер Кинг® в Казахстане за 2014 г., а также дальнейшим планам Компании по завоеванию рынка в условиях ужесточения конкуренции.",
+//                "19 февраля, 2015", "20", "10");
+//        pn.setArticle(article);
         List<Content> cont = new ArrayList<Content>();
         Content c = new Content();
         c.setType("txt");
@@ -129,22 +134,22 @@ public class NewsPageFragment extends BaseFragment {
 
         List<Article> similar = new ArrayList<Article>();
 
-        Article ar = new Article("281", "Белый цвет надежды", "http://www.voxpopuli.kz/img/article/117/99_tn.jpg",
-                "http://www.voxpopuli.kz/img/article/117/99_tn.jpg", "http://www.voxpopuli.kz/img/article/117/99_tn.jpg",
-                "",
-                "26 февраля 14:00", "20", "10");
-        similar.add(ar);
-        ar = new Article("281", "Pictor – бизнес на живописи", "http://www.voxpopuli.kz/img/article/117/87_tn.jpg",
-                "http://www.voxpopuli.kz/img/article/117/87_tn.jpg", "http://www.voxpopuli.kz/img/article/117/87_tn.jpg",
-                "",
-                "24 февраля 14:00", "50", "7");
-        similar.add(ar);
-        ar = new Article("281", "BeSmart – бизнес на скидках", "http://www.voxpopuli.kz/img/article/117/74_tn.jpg",
-                "http://www.voxpopuli.kz/img/article/117/74_tn.jpg", "http://www.voxpopuli.kz/img/article/117/74_tn.jpg",
-                "",
-                "20 марта 15:00", "120", "17");
-        similar.add(ar);
-        pn.setSimilar(similar);
+//        Article ar = new Article("281", "Белый цвет надежды", "http://www.voxpopuli.kz/img/article/117/99_tn.jpg",
+//                "http://www.voxpopuli.kz/img/article/117/99_tn.jpg", "http://www.voxpopuli.kz/img/article/117/99_tn.jpg",
+//                "",
+//                "26 февраля 14:00", "20", "10");
+//        similar.add(ar);
+//        ar = new Article("281", "Pictor – бизнес на живописи", "http://www.voxpopuli.kz/img/article/117/87_tn.jpg",
+//                "http://www.voxpopuli.kz/img/article/117/87_tn.jpg", "http://www.voxpopuli.kz/img/article/117/87_tn.jpg",
+//                "",
+//                "24 февраля 14:00", "50", "7");
+//        similar.add(ar);
+//        ar = new Article("281", "BeSmart – бизнес на скидках", "http://www.voxpopuli.kz/img/article/117/74_tn.jpg",
+//                "http://www.voxpopuli.kz/img/article/117/74_tn.jpg", "http://www.voxpopuli.kz/img/article/117/74_tn.jpg",
+//                "",
+//                "20 марта 15:00", "120", "17");
+//        similar.add(ar);
+//        pn.setSimilar(similar);
     }
 
     @Override

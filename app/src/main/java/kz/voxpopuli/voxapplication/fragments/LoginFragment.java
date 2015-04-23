@@ -20,7 +20,6 @@ import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.github.gorbin.asne.vk.VkSocialNetwork;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -81,6 +80,7 @@ public class LoginFragment extends BaseFragment {
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
+        socialNetworkUtils.disconectConnectedNetworks();
     }
 
     @Override
@@ -173,6 +173,11 @@ public class LoginFragment extends BaseFragment {
         UserInfoTools.saveUserAvatarUrl(getActivity(), data.getUserData().getAvatar());
         UserInfoTools.saveUserLogin(getActivity(), loginInput.getText().toString());
         UserInfoTools.saveUserPassword(getActivity(), passwordInput.getText().toString());
+        UserInfoTools.saveUserId(getActivity(), data.getUserData().getId());
+        UserInfoTools.saveUserFirstName(getActivity(), data.getUserData().getNick());
+
+        ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
+                null);
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {

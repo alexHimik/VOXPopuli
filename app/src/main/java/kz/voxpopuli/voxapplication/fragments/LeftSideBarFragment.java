@@ -1,5 +1,6 @@
 package kz.voxpopuli.voxapplication.fragments;
 
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.events.UserDataClearedEvent;
 import kz.voxpopuli.voxapplication.model.rows.IRowItemModel;
 import kz.voxpopuli.voxapplication.model.rows.RubricRowItem;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
@@ -77,6 +79,7 @@ public class LeftSideBarFragment extends Fragment {
             builder.append(" ");
             builder.append(UserInfoTools.getUserLastName(getActivity()));
             userName.setText(builder.toString());
+            userAvatar.setOnClickListener(clickListener);
         } else {
             userName.setOnClickListener(clickListener);
         }
@@ -113,6 +116,17 @@ public class LeftSideBarFragment extends Fragment {
         categoryHelper.selectCategory(R.id.left_bar_category_all);
     }
 
+    public void onEvent(UserDataClearedEvent clearedEvent) {
+        bluredBackImage.setBackgroundDrawable(
+                new ColorDrawable(getResources().getColor(R.color.vox_red)));
+        bluredBackImage.refreshDrawableState();
+        userAvatar.setBackgroundResource(R.drawable.vox_upic_sidebar);
+        userAvatar.refreshDrawableState();
+        userAvatar.setOnClickListener(null);
+        userName.setOnClickListener(clickListener);
+        userName.setText(getString(R.string.default_user_name_stub));
+    }
+
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -123,8 +137,11 @@ public class LeftSideBarFragment extends Fragment {
                 MainActivity activity = (MainActivity)getActivity();
                 activity.togleLeftDrawer();
                 activity.handleFragmentSwitching(SettingsFragment.FRAGMENT_ID, null);
+            } else if(v.getId() == R.id.left_bar_user_avatar) {
+                ((MainActivity)getActivity()).togleLeftDrawer();
+                ((MainActivity)getActivity()).handleFragmentSwitching(
+                        UserProfileFragment.FRAGMENT_ID, null);
             }
-
         }
     };
 }

@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import com.devspark.robototextview.widget.RobotoTextView;
 
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.tools.UserInfoTools;
 
 /**
  * Created by user on 21.04.15.
@@ -71,6 +73,14 @@ public class SettingsFragment extends BaseFragment {
         aboutPlace.setOnClickListener(clickListener);
         rulesPlace.setOnClickListener(clickListener);
         vacancyPlace.setOnClickListener(clickListener);
+
+        if(UserInfoTools.isUserLoggedIn(getActivity())) {
+            ((RobotoTextView)enterPlace.getChildAt(0)).setText(
+                    getString(R.string.settings_profile_edit_profile));
+            RobotoTextView text = ((RobotoTextView)registerPlace.getChildAt(0));
+            text.setTextColor(getResources().getColor(R.color.vox_red));
+            text.setText(getString(R.string.settings_profile_logout));
+        }
     }
 
     @Override
@@ -88,7 +98,37 @@ public class SettingsFragment extends BaseFragment {
         public void onClick(View v) {
             if(v.getId() == R.id.left_drawer_item) {
                 getActivity().onBackPressed();
+            } else if(v.getId() == R.id.settings_enter_place) {
+                if(UserInfoTools.isUserLoggedIn(getActivity())) {
+                    ((MainActivity)getActivity()).handleFragmentSwitching(
+                            EditUserProfileFragment.FRAGMENT_ID, null);
+                } else {
+                    ((MainActivity)getActivity()).handleFragmentSwitching(LoginFragment.FRAGMENT_ID,
+                            null);
+                }
+            } else if(v.getId() == R.id.settings_register_place) {
+                if(UserInfoTools.isUserLoggedIn(getActivity())) {
+                    clearUserData();
+                    ((ActionBarActivity)getActivity()).getSupportFragmentManager().popBackStack();
+                    ((MainActivity)getActivity()).handleFragmentSwitching(
+                            SettingsFragment.FRAGMENT_ID, null);
+                } else {
+                    ((MainActivity)getActivity()).handleFragmentSwitching(
+                            RegistrationFragment.FRAGMENT_ID, null);
+                }
+            } else if(v.getId() == R.id.settings_version_place) {
+
+            } else if(v.getId() == R.id.settings_about_place) {
+
+            } else if(v.getId() == R.id.settings_rules_place) {
+
+            } else if(v.getId() == R.id.settings_vacancy_place) {
+
             }
         }
     };
+
+    private void clearUserData() {
+        UserInfoTools.clearUserData(getActivity());
+    }
 }

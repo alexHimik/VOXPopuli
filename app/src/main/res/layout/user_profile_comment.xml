@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/comment_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/gray_info_text.size_14sp"
+        android:layout_marginLeft="@dimen/login_page_side_padding"
+        android:layout_marginRight="@dimen/login_page_side_padding"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
+        android:layout_marginTop="@dimen/profile_comment_upper_margin"
+        android:layout_marginBottom="@dimen/profile_comment_date_bottom_margin"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/comment_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/user_profile_comment_body"
+        android:layout_marginLeft="@dimen/login_page_side_padding"
+        android:layout_marginRight="@dimen/login_page_side_padding"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
+        android:layout_marginBottom="@dimen/profile_comment_body_bottom_margin"/>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/comment_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/user_profile_comment_theme"
+        android:layout_marginLeft="@dimen/login_page_side_padding"
+        android:layout_marginRight="@dimen/login_page_side_padding"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
+        android:layout_marginBottom="@dimen/profile_comment_bottom_margin"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/login_page_side_padding"
+        android:layout_marginRight="@dimen/login_page_side_padding"
+        android:background="@color/side_bar_divider_color">
+
+        </View>
+</LinearLayout>

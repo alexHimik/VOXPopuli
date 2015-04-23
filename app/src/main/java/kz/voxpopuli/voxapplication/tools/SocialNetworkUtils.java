@@ -90,7 +90,7 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     public void requestUserLogin(int socialNetworkId) {
         if(socialNetworkManager != null) {
             SocialNetwork network = socialNetworkManager.getSocialNetwork(socialNetworkId);
-            if(network != null) {
+            if(network != null && !network.isConnected()) {
                 network.requestLogin();
             }
         }
@@ -157,4 +157,12 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
             EventBus.getDefault().post(new ErrorEvent(errorMessage, socialNetworkID));
         }
     };
+
+    public void disconectConnectedNetworks() {
+        for (SocialNetwork socialNetwork : socialNetworkManager.getInitializedSocialNetworks()) {
+            if(socialNetwork.isConnected()) {
+                socialNetwork.logout();
+            }
+        }
+    }
 }

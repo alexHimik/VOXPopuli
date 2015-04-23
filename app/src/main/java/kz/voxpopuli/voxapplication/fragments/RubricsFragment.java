@@ -139,7 +139,11 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     private View.OnClickListener barClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((MainActivity)getActivity()).onClick(v);
+            if(v.getId() == R.id.right_drawer_item) {
+                ((MainActivity)getActivity()).onClick(v);
+//                ((MainActivity)getActivity()).getSupportFragmentManager().popBackStack();
+//                ((MainActivity)getActivity()).handleFragmentSwitching(SearchFragment.FRAGMENT_ID, null);
+            }
         }
     };
 }

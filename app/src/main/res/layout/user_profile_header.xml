@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="@dimen/header_image_height">
+    <ImageView
+        android:id="@+id/user_avatar_back"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_image_height"
+        android:scaleType="centerCrop"/>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/header_image_height"
+        android:layout_centerHorizontal="true">
+        <com.devspark.robototextview.widget.RobotoTextView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            style="@style/user_profile_name_style"
+            app:fontFamily="roboto"
+            app:textWeight="normal"
+            android:layout_marginBottom="@dimen/user_name_bottom_margin"
+            android:layout_marginTop="@dimen/user_name_upper_margin"/>
+
+        <ImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/white_circle_background_size"
+            android:layout_height="@dimen/white_circle_background_size"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/user_name"/>
+    </RelativeLayout>
+</RelativeLayout>

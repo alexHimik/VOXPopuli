@@ -185,6 +185,12 @@ public abstract class FadingActionBarHelperBase {
         }
     }
 
+    public void setActionBarAlfa() {
+        if(mActionBarBackgroundDrawable != null) {
+            mActionBarBackgroundDrawable.setAlpha(0);
+        }
+    }
+
     protected abstract int getActionBarHeight();
     protected abstract boolean isActionBarNull();
     protected abstract void setActionBarBackgroundDrawable(Drawable drawable);
