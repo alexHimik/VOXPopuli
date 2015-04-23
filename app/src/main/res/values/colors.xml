@@ -33,6 +33,8 @@
     <color name="news_color_test1">#ffc3ffb8</color>
     <color name="news_color_test2">#ffaecaff</color>
 
+    <!--Список комментариев-->
+    <color name="comm_bg">#fafafa</color>
 
     <color name="restore_password_dark_grey">#ff4c4c4c</color>
 </resources>

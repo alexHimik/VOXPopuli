@@ -70,6 +70,15 @@
     <dimen name="news_height_tag">32dp</dimen>
     <dimen name="news_height_gallery">158dp</dimen>
 
+    <!-- Список комментариев -->
+    <dimen name="com_size_img">40dp</dimen>
+    <dimen name="com_radius_img">20dp</dimen>
+    <dimen name="com_padding_img_lr">16dp</dimen>
+    <dimen name="com_padding_img_tb">8dp</dimen>
+    <dimen name="com_padding_line">36dp</dimen>
+    <dimen name="com_padd_img12">12dp</dimen>
+
+
     <!--search fragment items-->
     <dimen name="default_search_card_img_width">168dp</dimen>
     <dimen name="default_search_card_img_height">95dp</dimen>

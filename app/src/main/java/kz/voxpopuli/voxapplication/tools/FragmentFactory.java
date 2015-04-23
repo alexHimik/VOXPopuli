@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
+import kz.voxpopuli.voxapplication.fragments.CommentsListFragment;
 import kz.voxpopuli.voxapplication.fragments.ForgotPasswordFragment;
 import kz.voxpopuli.voxapplication.fragments.LoginFragment;
 import kz.voxpopuli.voxapplication.fragments.RegistrationFragment;
@@ -43,6 +44,9 @@ public class FragmentFactory {
             }
             case SettingsFragment.FRAGMENT_ID: {
                 return new SettingsFragment();
+            }
+            case CommentsListFragment.FRAGMENT_ID: {
+                return new CommentsListFragment();
             }
             default: {
                 return null;
