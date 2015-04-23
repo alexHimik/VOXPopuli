@@ -40,7 +40,9 @@ import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.ArticleContentRequest;
 import kz.voxpopuli.voxapplication.network.request.PageNewsRequest;
+import kz.voxpopuli.voxapplication.network.wrappers.article.ArticleDataWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
@@ -51,9 +53,12 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
     public static final String TAG = "NewsPageFragment";
     public static final int FRAGMENT_ID = 3;
 
+    public static final String ARTICLE_KEY = "article";
+
     public Context context;
     private LinearLayout ll;
     private Pnews pn = new Pnews();
+    private Article articleData;
 
     @Nullable
     @Override
@@ -61,6 +66,15 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
         context = getActivity().getApplicationContext();
         View parent = inflater.inflate(R.layout.news_page, container,false);
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
+
+        /**Дістаємо переданий об"єкт для того, щоб дізнатися айдішник статті*/
+        articleData = (Article)mArguments.getSerializable(ARTICLE_KEY);
+        /**Дістаємо айдішник і просімо у сервера данні для статті*/
+        if(articleData != null) {
+            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new ArticleContentRequest(articleData.getId(),
+                    (MainActivity)getActivity()));
+        }
+
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         int maxWidth = display.getWidth();
         formPnews();
@@ -202,6 +216,19 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
 
     public void onEvent(PageNewsWrapper wrapper) {
         pn = wrapper.getPnews();
+    }
+
+    /**Отримуємо розпаршені данні від сервера*/
+    public void onEvent(ArticleDataWrapper articleDataWrapper) {
+        articleDataWrapper.getArticle();
+        /**Потрібно буде змінити обертки під ті данні, що зараз приходять.
+         * Закоментовано отрімання данних, лишилося тільки Pnews привести до потрыбного вигляду */
+        /**З парсингом новини зараз біда. Треба правильно зформувати об"єкти для контента самої статті. Зараз авто-генерація не правильно щось розпарсила.*/
+//        pn.setArticle(articleDataWrapper.getArticle());
+//        pn.setContent(articleDataWrapper.getArticle().getContent());
+//        pn.setAuthor(articleDataWrapper.getArticle().getAuthors().get(0));
+//        pn.setTags(articleDataWrapper.getArticle().getTags());
+//        pn.setSimilar(articleDataWrapper.getArticle().getSimilar());
     }
 
     @Override

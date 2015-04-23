@@ -8,6 +8,7 @@ public interface VoxProviderUrls {
     public static final String RUBRIC_ID_IDENTIFIER = "%rubricId%";
     public static final String RUBRIC_PAGE_IDENTIFIER = "%page%";
     public static final String USER_ID_IDENTIFIER = "%userId%";
+    public static final String NEW_IDENTIFIER = "%newId%";
 
     public static final String SALT = "VoxPopuli_API_SaLt_%#@$";
 
@@ -17,5 +18,6 @@ public interface VoxProviderUrls {
     public static final String SEARCH_REQUEST = "http://www.voxpopuli.kz/api/search.json";
     public static final String SIGN_IN_REQUEST = "http://www.voxpopuli.kz/api/sign_in.json";
     public static final String USER_COMMENTS_REQUEST = "http://www.voxpopuli.kz/api/user/%userId%.json";
+    public static final String NEWS_PAGE_DATA_REQUEST = "http://www.voxpopuli.kz/api/news/%newId%.json";
 
 }

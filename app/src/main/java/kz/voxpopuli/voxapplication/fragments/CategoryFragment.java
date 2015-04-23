@@ -78,7 +78,11 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Article artice = articlesAdapter.getItem(position);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(NewsPageFragment.ARTICLE_KEY, artice);
+        ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+                bundle);
     }
 
     @Override
