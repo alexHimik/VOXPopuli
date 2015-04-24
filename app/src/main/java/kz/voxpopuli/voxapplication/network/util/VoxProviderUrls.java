@@ -19,5 +19,6 @@ public interface VoxProviderUrls {
     public static final String SIGN_IN_REQUEST = "http://www.voxpopuli.kz/api/sign_in.json";
     public static final String USER_COMMENTS_REQUEST = "http://www.voxpopuli.kz/api/user/%userId%.json";
     public static final String NEWS_PAGE_DATA_REQUEST = "http://www.voxpopuli.kz/api/news/%newId%.json";
-
+    public static final String USER_DATA_EDIT_REQUEST = "http://www.voxpopuli.kz/api/edit.json";
+    public static final String SIGN_UP_USER_REQUEST = "http://www.voxpopuli.kz/api/sign_up.json";
 }

@@ -1,13 +1,16 @@
 package kz.voxpopuli.voxapplication.network.wrappers.article;
 
-/**
- * Created by user on 23.04.15.
- */
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Created by user on 23.04.15.
+ */
 public class Datum {
 
+
+    @Expose
+    private String type;
     @Expose
     private String title;
     @Expose
