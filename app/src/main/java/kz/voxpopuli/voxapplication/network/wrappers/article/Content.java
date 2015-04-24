@@ -12,7 +12,7 @@ public class Content {
     @Expose
     private String type;
     @Expose
-    private List<Datum> data = new ArrayList<Datum>();
+    private List<String> data = new ArrayList<String>();
     @Expose
     private String url;
     @Expose
@@ -50,7 +50,7 @@ public class Content {
      * @return
      * The data
      */
-    public List<Datum> getData() {
+    public List<String> getData() {
         return data;
     }
 
@@ -59,11 +59,11 @@ public class Content {
      * @param data
      * The data
      */
-    public void setData(List<Datum> data) {
+    public void setData(List<String> data) {
         this.data = data;
     }
 
-    public Content withData(List<Datum> data) {
+    public Content withData(List<String> data) {
         this.data = data;
         return this;
     }
