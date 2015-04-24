@@ -26,46 +26,49 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
-import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
-import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
-import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
-import kz.voxpopuli.voxapplication.network.wrappers.pnews.NewsTag;
-import kz.voxpopuli.voxapplication.network.wrappers.pnews.Pnews;
+import kz.voxpopuli.voxapplication.network.wrappers.article.Article;
+import kz.voxpopuli.voxapplication.network.wrappers.article.Author;
+import kz.voxpopuli.voxapplication.network.wrappers.article.Similar;
+import kz.voxpopuli.voxapplication.network.wrappers.article.Tag;
+//import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
+//import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
+//import kz.voxpopuli.voxapplication.network.wrappers.pnews.NewsTag;
+//import kz.voxpopuli.voxapplication.network.wrappers.pnews.Pnews;
 
 public class FormNewsPage implements Response.ErrorListener, View.OnClickListener {
     int maxWidth;
     LinearLayout ll;
-    Pnews pn;
+    Article pn;
     Context context;
     View parent;
     public ViewGroup.LayoutParams lpWrap;
     private MediaController mediaControls;
 
-    public FormNewsPage(Context cont, Pnews p, LinearLayout l, View parent, int mWidth){
+    public FormNewsPage(Context cont, Article articleData, LinearLayout l, View parent, int mWidth){
         maxWidth = mWidth - ((int) parent.getResources().getDimension(R.dimen.news_padding_txt))*2;
         ll = l;
-        pn = p;
+        pn = articleData;
         context = cont;
         this.parent = parent;
     }
 
     public void setNewsPage(){
         lpWrap = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        ImageView iv = (ImageView) parent.findViewById(R.id.imageView);
+        Glide.with(context).load(pn.getImageMid()).into(iv);
         setArticle();
-        setContent();
-        setAuthor(pn.getAuthor());
-//        ll.addView(setAuthor(pn.getAuthor()));
-        setTags(ll,pn.getTags());
-        setSimilar(pn.getSimilar());
-        setBottom(pn.getArticle().getCommentsAmount());
-
+//        setContent();
+//        setAuthors(pn.getAuthors());
+//        setTags(ll,pn.getTags());
+//        setSimilar(pn.getSimilar());
+//        setBottom(pn.getCommentsAmount());
     }
 
     @Override
     public void onClick(View v) {
         String classV = v.getClass().getName();
         if (classV.indexOf("TextView")>0) {
-            List<NewsTag> tags = pn.getTags();
+            List<Tag> tags = pn.getTags();
             TextView t = (TextView)v;
             String tag = t.getText().toString();
             String id = "";
@@ -85,22 +88,22 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     }
 
     public void setArticle(){
-        Article article = pn.getArticle();
+//        Article article = pn.getArticle();
         ImageView iv = (ImageView)parent.findViewById(R.id.imv);
         TextView title = (TextView)parent.findViewById(R.id.title);
-        Glide.with(context).load(article.getImageMid()).into(iv);
-        title.setText(article.getTitle());
+        Glide.with(context).load(pn.getImageMid()).into(iv);
+        title.setText(pn.getTitle());
         TextView descr = (TextView)parent.findViewById(R.id.descr);
-        descr.setText(article.getDescription());
+        descr.setText(pn.getDescription());
         TextView date = (TextView)parent.findViewById(R.id.date);
-        date.setText(article.getPostDate());
+        date.setText(pn.getPostDate());
         TextView v = (TextView)parent.findViewById(R.id.txt_views);
-        v.setText(article.getViwed());
+        v.setText(pn.getViwed());
         TextView com = (TextView)parent.findViewById(R.id.txt_comment);
-        com.setText(article.getCommentsAmount());
+        com.setText(pn.getCommentsAmount());
     }
 
-    public void setTags(LinearLayout linerL, List<NewsTag> tag){
+    public void setTags(LinearLayout linerL, List<Tag> tag){
         int width, widthAll;
         ViewGroup.LayoutParams lpWMW = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams lpM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -160,7 +163,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         return line1;
     }
 
-
+/*
      public void setContent(){
         List<Content> content = pn.getContent();
         int iMax = content.size();
@@ -389,6 +392,10 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         return author;
     }
 
+    public void setAuthors(List<Author> a){
+
+    }
+
     public void setAuthor(Author a){
         View view = ((LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.news_author, null);
@@ -404,7 +411,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     }
 
 
-    public void setSimilar(List<Article> s){
+    public void setSimilar(List<Similar> s){
         TextView tv = new TextView(context);
         tv.setText("Материал по теме");
         tv.setLayoutParams(lpWrap);
@@ -486,6 +493,8 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         v.addView(myVideoView);
         return v;
     }
+
+*/
 
     @Override
     public void onErrorResponse(VolleyError error) {

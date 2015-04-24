@@ -1,9 +1,11 @@
 package kz.voxpopuli.voxapplication.network.wrappers.article;
 
+/**
+ * Created by user on 23.04.15.
+ */
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
-
 
 public class Content {
 
@@ -12,9 +14,13 @@ public class Content {
     @Expose
     private List<String> data = new ArrayList<String>();
     @Expose
+    private String url;
+    @Expose
     private String title;
     @Expose
     private String author;
+    @Expose
+    private String code;
 
     /**
      *
@@ -65,6 +71,29 @@ public class Content {
     /**
      *
      * @return
+     * The url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     *
+     * @param url
+     * The url
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Content withUrl(String url) {
+        this.url = url;
+        return this;
+    }
+
+    /**
+     *
+     * @return
      * The title
      */
     public String getTitle() {
@@ -105,6 +134,29 @@ public class Content {
 
     public Content withAuthor(String author) {
         this.author = author;
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     * The code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     *
+     * @param code
+     * The code
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Content withCode(String code) {
+        this.code = code;
         return this;
     }
 
