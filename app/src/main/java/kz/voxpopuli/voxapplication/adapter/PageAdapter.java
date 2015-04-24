@@ -11,11 +11,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
+
 public class PageAdapter extends PagerAdapter {
     Context context;
-    String[] pages = null;
+    List<String> pages = null;
 
-    public PageAdapter(Context cont, String[] pages){
+    public PageAdapter(Context cont, List<String> pages){
         this.pages = pages;
         context = cont;
     }
@@ -25,7 +27,7 @@ public class PageAdapter extends PagerAdapter {
         ViewGroup.LayoutParams lpWrap = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         ImageView v = new ImageView(context);
         v.setLayoutParams(lpWrap);
-        Glide.with(context).load(pages[position]).into(v);
+        Glide.with(context).load(pages.get(position)).into(v);
         ((ViewPager) collection).addView(v, 0);
         return v;
     }
@@ -37,7 +39,7 @@ public class PageAdapter extends PagerAdapter {
 
     @Override
     public int getCount(){
-        return pages.length;
+        return pages.size();
     }
 
     @Override
@@ -63,6 +65,6 @@ public class PageAdapter extends PagerAdapter {
     }
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Фото  " + position + " из " + pages.length;
+        return "Фото  " + position + " из " + pages.size();
     }
 }
