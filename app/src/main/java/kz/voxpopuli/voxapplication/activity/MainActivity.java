@@ -57,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.vox_white)));
         initViews();
-        handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,null);
+//        handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,null);
 //        readImageBytes();
     }
 
@@ -221,6 +221,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onEvent(RubricSelectedEvent rubricSelectedEvent) {
         handleCategoryOrRubricSelection(RubricsFragment.FRAGMENT_ID,
                 RubricSelectedEvent.RUBRIC_DATA, rubricSelectedEvent);
+    }
+
+    public void onEventMainThread(ErrorEvent errorEvent) {
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog.setTitle("Error!");
+        errorDialog.setMessage(errorEvent.getMessage());
+        errorDialog.create().show();
+        Log.e("MianActivity", "Volley error -> " + errorEvent.getMessage());
     }
 
     /** error handler for network responses from the Volley */

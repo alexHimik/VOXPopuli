@@ -130,4 +130,17 @@
     <style name="action_bar_red_title.settings" parent="action_bar_red_title">
         <item name="android:textColor">@color/vox_red</item>
     </style>
+
+    <!--user profile-->
+    <style name="user_profile_name_style" parent="gray_info_text.size_14sp">
+        <item name="android:textColor">@color/vox_white</item>
+    </style>
+    <style name="user_profile_comment_body">
+        <item name="android:textColor">@color/news_color_text</item>
+        <item name="android:lineSpacingExtra">@dimen/profile_comment_body_line_spacing</item>
+        <item name="android:textSize">@dimen/profile_comment_body_text_size</item>
+    </style>
+    <style name="user_profile_comment_theme" parent="gray_info_text.size_14sp">
+        <item name="android:textColor">@color/vox_red</item>
+    </style>
 </resources>

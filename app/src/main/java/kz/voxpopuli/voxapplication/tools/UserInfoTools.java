@@ -3,6 +3,9 @@ package kz.voxpopuli.voxapplication.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import de.greenrobot.event.EventBus;
+import kz.voxpopuli.voxapplication.events.UserDataClearedEvent;
+
 /**
  * Created by user on 14.04.15.
  */
@@ -84,7 +87,12 @@ public class UserInfoTools {
     }
 
     public static boolean isUserLoggedIn(Context context) {
-        return getUserEmail(context) != null && getUserPassword(context) != null;
+        return getUserLogin(context) != null && getUserPassword(context) != null;
+    }
+
+    public static void clearUserData(Context context) {
+        getEditor(context).clear().commit();
+        EventBus.getDefault().post(new UserDataClearedEvent(true));
     }
 
     private static SharedPreferences getSharedPreferences(Context context) {

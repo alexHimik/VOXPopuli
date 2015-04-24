@@ -1,14 +1,11 @@
-package kz.voxpopuli.voxapplication.network.wrappers.mpage;
+package kz.voxpopuli.voxapplication.network.wrappers.article;
 
 /**
- * Created by user on 10.04.15.
+ * Created by user on 23.04.15.
  */
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class Article implements Serializable{
+public class Similar {
 
     @Expose
     private String id;
@@ -16,14 +13,6 @@ public class Article implements Serializable{
     private String title;
     @Expose
     private String image;
-    @SerializedName("image_mid")
-    @Expose
-    private String imageMid;
-    @SerializedName("image_big")
-    @Expose
-    private String imageBig;
-    @Expose
-    private String description;
     @Expose
     private String postDate;
     @Expose
@@ -49,6 +38,11 @@ public class Article implements Serializable{
         this.id = id;
     }
 
+    public Similar withId(String id) {
+        this.id = id;
+        return this;
+    }
+
     /**
      *
      * @return
@@ -65,6 +59,11 @@ public class Article implements Serializable{
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Similar withTitle(String title) {
+        this.title = title;
+        return this;
     }
 
     /**
@@ -85,58 +84,9 @@ public class Article implements Serializable{
         this.image = image;
     }
 
-    /**
-     *
-     * @return
-     * The imageMid
-     */
-    public String getImageMid() {
-        return imageMid;
-    }
-
-    /**
-     *
-     * @param imageMid
-     * The image_mid
-     */
-    public void setImageMid(String imageMid) {
-        this.imageMid = imageMid;
-    }
-
-    /**
-     *
-     * @return
-     * The imageBig
-     */
-    public String getImageBig() {
-        return imageBig;
-    }
-
-    /**
-     *
-     * @param imageBig
-     * The image_big
-     */
-    public void setImageBig(String imageBig) {
-        this.imageBig = imageBig;
-    }
-
-    /**
-     *
-     * @return
-     * The description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     *
-     * @param description
-     * The description
-     */
-    public void setDescription(String description) {
-        this.description = description;
+    public Similar withImage(String image) {
+        this.image = image;
+        return this;
     }
 
     /**
@@ -157,6 +107,11 @@ public class Article implements Serializable{
         this.postDate = postDate;
     }
 
+    public Similar withPostDate(String postDate) {
+        this.postDate = postDate;
+        return this;
+    }
+
     /**
      *
      * @return
@@ -175,6 +130,11 @@ public class Article implements Serializable{
         this.viwed = viwed;
     }
 
+    public Similar withViwed(String viwed) {
+        this.viwed = viwed;
+        return this;
+    }
+
     /**
      *
      * @return
@@ -191,6 +151,11 @@ public class Article implements Serializable{
      */
     public void setCommentsAmount(String commentsAmount) {
         this.commentsAmount = commentsAmount;
+    }
+
+    public Similar withCommentsAmount(String commentsAmount) {
+        this.commentsAmount = commentsAmount;
+        return this;
     }
 
 }

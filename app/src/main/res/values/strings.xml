@@ -26,9 +26,10 @@
     <string name="login_screen_header_text">Вход</string>
     <string name="password_restore_screen_header_text">Восстановление</string>
     <string name="registration_screen_header_text">Регистрация</string>
+    <string name="edit_profile_screen_header_text">Редактирование</string>
 
     <string name="search_bar_input_hint">Поиск</string>
-
+    <string name="user_comments_text">Комментарии</string>
     <string name="most_popular">Самые обсуждаемые</string>
     <string name="login_hint">Логин</string>
     <string name="password_hint">Пароль</string>
@@ -39,6 +40,7 @@
     <string name="registration_via_social">Регистрация через соцсети</string>
     <string name="user_name_hint">Имя</string>
     <string name="user_surname_hint">Фамилия</string>
+    <string name="user_nick_hint">Никнейм</string>
     <string name="restore_password_hint">E-mail</string>
     <string name="restore_password_info_text">Введите ваш адресс электронной почты. \nСистема вышлет на него новый пароль.</string>
 
@@ -52,4 +54,6 @@
     <string name="settings_info_about">О проекте</string>
     <string name="settings_info_rules">Правила</string>
     <string name="settings_info_vacancy">Вакансии</string>
+
+    <string name="edit_profile_change_passw_text">Изменить пароль</string>
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/comments_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/login_page_side_padding"
+        android:layout_marginRight="@dimen/login_page_side_padding"
+        android:layout_marginTop="@dimen/create_account_btn_margin"
+        style="@style/dark_grey_info_text"
+        android:textColor="@color/color_text_title_white"
+        app:fontFamily="roboto"
+        app:textWeight="normal"
+        android:layout_marginBottom="@dimen/profile_comment_first_bottom_margin"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/login_page_side_padding"
+        android:layout_marginRight="@dimen/login_page_side_padding"
+        android:background="@color/side_bar_divider_color">
+
+    </View>
+</LinearLayout>

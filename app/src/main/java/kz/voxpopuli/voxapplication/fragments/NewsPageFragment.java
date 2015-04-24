@@ -1,8 +1,16 @@
 package kz.voxpopuli.voxapplication.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +19,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.VideoView;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +40,9 @@ import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.ArticleContentRequest;
 import kz.voxpopuli.voxapplication.network.request.PageNewsRequest;
+import kz.voxpopuli.voxapplication.network.wrappers.article.ArticleDataWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
@@ -34,9 +54,12 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
     public static final String TAG = "NewsPageFragment";
     public static final int FRAGMENT_ID = 3;
 
+    public static final String ARTICLE_KEY = "article";
+
     public Context context;
     private LinearLayout ll;
     private Pnews pn = new Pnews();
+    private Article articleData;
 
     @Nullable
     @Override
@@ -44,6 +67,15 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
         context = getActivity().getApplicationContext();
         View parent = inflater.inflate(R.layout.news_page, container,false);
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
+
+        /**Дістаємо переданий об"єкт для того, щоб дізнатися айдішник статті*/
+        articleData = (Article)mArguments.getSerializable(ARTICLE_KEY);
+        /**Дістаємо айдішник і просімо у сервера данні для статті*/
+        if(articleData != null) {
+            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new ArticleContentRequest(articleData.getId(),
+                    (MainActivity)getActivity()));
+        }
+
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         int maxWidth = display.getWidth();
         formPnews();
@@ -227,6 +259,19 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
 
     public void onEvent(PageNewsWrapper wrapper) {
         pn = wrapper.getPnews();
+    }
+
+    /**Отримуємо розпаршені данні від сервера*/
+    public void onEvent(ArticleDataWrapper articleDataWrapper) {
+        articleDataWrapper.getArticle();
+        /**Потрібно буде змінити обертки під ті данні, що зараз приходять.
+         * Закоментовано отрімання данних, лишилося тільки Pnews привести до потрыбного вигляду */
+        /**З парсингом новини зараз біда. Треба правильно зформувати об"єкти для контента самої статті. Зараз авто-генерація не правильно щось розпарсила.*/
+//        pn.setArticle(articleDataWrapper.getArticle());
+//        pn.setContent(articleDataWrapper.getArticle().getContent());
+//        pn.setAuthor(articleDataWrapper.getArticle().getAuthors().get(0));
+//        pn.setTags(articleDataWrapper.getArticle().getTags());
+//        pn.setSimilar(articleDataWrapper.getArticle().getSimilar());
     }
 
     @Override

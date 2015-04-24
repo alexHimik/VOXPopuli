@@ -121,4 +121,27 @@
     <dimen name="settings_profile_section_top_margin">16dp</dimen>
     <dimen name="settings_item_height">56dp</dimen>
     <dimen name="settings_item_text_upper_margin">20dp</dimen>
+
+    <!--user profile-->
+    <dimen name="white_circle_background_size">96dp</dimen>
+    <dimen name="circle_avatar_size">92dp</dimen>
+    <dimen name="header_image_height">180dp</dimen>
+    <dimen name="user_name_bottom_margin">32dp</dimen>
+    <dimen name="user_name_upper_margin">16dp</dimen>
+    <dimen name="profile_comment_first_bottom_margin">16dp</dimen>
+    <dimen name="profile_comment_upper_margin">22dp</dimen>
+    <dimen name="profile_comment_bottom_margin">24dp</dimen>
+    <dimen name="profile_comment_date_bottom_margin">12dp</dimen>
+    <dimen name="profile_comment_body_bottom_margin">14dp</dimen>
+
+    <dimen name="profile_comment_body_line_spacing">8sp</dimen>
+    <dimen name="profile_comment_body_text_size">14sp</dimen>
+
+    <dimen name="profile_edit_avatar_block_bottom_margin">22dp</dimen>
+    <dimen name="profile_edit_avatar_block_upper_margin">18dp</dimen>
+    <dimen name="profile_edit_first_input_top_margin">12dp</dimen>
+    <dimen name="profile_edit_input_top_margin">20dp</dimen>
+    <dimen name="profile_edit_last_input_bottom_margin">56dp</dimen>
+    <dimen name="profile_edit_change_passw_img_margin">16dp</dimen>
+    <dimen name="profile_edit_change_passw_text_margin">72dp</dimen>
 </resources>
