@@ -30,6 +30,7 @@ import java.io.Serializable;
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
+import kz.voxpopuli.voxapplication.events.ErrorEvent;
 import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
 import kz.voxpopuli.voxapplication.fragments.BackStackDataDescriber;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
