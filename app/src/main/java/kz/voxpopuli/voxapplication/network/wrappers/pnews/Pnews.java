@@ -13,7 +13,7 @@ public class Pnews {
     @Expose
     private List<Content> content = new ArrayList<Content>();
     @Expose
-    private String tags;
+    private List<NewsTag> tags = new ArrayList<NewsTag>();
     @Expose
     private Author author;
     @Expose
@@ -70,7 +70,7 @@ public class Pnews {
      * @return
      * The tags
      */
-    public String getTags() {
+    public List<NewsTag> getTags() {
         return tags;
     }
 
@@ -79,11 +79,11 @@ public class Pnews {
      * @param tags
      * The tags
      */
-    public void setTags(String tags) {
+    public void setTags(List<NewsTag> tags) {
         this.tags = tags;
     }
 
-    public Pnews withTags(String tags) {
+    public Pnews withTags(List<NewsTag> tags) {
         this.tags = tags;
         return this;
     }

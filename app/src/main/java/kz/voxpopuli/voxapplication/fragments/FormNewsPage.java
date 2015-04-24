@@ -3,6 +3,7 @@ package kz.voxpopuli.voxapplication.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -28,6 +29,7 @@ import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
+import kz.voxpopuli.voxapplication.network.wrappers.pnews.NewsTag;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Pnews;
 
 public class FormNewsPage implements Response.ErrorListener, View.OnClickListener {
@@ -61,7 +63,25 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        TextView t = (TextView)v;
+        String classV = v.getClass().getName();
+        if (classV.indexOf("TextView")>0) {
+            List<NewsTag> tags = pn.getTags();
+            TextView t = (TextView)v;
+            String tag = t.getText().toString();
+            String id = "";
+            for (int i = 0; i<tags.size(); i++){
+                if (tag.equals(tags.get(i).getTitle())) {
+                    id = tags.get(i).getId();
+                    break;
+                }
+            }
+
+            Log.d("TAG","TAG="+t.getText()+" ID="+id);
+        }
+        else {
+            TextView tv = (TextView) v.findViewById(R.id.title_l);
+            Log.d("TAG","Article="+tv.getText());
+        }
     }
 
     public void setArticle(){
@@ -80,9 +100,8 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         com.setText(article.getCommentsAmount());
     }
 
-    public void setTags(LinearLayout linerL, String tag){
+    public void setTags(LinearLayout linerL, List<NewsTag> tag){
         int width, widthAll;
-        String [] tagArr = tag.split(",");
         ViewGroup.LayoutParams lpWMW = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams lpM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 (int)context.getResources().getDimension(R.dimen.news_height_tag));
@@ -104,10 +123,10 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         LinearLayout line = newLayout(context, lpWrap);
         lt.addView(line);
         widthAll = 0;
-        for (int i=0;i<tagArr.length;i++){
+        for (int i=0;i<tag.size();i++){
             TextView tv = new TextView(context);
             tv.setLayoutParams(lpM);
-            tv.setText(tagArr[i]);
+            tv.setText(tag.get(i).getTitle());
             tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
             tv.setBackgroundResource(R.drawable.tag_shape);
             tv.setTextAppearance(context, R.style.news_tag);
@@ -165,7 +184,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 
     public View setTitle(Content c){
         TextView tv = new TextView(context);
-        tv.setText(c.getData());
+        tv.setText(c.getData().get(0));
         tv.setLayoutParams(lpWrap);
         tv.setTextColor(context.getResources().getColor(R.color.news_color_title));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_title));
@@ -180,7 +199,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 
     public View setTxt(Content c){
         TextView tv = new TextView(context);
-        tv.setText(c.getData());
+        tv.setText(c.getData().get(0));
         tv.setLayoutParams(lpWrap);
         tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_text));
@@ -195,7 +214,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     public View setPhoto(Content c){
         ImageView iv = new ImageView(context);
         iv.setLayoutParams(lpWrap);
-        Glide.with(context).load(c.getData()).into(iv);
+        Glide.with(context).load(c.getData().get(0)).into(iv);
         LinearLayout lt = new LinearLayout(context);
         lt.setOrientation(LinearLayout.VERTICAL);
         int pad = (int) context.getResources().getDimension(R.dimen.news_padding_img);
@@ -239,11 +258,12 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     }
 
     public View setGallery(Content c){
-        final String [] gal = c.getData().split(" ; ");
+//        final String [] gal = c.getData().split(" ; ");
+        final List<String> gal = c.getData();
         final TextView numPhoto = new TextView(context);
         numPhoto.setLayoutParams(lpWrap);
         numPhoto.setTextAppearance(context, R.style.photo_title);
-        numPhoto.setText("1 из "+gal.length);
+        numPhoto.setText("1 из "+gal.size());
         TextView txtGal = new TextView(context);
         txtGal.setLayoutParams(lpWrap);
         txtGal.setTextAppearance(context, R.style.title_gallery);
@@ -265,7 +285,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 
             @Override
             public void onPageSelected(int position) {
-                numPhoto.setText((position + 1) + " из " + gal.length);
+                numPhoto.setText((position + 1) + " из " + gal.size());
             }
 
             @Override
@@ -345,7 +365,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         int ind = (int) context.getResources().getDimension(R.dimen.news_pad_comment_t);
         b1.setPadding(ind, ind, 0, 0);
         TextView tvc = new TextView(context);
-        tvc.setText(c.getData());
+        tvc.setText(c.getData().get(0));
         tvc.setLayoutParams(lpWrap);
         tvc.setTextAppearance(context, R.style.comment);
         b1.addView(tvc);
@@ -415,6 +435,8 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 
         View view = ((LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
+        view.setClickable(true);
+        view.setOnClickListener(this);
         iv = (ImageView) view.findViewById(R.id.imv_l);
         title = (TextView) view.findViewById(R.id.title_l);
         date = (TextView) view.findViewById(R.id.date_l);
@@ -449,7 +471,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 //        v.addView(lt);
 
         VideoView myVideoView = new VideoView(context);
-        myVideoView.setVideoURI(Uri.parse(c.getData()));
+        myVideoView.setVideoURI(Uri.parse(c.getData().get(0)));
         if (mediaControls == null) {
             mediaControls = new MediaController(context);
         }

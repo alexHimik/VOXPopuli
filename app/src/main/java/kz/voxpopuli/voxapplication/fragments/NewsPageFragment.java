@@ -26,6 +26,7 @@ import kz.voxpopuli.voxapplication.network.request.PageNewsRequest;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
+import kz.voxpopuli.voxapplication.network.wrappers.pnews.NewsTag;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.PageNewsWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.pnews.Pnews;
 
@@ -78,46 +79,65 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
         article.setCommentsAmount("10");
         pn.setArticle(article);
         List<Content> cont = new ArrayList<Content>();
+        List<String> ls;
         Content c = new Content();
         c.setType("txt");
-        c.setData("В 2014 г. чистый оборот компании составил более 10 млн. долларов. В течение 2014 г. Компанией было открыто 10 новых ресторанов и фуд-кортов, включая первый ресторан «Автоэкспресс», 2 фуд-корта и 2 ресторана в Алматы. В Астане свои двери открыли 1 фуд-корт и 2 ресторана, на западе Казахстана, в г. Актобе свою операционную деятельность начал 1 фуд-корт, а в г. Актау - ресторан.");
+        ls = new ArrayList<String>();
+        ls.add("В 2014 г. чистый оборот компании составил более 10 млн. долларов. В течение 2014 г. Компанией было открыто 10 новых ресторанов и фуд-кортов, включая первый ресторан «Автоэкспресс», 2 фуд-корта и 2 ресторана в Алматы. В Астане свои двери открыли 1 фуд-корт и 2 ресторана, на западе Казахстана, в г. Актобе свою операционную деятельность начал 1 фуд-корт, а в г. Актау - ресторан.");
+        c.setData(ls);
         cont.add(c);
         c = new Content();
         c.setType("title");
-        c.setData("Слово руководству");
+        ls = new ArrayList<String>();
+        ls.add("Слово руководству");
+        c.setData(ls);
         cont.add(c);
         c = new Content();
         c.setType("txt");
-        c.setData("«В 2015 г. мы планируем открытие еще 10 ресторанов и фуд-кортов, 5 из которых в данный момент находятся в стадии строительства, в том числе 4 ресторана «Автоэкспресс», что позволит создать  более 140 новых рабочих мест», – поделился г-н Нашед.");
+        ls = new ArrayList<String>();
+        ls.add("«В 2015 г. мы планируем открытие еще 10 ресторанов и фуд-кортов, 5 из которых в данный момент находятся в стадии строительства, в том числе 4 ресторана «Автоэкспресс», что позволит создать  более 140 новых рабочих мест», – поделился г-н Нашед.");
+        c.setData(ls);
         cont.add(c);
         c = new Content();
         c.setType("Photo");
-        c.setData("http://www.voxpopuli.kz/img/inner/117/60/btt_2119_01.jpg");
+        ls = new ArrayList<String>();
+        ls.add("http://www.voxpopuli.kz/img/inner/117/60/btt_2119_01.jpg");
+        c.setData(ls);
         c.setTitle("Самир Нашед говорит в микрофон");
         c.setAuthor("Фото: Тимур Батыршин");
         cont.add(c);
         c = new Content();
         c.setType("txt");
-        c.setData("«На рынке фаст-фуда McDonald’s исторически был нашим главным конкурентом в сегменте бургеров. Начиная с 1950-ых годов до нынешнего времени, McDonald’s и Burger King удалось полностью стандартизировать операции. Сегодня обе компании по праву считаются одними из крупнейших сетей бургеров в мире.  Приход такого крупного бренда, как McDonald’s, безусловно, увеличит конкуренцию на рынке, предлагая более широкий выбор и разнообразие продуктов для клиентов.");
+        ls = new ArrayList<String>();
+        ls.add("«На рынке фаст-фуда McDonald’s исторически был нашим главным конкурентом в сегменте бургеров. Начиная с 1950-ых годов до нынешнего времени, McDonald’s и Burger King удалось полностью стандартизировать операции. Сегодня обе компании по праву считаются одними из крупнейших сетей бургеров в мире.  Приход такого крупного бренда, как McDonald’s, безусловно, увеличит конкуренцию на рынке, предлагая более широкий выбор и разнообразие продуктов для клиентов.");
+        c.setData(ls);
         cont.add(c);
         c = new Content();
         c.setType("Gallery");
-        c.setData("http://www.voxpopuli.kz/img/article/118/18_mid.jpg ; http://www.voxpopuli.kz/img/article/118/35_mid.jpg ; " +
-                "http://www.voxpopuli.kz/img/article/118/78_mid.jpg ; http://www.voxpopuli.kz/img/article/119/0_mid.jpg ; " +
-                "http://www.voxpopuli.kz/img/article/117/3_mid.jpg");
+        ls = new ArrayList<String>();
+        ls.add("http://www.voxpopuli.kz/img/article/118/18_mid.jpg");
+        ls.add("http://www.voxpopuli.kz/img/article/118/35_mid.jpg");
+        ls.add("http://www.voxpopuli.kz/img/article/118/78_mid.jpg");
+        ls.add("http://www.voxpopuli.kz/img/article/119/0_mid.jpg");
+        ls.add("http://www.voxpopuli.kz/img/article/117/3_mid.jpg");
+        c.setData(ls);
         c.setTitle("Результаты Бургер Кинг в Казахстане в 2014г.");
         c.setAuthor("");
         cont.add(c);
 
         c = new Content();
         c.setType("comment");
-        c.setData("В Казахстане Бургер Кинг® – первый международный бренд, который уже прошел этап становления, поэтому сейчас мы можем себе позволить сфокусироваться на совершенствовании сервиса для гостей в наших ресторанах, чтобы клиенты возвращались к нам снова и снова.");
+        ls = new ArrayList<String>();
+        ls.add("В Казахстане Бургер Кинг® – первый международный бренд, который уже прошел этап становления, поэтому сейчас мы можем себе позволить сфокусироваться на совершенствовании сервиса для гостей в наших ресторанах, чтобы клиенты возвращались к нам снова и снова.");
+        c.setData(ls);
         c.setTitle("Ануар Утемуратов");
         c.setAuthor("Представитель Бургер Кинг");
         cont.add(c);
         c = new Content();
         c.setType("txt");
-        c.setData("Бургер Кинг® тщательно контролирует качество своей продукции и очень тщательно относится к выбору поставщиков. Все поставщики имеют Сертификат Безопасности (Food safety Certificate), который утвержден GFSI (Global Food Safety Initiative).");
+        ls = new ArrayList<String>();
+        ls.add("Бургер Кинг® тщательно контролирует качество своей продукции и очень тщательно относится к выбору поставщиков. Все поставщики имеют Сертификат Безопасности (Food safety Certificate), который утвержден GFSI (Global Food Safety Initiative).");
+        c.setData(ls);
         cont.add(c);
 
         pn.setContent(cont);
@@ -127,7 +147,30 @@ public class NewsPageFragment extends FaddingTitleBaseFragment {
         a.setPost("Журналист");
         a.setAvatar("http://www.voxpopuli.kz/img/user/123/75_main.jpg");
         pn.setAuthor(a);
-        pn.setTags("Казахстан,Астана,Бургер Кинг,Байконур,Киев");
+
+        List<NewsTag> ta = new ArrayList<NewsTag>();
+        NewsTag nt = new NewsTag();
+        nt.setId("124");
+        nt.setTitle("Казахстан");
+        ta.add(nt);
+        nt = new NewsTag();
+        nt.setId("125");
+        nt.setTitle("Астана");
+        ta.add(nt);
+        nt = new NewsTag();
+        nt.setId("127");
+        nt.setTitle("Бургер Кинг");
+        ta.add(nt);
+        nt = new NewsTag();
+        nt.setId("128");
+        nt.setTitle("Байконур");
+        ta.add(nt);
+        nt = new NewsTag();
+        nt.setId("130");
+        nt.setTitle("Киев");
+        ta.add(nt);
+
+        pn.setTags(ta);
 
         List<Article> similar = new ArrayList<Article>();
 

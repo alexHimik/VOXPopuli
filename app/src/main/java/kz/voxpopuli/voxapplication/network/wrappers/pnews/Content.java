@@ -2,12 +2,14 @@ package kz.voxpopuli.voxapplication.network.wrappers.pnews;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 public class Content {
 
     @Expose
     private String type;
     @Expose
-    private String data;
+    private List<String> data;
     @Expose
     private String title;
     @Expose
@@ -41,7 +43,7 @@ public class Content {
      * @return
      * The data
      */
-    public String getData() {
+    public List<String> getData() {
         return data;
     }
 
@@ -50,11 +52,11 @@ public class Content {
      * @param data
      * The data
      */
-    public void setData(String data) {
+    public void setData(List<String> data) {
         this.data = data;
     }
 
-    public Content withData(String data) {
+    public Content withData(List<String> data) {
         this.data = data;
         return this;
     }

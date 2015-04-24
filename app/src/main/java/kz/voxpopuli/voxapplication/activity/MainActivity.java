@@ -34,6 +34,7 @@ import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
 import kz.voxpopuli.voxapplication.fragments.BackStackDataDescriber;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.CommentsListFragment;
+import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.SearchFragment;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
@@ -56,7 +57,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.vox_white)));
         initViews();
-        handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,null);
+        handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,null);
 //        readImageBytes();
     }
 

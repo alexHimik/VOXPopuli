@@ -7,6 +7,7 @@ import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.CommentsListFragment;
 import kz.voxpopuli.voxapplication.fragments.ForgotPasswordFragment;
 import kz.voxpopuli.voxapplication.fragments.LoginFragment;
+import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RegistrationFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.SearchFragment;
@@ -47,6 +48,9 @@ public class FragmentFactory {
             }
             case CommentsListFragment.FRAGMENT_ID: {
                 return new CommentsListFragment();
+            }
+            case NewsPageFragment.FRAGMENT_ID: {
+                return new NewsPageFragment();
             }
             default: {
                 return null;
