@@ -11,7 +11,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/lineLayout_1"
-        android:paddingTop="70dp">
+        android:paddingTop="70dp"
+        android:background="@color/news_color_white">
 
     </LinearLayout>
 </ScrollView>

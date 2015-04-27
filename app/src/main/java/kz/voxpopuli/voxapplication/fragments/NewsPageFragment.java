@@ -35,6 +35,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
+import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.ArticleContentRequest;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Article;
@@ -168,7 +169,12 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         String btn = id.substring(0,i);
         id = id.substring(i+1);
         if (btn.equals("tag")) {
-
+            Bundle bundle = new Bundle();
+            RubricSelectedEvent rs = new RubricSelectedEvent();
+            rs.setRubricId(Integer.parseInt(id));
+            bundle.putSerializable(RubricSelectedEvent.RUBRIC_DATA, rs);
+            ((MainActivity)getActivity()).handleFragmentSwitching(RubricsFragment.FRAGMENT_ID,
+                    bundle);
             return;
         }
         if (btn.equals("art")) {
@@ -179,7 +185,10 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
             return;
         }
         if (btn.equals("com")) {
-
+            Bundle bundle = new Bundle();
+            bundle.putString(NewsPageFragment.ARTICLE_KEY, id);
+            ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+                    bundle);
             return;
         }
         if (btn.equals("send")) {
@@ -275,7 +284,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
             tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
             tv.setBackgroundResource(R.drawable.tag_shape);
             tv.setTextAppearance(context, R.style.news_tag);
-            tv.setTag("tag;"+tag.get(i).getId());
+            tv.setTag("tag;" + tag.get(i).getId());
             tv.setClickable(true);
             tv.setOnClickListener(this);
             tv.measure(0, 0);
@@ -639,7 +648,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
         view.setClickable(true);
         view.setOnClickListener(this);
-        view.setTag("art;"+a.getId());
+        view.setTag("art;" + a.getId());
         iv = (ImageView) view.findViewById(R.id.imv_l);
         title = (TextView) view.findViewById(R.id.title_l);
         date = (TextView) view.findViewById(R.id.date_l);
