@@ -172,9 +172,10 @@ public class LoginFragment extends BaseFragment {
         UserInfoTools.saveUserLastName(getActivity(), data.getUserData().getLastName());
         UserInfoTools.saveUserAvatarUrl(getActivity(), data.getUserData().getAvatar());
         UserInfoTools.saveUserLogin(getActivity(), loginInput.getText().toString());
+        UserInfoTools.saveUserEmail(getActivity(),loginInput.getText().toString());
         UserInfoTools.saveUserPassword(getActivity(), passwordInput.getText().toString());
         UserInfoTools.saveUserId(getActivity(), data.getUserData().getId());
-        UserInfoTools.saveUserFirstName(getActivity(), data.getUserData().getNick());
+        UserInfoTools.saveUserNick(getActivity(), data.getUserData().getNick());
 
         ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
                 null);

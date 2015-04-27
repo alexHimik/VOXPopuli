@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
+import kz.voxpopuli.voxapplication.fragments.ChangePasswordFragment;
 import kz.voxpopuli.voxapplication.fragments.EditUserProfileFragment;
 import kz.voxpopuli.voxapplication.fragments.CommentsListFragment;
 import kz.voxpopuli.voxapplication.fragments.ForgotPasswordFragment;
@@ -59,6 +60,9 @@ public class FragmentFactory {
             }
             case NewsPageFragment.FRAGMENT_ID: {
                 return new NewsPageFragment();
+            }
+            case ChangePasswordFragment.FRAGMENT_ID: {
+                return new ChangePasswordFragment();
             }
             default: {
                 return null;
