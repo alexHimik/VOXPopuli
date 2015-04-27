@@ -163,42 +163,30 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
 
     @Override
     public void onClick(View v) {
-        String classV = v.getClass().getName();
-        if (classV.indexOf("TextView")>0) {
-            List<Tag> tags = pn.getTags();
-            TextView t = (TextView)v;
-            String tag = t.getText().toString();
-            String id = "";
-            for (int i = 0; i<tags.size(); i++){
-                if (tag.equals(tags.get(i).getTitle())) {
-                    id = tags.get(i).getId();
-                    break;
-                }
-            }
+        String id = v.getTag().toString();
+        int i = id.indexOf(";");
+        String btn = id.substring(0,i);
+        id = id.substring(i+1);
+        if (btn.equals("tag")) {
 
-            Log.d("TAG", "TAG=" + t.getText() + " ID=" + id);
+            return;
         }
-        else {
-            TextView tv = (TextView) v.findViewById(R.id.title_l);
-            Log.d("TAG","Article="+tv.getText());
-//            reStart("11");
-
-
-            String tit = tv.getText().toString();
-            String id = "";
-            for (int i = 0; i<pn.getSimilar().size(); i++){
-                if (tit.equals(pn.getSimilar().get(i).getTitle())) {
-                    id = pn.getSimilar().get(i).getId();
-                    break;
-                }
-            }
-
-
+        if (btn.equals("art")) {
             Bundle bundle = new Bundle();
             bundle.putString(NewsPageFragment.ARTICLE_KEY, id);
             ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
                     bundle);
+            return;
         }
+        if (btn.equals("com")) {
+
+            return;
+        }
+        if (btn.equals("send")) {
+
+            return;
+        }
+
     }
 
     public void setArticle(){
@@ -287,7 +275,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
             tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
             tv.setBackgroundResource(R.drawable.tag_shape);
             tv.setTextAppearance(context, R.style.news_tag);
-
+            tv.setTag("tag;"+tag.get(i).getId());
             tv.setClickable(true);
             tv.setOnClickListener(this);
             tv.measure(0, 0);
@@ -305,23 +293,18 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public void setBottom(String com){
-//        RelativeLayout rl = new RelativeLayout(context);
-//        rl.setLayoutParams(lp_W_W);
-//        rl.setGravity(Gravity.CENTER_VERTICAL);
-//
-////        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
-////        rl.setPadding(padText, padText, padText, padText);
-//
-//        ImageView iv1 = new ImageView(context);
-//        ViewGroup.LayoutParams lp56 = new ViewGroup.LayoutParams((int)getResources().getDimension(R.dimen.news_height_img_com),
-//                (int)getResources().getDimension(R.dimen.news_height_img_com);
-//        iv1.setLayoutParams(lp56);
-//        iv1.setPadding(16, 16, 16, 16);
-//        iv1.setImageResource(R.drawable.vox_ic_red_comment);
-//        rl.addView(iv1);
+
         View v = ((LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_block, null);
         RobotoTextView rv = (RobotoTextView) v.findViewById(R.id.rt);
+        ImageView iv_com = (ImageView) v.findViewById(R.id.imv_com_b);
+        iv_com.setTag("com;"+pn.getId());
+        iv_com.setClickable(true);
+        iv_com.setOnClickListener(this);
+        ImageView iv_send = (ImageView) v.findViewById(R.id.send);
+        iv_send.setTag("send;"+pn.getId());
+        iv_send.setClickable(true);
+        iv_send.setOnClickListener(this);
         rv.setText(com + " комментариев");
         ll.addView(v);
     }
@@ -348,7 +331,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
 
     public View setV(Content c){
         String type = c.getType();
-        Log.d("QWERT","T="+type);
+//        Log.d("QWERT","T="+type);
         if (type.equals("title")) return setTitle(c);
         if (type.equals("txt")) return setTxt(c);
         if (type.equals("comment")) return setComment(c);
@@ -656,6 +639,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
         view.setClickable(true);
         view.setOnClickListener(this);
+        view.setTag("art;"+a.getId());
         iv = (ImageView) view.findViewById(R.id.imv_l);
         title = (TextView) view.findViewById(R.id.title_l);
         date = (TextView) view.findViewById(R.id.date_l);
