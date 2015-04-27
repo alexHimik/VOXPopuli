@@ -4,13 +4,95 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/social_dialog_margin"
-    android:layout_marginLeft="@dimen/social_dialog_margin">
+    android:layout_marginLeft="@dimen/social_dialog_margin"
+    android:padding="@dimen/social_dialog_inner_margin">
 
-    <com.devspark.robototextview.widget.RobotoTextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/social_share_dialog_title"
-        android:text="@string/social_dialog_title"
-        />
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="@dimen/social_dialog_item_bottom_margin"
+        android:gravity="center_vertical"
+        android:id="@+id/l_facebook">
+
+        <ImageView
+            android:layout_width="@dimen/social_dialog_item_diameter"
+            android:layout_height="@dimen/social_dialog_item_diameter"
+            android:src="@drawable/vox_social_sm_facebook" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/social_share_dialog_item"
+            android:text="@string/social_dialog_fb"
+            android:layout_marginLeft="@dimen/social_dialog_item_bottom_margin" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="@dimen/social_dialog_item_bottom_margin"
+        android:gravity="center_vertical"
+        android:id="@+id/l_tweeter">
+
+        <ImageView
+            android:layout_width="@dimen/social_dialog_item_diameter"
+            android:layout_height="@dimen/social_dialog_item_diameter"
+            android:src="@drawable/vox_social_sm_tweeter" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/social_share_dialog_item"
+            android:text="@string/social_dialog_tw"
+            android:layout_marginLeft="@dimen/social_dialog_item_bottom_margin" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="@dimen/social_dialog_item_bottom_margin"
+        android:gravity="center_vertical"
+        android:id="@+id/l_google">
+
+        <ImageView
+            android:layout_width="@dimen/social_dialog_item_diameter"
+            android:layout_height="@dimen/social_dialog_item_diameter"
+            android:src="@drawable/vox_social_sm_gplus" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/social_share_dialog_item"
+            android:layout_marginLeft="@dimen/social_dialog_item_bottom_margin"
+            android:text="@string/social_dialog_goo" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:id="@+id/l_vkontakt">
+
+        <ImageView
+            android:layout_width="@dimen/social_dialog_item_diameter"
+            android:layout_height="@dimen/social_dialog_item_diameter"
+            android:src="@drawable/vox_social_sm_vk" />
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/social_share_dialog_item"
+            android:text="@string/social_dialog_vkont"
+            android:layout_marginLeft="@dimen/social_dialog_item_bottom_margin" />
+
+    </LinearLayout>
 
 </LinearLayout>

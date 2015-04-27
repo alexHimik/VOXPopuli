@@ -1,6 +1,7 @@
 package kz.voxpopuli.voxapplication.fragments;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +21,9 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
-
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.app.DialogFragment;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
@@ -168,6 +171,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         int i = id.indexOf(";");
         String btn = id.substring(0,i);
         id = id.substring(i+1);
+Log.d("ASDF","T="+btn+" id="+id);
         if (btn.equals("tag")) {
             Bundle bundle = new Bundle();
             RubricSelectedEvent rs = new RubricSelectedEvent();
@@ -192,7 +196,8 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
             return;
         }
         if (btn.equals("send")) {
-
+            DialogFragment dlg = new SocialDialogFragment();
+            dlg.show(((MainActivity)getActivity()).getFragmentManager(), "dlg");
             return;
         }
 
@@ -306,14 +311,18 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         View v = ((LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_block, null);
         RobotoTextView rv = (RobotoTextView) v.findViewById(R.id.rt);
-        ImageView iv_com = (ImageView) v.findViewById(R.id.imv_com_b);
+        LinearLayout iv_com = (LinearLayout) v.findViewById(R.id.imv_com_b);
         iv_com.setTag("com;"+pn.getId());
         iv_com.setClickable(true);
         iv_com.setOnClickListener(this);
-        ImageView iv_send = (ImageView) v.findViewById(R.id.send);
+        LinearLayout iv_send = (LinearLayout) v.findViewById(R.id.send);
         iv_send.setTag("send;"+pn.getId());
         iv_send.setClickable(true);
         iv_send.setOnClickListener(this);
+//        ImageView iv_send = (ImageView) v.findViewById(R.id.send);
+//        iv_send.setTag("send;"+pn.getId());
+//        iv_send.setClickable(true);
+//        iv_send.setOnClickListener(this);
         rv.setText(com + " комментариев");
         ll.addView(v);
     }
