@@ -71,4 +71,6 @@
     <string name="social_dialog_tw">Twitter</string>
     <string name="social_dialog_goo">Google+</string>
     <string name="social_dialog_vkont">Вконтакте</string>
+
+    <string name="empty_field_alarm">Поля ввода не можут быть пустыми.\nПожалуйста, заполните необходимые поля.</string>
 </resources>

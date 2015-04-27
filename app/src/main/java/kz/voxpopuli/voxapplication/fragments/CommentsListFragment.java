@@ -4,6 +4,7 @@ package kz.voxpopuli.voxapplication.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,15 @@ import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.devspark.robototextview.widget.RobotoEditText;
 import com.devspark.robototextview.widget.RobotoTextView;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -27,8 +31,14 @@ import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.CommentsListAdapter;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.ArticleCommentsRequest;
+import kz.voxpopuli.voxapplication.network.request.PostUserCommentRequest;
+import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
+import kz.voxpopuli.voxapplication.network.wrappers.comments.PostUserCommentWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.comments.article.ArcticleComment;
 import kz.voxpopuli.voxapplication.network.wrappers.comments.article.ArticleCommentsWrapper;
+import kz.voxpopuli.voxapplication.tools.DialogTools;
+import kz.voxpopuli.voxapplication.tools.MD5Hasher;
+import kz.voxpopuli.voxapplication.tools.TextInputsValidators;
 import kz.voxpopuli.voxapplication.tools.UserInfoTools;
 
 public class CommentsListFragment extends BaseFragment implements SwipyRefreshLayout.OnRefreshListener {
@@ -42,6 +52,7 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
     private ListView lv;
     private ImageView send;
     private ImageView iv;
+    private RobotoEditText comment;
     private SwipyRefreshLayout refreshLayout;
 
     private int page = 1;
@@ -80,6 +91,7 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
         lv = (ListView) parent.findViewById(R.id.lv);
         commentsAdapter = new CommentsListAdapter(this, comments);
         send = (ImageView) parent.findViewById(R.id.send);
+        comment = (RobotoEditText)parent.findViewById(R.id.rt);
 
         refreshLayout = (SwipyRefreshLayout)parent.findViewById(R.id.swipe_refresh_layout);
         refreshLayout.setOnRefreshListener(this);
@@ -100,10 +112,10 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
     private View.OnClickListener barClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.right_drawer_item) {
+            if(v.getId() == R.id.left_drawer_item) {
                 ((MainActivity)getActivity()).onBackPressed();
             } else if(v.getId() == R.id.send) {
-
+                postUserComment();
             }
         }
     };
@@ -124,9 +136,17 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
         if(wrapper.getArcticleComments().size() > 0) {
             comments.addAll(wrapper.getArcticleComments());
             commentsAdapter.notifyDataSetChanged();
-
         }
         refreshLayout.setRefreshing(false);
+    }
+
+    public void onEvent(PostUserCommentWrapper postUserCommentWrapper) {
+        if(postUserCommentWrapper != null && "OK".equals(postUserCommentWrapper.getResult())) {
+            comment.setText("");
+            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
+                    new ArticleCommentsRequest(articleId, String.valueOf(page),
+                            (MainActivity)getActivity()));
+        }
     }
 
     @Override
@@ -151,5 +171,25 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
     @Override
     public int getFragmentId() {
         return FRAGMENT_ID;
+    }
+
+    private void postUserComment() {
+        if(!TextInputsValidators.isInputEmpty(comment)) {
+            Map<String, String> params = new LinkedHashMap<>();
+            params.put("id", articleId);
+            params.put("user_id", UserInfoTools.getUSerId(getActivity()));
+            params.put("parent_id", "0");
+            params.put("text", comment.getText().toString());
+            params.put("", VoxProviderUrls.SALT);
+
+            String signature = MD5Hasher.getHash(params);
+            params.remove("");
+            params.put("signature", signature);
+            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
+                    new PostUserCommentRequest(params, (MainActivity)getActivity()));
+        } else {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.empty_field_alarm));
+        }
     }
 }

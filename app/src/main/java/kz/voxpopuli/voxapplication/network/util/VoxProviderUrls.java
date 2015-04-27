@@ -25,4 +25,5 @@ public interface VoxProviderUrls {
     public static final String SIGN_UP_USER_REQUEST = "http://www.voxpopuli.kz/api/sign_up.json";
     public static final String TAG_INFO_REQUEST = "http://www.voxpopuli.kz/api/tag/%tagId%.json";
     public static final String ARTICLE_COMMENTS_REQUEST = "http://www.voxpopuli.kz/api/comments/%articleId%/%page%.json";
+    public static final String POST_ARTICLE_COMMENT_REQUEST = "http://www.voxpopuli.kz/api/comment.json";
 }
