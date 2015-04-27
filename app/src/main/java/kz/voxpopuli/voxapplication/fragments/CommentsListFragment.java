@@ -124,8 +124,9 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
         if(wrapper.getArcticleComments().size() > 0) {
             comments.addAll(wrapper.getArcticleComments());
             commentsAdapter.notifyDataSetChanged();
-            refreshLayout.setRefreshing(false);
+
         }
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
