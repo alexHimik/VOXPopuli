@@ -4,28 +4,51 @@
     android:layout_height="wrap_content"
     android:background="@color/comm_bg"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_alignParentLeft="true"
         android:id="@+id/imv_com_b"
-        android:src="@drawable/vox_ic_red_comment"
-        android:layout_margin="16dp" />
+        android:layout_centerVertical="true"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:paddingLeft="5dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/vox_ic_red_comment"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+    <!--<ImageView-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:id="@+id/imv_com_b"-->
+        <!--android:src="@drawable/vox_ic_red_comment"-->
+        <!--android:layout_margin="16dp" />-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_alignParentRight="true"
+        android:id="@+id/send"
+        android:layout_centerVertical="true"
+        android:layout_width="40dp"
+        android:layout_height="48dp">
     <ImageView
         android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:id="@+id/send"
         android:src="@drawable/vox_ic_red_share"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
-    <com.devspark.robototextview.widget.RobotoTextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imv_com_b"
-        android:layout_toLeftOf="@id/send"
-        android:hint="Введите комментарий"
-        android:textAppearance="@style/com_14_99"
-        android:id="@+id/rt"
-        android:layout_centerVertical="true" />
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imv_com_b"
+            android:layout_toLeftOf="@id/send"
+            android:hint="Введите комментарий"
+            android:textAppearance="@style/com_14_99"
+            android:id="@+id/rt"
+            android:layout_centerVertical="true" />
+
 </RelativeLayout>
