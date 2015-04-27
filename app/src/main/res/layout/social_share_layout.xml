@@ -36,7 +36,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="@dimen/social_dialog_item_bottom_margin"
         android:gravity="center_vertical"
-        android:id="@+id/l_tweeter">
+        android:id="@+id/l_twitter">
 
         <ImageView
             android:layout_width="@dimen/social_dialog_item_diameter"

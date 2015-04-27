@@ -67,7 +67,7 @@
 
     <string name="social_dialog_title">Поделиться</string>
     <string name="social_dialog_fb">Facebook</string>
-    <string name="social_dialog_tw">Tweeter</string>
+    <string name="social_dialog_tw">Twitter</string>
     <string name="social_dialog_goo">Google+</string>
     <string name="social_dialog_vkont">Вконтакте</string>
 </resources>

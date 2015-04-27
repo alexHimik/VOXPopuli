@@ -1,7 +1,7 @@
 package kz.voxpopuli.voxapplication.fragments;
 
 import android.app.Activity;
-import android.app.DialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,9 +21,9 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.app.DialogFragment;
+//import android.app.DialogFragment;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
@@ -171,7 +171,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         int i = id.indexOf(";");
         String btn = id.substring(0,i);
         id = id.substring(i+1);
-Log.d("ASDF","T="+btn+" id="+id);
+//Log.d("ASDF","T="+btn+" id="+id);
         if (btn.equals("tag")) {
             Bundle bundle = new Bundle();
             RubricSelectedEvent rs = new RubricSelectedEvent();
@@ -197,7 +197,8 @@ Log.d("ASDF","T="+btn+" id="+id);
         }
         if (btn.equals("send")) {
             DialogFragment dlg = new SocialDialogFragment();
-            dlg.show(((MainActivity)getActivity()).getFragmentManager(), "dlg");
+//            dlg.show(((MainActivity)getActivity()).getFragmentManager(), "dlg");
+            dlg.show(((MainActivity)getActivity()).getSupportFragmentManager(), "dlg");
             return;
         }
 
@@ -375,16 +376,19 @@ Log.d("ASDF","T="+btn+" id="+id);
     }
 
     public View setTxt(Content c){
-        TextView tv = new TextView(context);
-        tv.setText(c.getData().get(0));
-        tv.setLayoutParams(lp_W_W);
-        tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_text));
-        LinearLayout lt = new LinearLayout(context);
-        lt.setLayoutParams(lp_W_W);
-        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
-        lt.setPadding(padText, padText, padText, padText);
-        lt.addView(tv);
+        LinearLayout lt = null;
+        if (c.getData().get(0).length()>0) {
+            TextView tv = new TextView(context);
+            tv.setText(c.getData().get(0));
+            tv.setLayoutParams(lp_W_W);
+            tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_text));
+            lt = new LinearLayout(context);
+            lt.setLayoutParams(lp_W_W);
+            int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
+            lt.setPadding(padText, padText, padText, padText);
+            lt.addView(tv);
+        }
         return lt;
     }
 
