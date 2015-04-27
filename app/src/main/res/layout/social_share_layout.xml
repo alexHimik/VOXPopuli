@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/social_dialog_margin"
+    android:layout_marginLeft="@dimen/social_dialog_margin">
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/social_share_dialog_title"
+        android:text="@string/social_dialog_title"
+        />
+
+</LinearLayout>

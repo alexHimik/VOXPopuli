@@ -2,6 +2,7 @@ package kz.voxpopuli.voxapplication.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ import java.io.Serializable;
 
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.dialog.QustomDialogBuilder;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.events.ErrorEvent;
 import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
@@ -38,6 +40,7 @@ import kz.voxpopuli.voxapplication.fragments.CommentsListFragment;
 import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.SearchFragment;
+import kz.voxpopuli.voxapplication.tools.DialogTools;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 import kz.voxpopuli.voxapplication.tools.ViewTools;
@@ -179,13 +182,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                getSupportActionBar().getCustomView().setVisibility(View.VISIBLE);
+                View customBar = getSupportActionBar().getCustomView();
+                if(customBar != null) {
+                    customBar.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().getCustomView().setVisibility(View.INVISIBLE);
+                View customBar = getSupportActionBar().getCustomView();
+                if(customBar != null) {
+                    customBar.setVisibility(View.INVISIBLE);
+                }
             }
         };
         drawerLayout.setDrawerListener(drawerToggle);
@@ -225,21 +234,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     public void onEventMainThread(ErrorEvent errorEvent) {
-        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
-        errorDialog.setTitle("Error!");
-        errorDialog.setMessage(errorEvent.getMessage());
-        errorDialog.create().show();
-        Log.e("MianActivity", "Volley error -> " + errorEvent.getMessage());
+        DialogTools.showInfoDialog(this, getString(R.string.error_dialog_title),
+                errorEvent.getMessage());
     }
 
     /** error handler for network responses from the Volley */
     @Override
     public void onErrorResponse(VolleyError error) {
-        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
-        errorDialog.setTitle("Error!");
-        errorDialog.setMessage(error.getMessage());
-        errorDialog.create().show();
-        Log.e("MianActivity", "Volley error -> " + error.getMessage());
+        DialogTools.showInfoDialog(this, getString(R.string.error_dialog_title),
+                error.getMessage());
     }
 
     private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {

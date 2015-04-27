@@ -144,4 +144,11 @@
     <dimen name="profile_edit_last_input_bottom_margin">56dp</dimen>
     <dimen name="profile_edit_change_passw_img_margin">16dp</dimen>
     <dimen name="profile_edit_change_passw_text_margin">72dp</dimen>
+
+    <dimen name="social_dialog_margin">40dp</dimen>
+    <dimen name="social_dialog_inner_margin">24dp</dimen>
+    <dimen name="social_dialog_item_bottom_margin">16dp</dimen>
+    <dimen name="social_dialog_item_diameter">56</dimen>
+    <dimen name="social_dialog_title_text_size">20sp</dimen>
+    <dimen name="social_dialog_item_text_size">16sp</dimen>
 </resources>
