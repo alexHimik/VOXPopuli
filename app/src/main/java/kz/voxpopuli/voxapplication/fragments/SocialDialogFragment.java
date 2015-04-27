@@ -1,28 +1,38 @@
 package kz.voxpopuli.voxapplication.fragments;
 
 
-import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
+import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
+import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
+import com.github.gorbin.asne.vk.VkSocialNetwork;
+
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 
 public class SocialDialogFragment extends DialogFragment implements View.OnClickListener {
 
-    final String LOG_TAG = "myLogs";
+    final String TAG = "SocialDialog";
+    private SocialNetworkUtils socialNetworkUtils;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        getDialog().setTitle("Title!");
         getDialog().setTitle(R.string.social_dialog_title);
         View sd = inflater.inflate(R.layout.social_share_layout, null);
         sd.findViewById(R.id.l_facebook).setOnClickListener(this);
-        sd.findViewById(R.id.l_tweeter).setOnClickListener(this);
+        sd.findViewById(R.id.l_twitter).setOnClickListener(this);
         sd.findViewById(R.id.l_google).setOnClickListener(this);
         sd.findViewById(R.id.l_vkontakt).setOnClickListener(this);
+        socialNetworkUtils = new SocialNetworkUtils();
+        socialNetworkUtils.initSocialManager(this);
         return sd;
     }
 
@@ -30,15 +40,19 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
         switch (((LinearLayout) v).getId()) {
             case R.id.l_facebook :
 Log.d("ASDF","l_facebook");
+                socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
                 break;
-            case R.id.l_tweeter :
+            case R.id.l_twitter :
 Log.d("ASDF","l_tweeter");
+                socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
                 break;
             case R.id.l_google :
 Log.d("ASDF","l_google");
+                socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
                 break;
             case R.id.l_vkontakt :
 Log.d("ASDF","l_vkontakt");
+                socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
                 break;
         }
         dismiss();
