@@ -1,7 +1,9 @@
 package kz.voxpopuli.voxapplication.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -10,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -20,14 +23,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
+import com.devspark.robototextview.widget.RobotoTextView;
 
 import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Author;
+import kz.voxpopuli.voxapplication.network.wrappers.article.Content;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Similar;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Tag;
 //import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
@@ -41,27 +47,30 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     Article pn;
     Context context;
     View parent;
-    public ViewGroup.LayoutParams lpWrap;
+    Activity activity;
+    public ViewGroup.LayoutParams lp_W_W, lp_M_W, lp_M_M;
     private MediaController mediaControls;
 
-    public FormNewsPage(Context cont, Article articleData, LinearLayout l, View parent, int mWidth){
+    public FormNewsPage(Activity act, Context cont, Article articleData, LinearLayout l, View parent, int mWidth){
         maxWidth = mWidth - ((int) parent.getResources().getDimension(R.dimen.news_padding_txt))*2;
         ll = l;
         pn = articleData;
         context = cont;
         this.parent = parent;
+        activity = act;
     }
 
     public void setNewsPage(){
-        lpWrap = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ImageView iv = (ImageView) parent.findViewById(R.id.imageView);
-        Glide.with(context).load(pn.getImageMid()).into(iv);
+        lp_W_W = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp_M_W = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp_M_M = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
         setArticle();
-//        setContent();
-//        setAuthors(pn.getAuthors());
-//        setTags(ll,pn.getTags());
-//        setSimilar(pn.getSimilar());
-//        setBottom(pn.getCommentsAmount());
+        setContent();
+        setAuthors(pn.getAuthors());
+        setTags(ll,pn.getTags());
+        setSimilar(pn.getSimilar());
+        setBottom(pn.getCommentsAmount());
     }
 
     @Override
@@ -84,23 +93,68 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         else {
             TextView tv = (TextView) v.findViewById(R.id.title_l);
             Log.d("TAG","Article="+tv.getText());
+//            reStart("11");
+//            Bundle bundle = new Bundle();
+//            bundle.putString(NewsPageFragment.ARTICLE_KEY, pn.getId());
+//            ((Activity)context).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+//                    bundle);
         }
     }
 
     public void setArticle(){
 //        Article article = pn.getArticle();
-        ImageView iv = (ImageView)parent.findViewById(R.id.imv);
-        TextView title = (TextView)parent.findViewById(R.id.title);
+        ImageView iv = (ImageView)parent.findViewById(R.id.imageView);
         Glide.with(context).load(pn.getImageMid()).into(iv);
-        title.setText(pn.getTitle());
-        TextView descr = (TextView)parent.findViewById(R.id.descr);
-        descr.setText(pn.getDescription());
-        TextView date = (TextView)parent.findViewById(R.id.date);
-        date.setText(pn.getPostDate());
-        TextView v = (TextView)parent.findViewById(R.id.txt_views);
-        v.setText(pn.getViwed());
-        TextView com = (TextView)parent.findViewById(R.id.txt_comment);
-        com.setText(pn.getCommentsAmount());
+
+        LinearLayout la = new LinearLayout(context);
+        la.setLayoutParams(lp_M_W);
+        la.setOrientation(LinearLayout.VERTICAL);
+        int pad = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
+        la.setPadding(pad, pad, pad, 0);
+
+        la.addView(newRobTV(lp_W_W, pn.getTitle(), R.style.news_title, 0));
+
+        LinearLayout othe1 = new LinearLayout(context);
+        othe1.setLayoutParams(lp_M_W);
+        othe1.setOrientation(LinearLayout.HORIZONTAL);
+        int pad1 = (int) context.getResources().getDimension(R.dimen.news_size_line);
+        othe1.setPadding(0, 0, 0, pad1);
+        othe1.setBackgroundColor(context.getResources().getColor(R.color.news_color_line));
+        la.addView(othe1);
+        LinearLayout othe2 = new LinearLayout(context);
+        othe2.setLayoutParams(lp_M_M);
+        othe2.setOrientation(LinearLayout.HORIZONTAL);
+        pad1 = (int) context.getResources().getDimension(R.dimen.news_padding_betw_text);
+        othe2.setPadding(0, pad1, 0, pad1);
+        othe2.setGravity(Gravity.CENTER_VERTICAL);
+        othe2.setBackgroundColor(context.getResources().getColor(R.color.news_color_white));
+        othe1.addView(othe2);
+        othe2.addView(newRobTV(lp_W_W, pn.getPostDate(), R.style.com_datetime, 0));
+        ImageView iv1 = new ImageView(context);
+        iv1.setLayoutParams(lp_W_W);
+        iv1.setPadding(12, 0, 12, 0);
+        iv1.setImageResource(R.drawable.vox_ic_sm_grey_eye);
+        othe2.addView(iv1);
+        othe2.addView(newRobTV(lp_W_W, pn.getViwed(), R.style.com_datetime, 0));
+        iv1 = new ImageView(context);
+        iv1.setLayoutParams(lp_W_W);
+        iv1.setPadding(12, 0, 12, 0);
+        iv1.setImageResource(R.drawable.vox_ic_sm_grey_comment);
+        othe2.addView(iv1);
+        othe2.addView(newRobTV(lp_W_W, pn.getCommentsAmount(), R.style.com_datetime, 0));
+
+        la.addView(newRobTV(lp_W_W, pn.getDescription(), R.style.news_descr, 0));
+
+        ll.addView(la);
+    }
+
+    public RobotoTextView newRobTV(LayoutParams lp, String txt, int style, int bg){
+        RobotoTextView tv = new RobotoTextView(context);
+        tv.setLayoutParams(lp);
+        tv.setText(txt);
+        if (style >0) tv.setTextAppearance(context, style);
+        if (bg>0) tv.setBackgroundResource(bg);
+        return tv;
     }
 
     public void setTags(LinearLayout linerL, List<Tag> tag){
@@ -123,7 +177,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         lt.setPadding(padText, padText, padText, padText);
         lt1.addView(lt);
 
-        LinearLayout line = newLayout(context, lpWrap);
+        LinearLayout line = newLayout(context, lp_W_W);
         lt.addView(line);
         widthAll = 0;
         for (int i=0;i<tag.size();i++){
@@ -141,7 +195,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
             widthAll += width;
             if (widthAll<maxWidth) line.addView(tv);
             else {
-                line = newLayout(context,lpWrap);
+                line = newLayout(context,lp_W_W);
                 lt.addView(line);
                 line.addView(tv);
                 widthAll = width;
@@ -163,7 +217,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         return line1;
     }
 
-/*
+
      public void setContent(){
         List<Content> content = pn.getContent();
         int iMax = content.size();
@@ -176,23 +230,24 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 
     public View setV(Content c){
         String type = c.getType();
+Log.d("QWERT","T="+type);
         if (type.equals("title")) return setTitle(c);
         if (type.equals("txt")) return setTxt(c);
         if (type.equals("comment")) return setComment(c);
-        if (type.equals("Photo")) return setPhoto(c);
-        if (type.equals("Video")) return setVideo(c);
-        if (type.equals("Gallery")) return setGallery(c);
+        if (type.equals("photo")) return setPhoto(c);
+        if (type.equals("video")) return setVideo(c);
+        if (type.equals("gallery")) return setGallery(c);
         return null;
     }
 
     public View setTitle(Content c){
         TextView tv = new TextView(context);
         tv.setText(c.getData().get(0));
-        tv.setLayoutParams(lpWrap);
+        tv.setLayoutParams(lp_W_W);
         tv.setTextColor(context.getResources().getColor(R.color.news_color_title));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_title));
         LinearLayout lt = new LinearLayout(context);
-        lt.setLayoutParams(lpWrap);
+        lt.setLayoutParams(lp_W_W);
         int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
         int padDelt = (int) context.getResources().getDimension(R.dimen.news_padding_top_title);
         lt.setPadding(padText, padDelt, padText, 0);
@@ -203,11 +258,11 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     public View setTxt(Content c){
         TextView tv = new TextView(context);
         tv.setText(c.getData().get(0));
-        tv.setLayoutParams(lpWrap);
+        tv.setLayoutParams(lp_W_W);
         tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_text));
         LinearLayout lt = new LinearLayout(context);
-        lt.setLayoutParams(lpWrap);
+        lt.setLayoutParams(lp_W_W);
         int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
         lt.setPadding(padText, padText, padText, padText);
         lt.addView(tv);
@@ -216,7 +271,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 
     public View setPhoto(Content c){
         ImageView iv = new ImageView(context);
-        iv.setLayoutParams(lpWrap);
+        iv.setLayoutParams(lp_W_W);
         Glide.with(context).load(c.getData().get(0)).into(iv);
         LinearLayout lt = new LinearLayout(context);
         lt.setOrientation(LinearLayout.VERTICAL);
@@ -226,30 +281,30 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         if ((c.getTitle().length()>0) ||(c.getAuthor().length()>0)) {
             LinearLayout author = new LinearLayout(context);
             author.setOrientation(LinearLayout.VERTICAL);
-            author.setLayoutParams(lpWrap);
+            author.setLayoutParams(lp_W_W);
             int indent = (int) context.getResources().getDimension(R.dimen.news_indent48);
             author.setPadding(indent, 0, 0, 0);
             LinearLayout b1 = new LinearLayout(context);
             author.setOrientation(LinearLayout.VERTICAL);
-            b1.setLayoutParams(lpWrap);
+            b1.setLayoutParams(lp_W_W);
             b1.setBackgroundColor(context.getResources().getColor(R.color.news_color_line));
             int t = (int) context.getResources().getDimension(R.dimen.news_thickness_line);
             b1.setPadding(t,0,0,0);
             LinearLayout b2 = new LinearLayout(context);
-            b2.setLayoutParams(lpWrap);
+            b2.setLayoutParams(lp_W_W);
             b2.setBackgroundColor(context.getResources().getColor(R.color.news_color_white));
             b2.setOrientation(LinearLayout.VERTICAL);
             int in12 = (int) context.getResources().getDimension(R.dimen.news_indent12);
             b2.setPadding(in12,pad,0,pad);
             TextView tv = new TextView(context);
             tv.setText(c.getTitle());
-            tv.setLayoutParams(lpWrap);
+            tv.setLayoutParams(lp_W_W);
             tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_photo));
             b2.addView(tv);
             TextView tva = new TextView(context);
             tva.setText(c.getAuthor());
-            tva.setLayoutParams(lpWrap);
+            tva.setLayoutParams(lp_W_W);
             tva.setTextColor(context.getResources().getColor(R.color.news_color_text));
             tva.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_photo));
             b2.addView(tva);
@@ -264,11 +319,11 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
 //        final String [] gal = c.getData().split(" ; ");
         final List<String> gal = c.getData();
         final TextView numPhoto = new TextView(context);
-        numPhoto.setLayoutParams(lpWrap);
+        numPhoto.setLayoutParams(lp_W_W);
         numPhoto.setTextAppearance(context, R.style.photo_title);
         numPhoto.setText("1 из "+gal.size());
         TextView txtGal = new TextView(context);
-        txtGal.setLayoutParams(lpWrap);
+        txtGal.setLayoutParams(lp_W_W);
         txtGal.setTextAppearance(context, R.style.title_gallery);
         txtGal.setText("Галерея        ");
 
@@ -281,7 +336,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         PageAdapter pa = new PageAdapter(context, gal);
         ViewPager vp = new ViewPager(context);
         vp.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                (int) context.getResources().getDimension(R.dimen.news_height_gallery)));
+                (int) context.getResources().getDimension(R.dimen.news_video_h)));
         vp.setAdapter(pa);
         vp.setCurrentItem(0);
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -312,17 +367,17 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         if ((c.getTitle().length()>0) ||(c.getAuthor().length()>0)) {
             LinearLayout author = new LinearLayout(context);
             author.setOrientation(LinearLayout.VERTICAL);
-            author.setLayoutParams(lpWrap);
+            author.setLayoutParams(lp_W_W);
             int indent = (int) context.getResources().getDimension(R.dimen.news_indent48);
             author.setPadding(indent, 0, 0, 0);
             LinearLayout b1 = new LinearLayout(context);
             author.setOrientation(LinearLayout.VERTICAL);
-            b1.setLayoutParams(lpWrap);
+            b1.setLayoutParams(lp_W_W);
             b1.setBackgroundColor(context.getResources().getColor(R.color.news_color_line));
             int t = (int) context.getResources().getDimension(R.dimen.news_thickness_line);
             b1.setPadding(t,0,0,0);
             LinearLayout b2 = new LinearLayout(context);
-            b2.setLayoutParams(lpWrap);
+            b2.setLayoutParams(lp_W_W);
             b2.setBackgroundColor(context.getResources().getColor(R.color.news_color_white));
             b2.setOrientation(LinearLayout.VERTICAL);
             int in12 = (int) context.getResources().getDimension(R.dimen.news_indent12);
@@ -330,7 +385,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
             if (c.getTitle().length()>0){
                 TextView tv = new TextView(context);
                 tv.setText(c.getTitle());
-                tv.setLayoutParams(lpWrap);
+                tv.setLayoutParams(lp_W_W);
                 tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_photo));
                 b2.addView(tv);
@@ -338,7 +393,7 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
             if (c.getAuthor().length()>0) {
                 TextView tva = new TextView(context);
                 tva.setText(c.getAuthor());
-                tva.setLayoutParams(lpWrap);
+                tva.setLayoutParams(lp_W_W);
                 tva.setTextColor(context.getResources().getColor(R.color.news_color_text));
                 tva.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_photo));
                 b2.addView(tva);
@@ -353,37 +408,37 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
     public View setComment(Content c){
         LinearLayout author = new LinearLayout(context);
         author.setOrientation(LinearLayout.HORIZONTAL);
-        author.setLayoutParams(lpWrap);
+        author.setLayoutParams(lp_W_W);
         int indent = (int) context.getResources().getDimension(R.dimen.news_pad_comment_l);
         int indR = (int) context.getResources().getDimension(R.dimen.news_pad_comment_r);
         author.setPadding(indent, 0, indR, 0);
         ImageView iv = new ImageView(context);
-        iv.setLayoutParams(lpWrap);
+        iv.setLayoutParams(lp_W_W);
         iv.setImageDrawable(context.getResources().getDrawable(R.drawable.vox_ic_red_quote));
         author.addView(iv);
 
         LinearLayout b1 = new LinearLayout(context);
         b1.setOrientation(LinearLayout.VERTICAL);
-        b1.setLayoutParams(lpWrap);
+        b1.setLayoutParams(lp_W_W);
         int ind = (int) context.getResources().getDimension(R.dimen.news_pad_comment_t);
         b1.setPadding(ind, ind, 0, 0);
         TextView tvc = new TextView(context);
         tvc.setText(c.getData().get(0));
-        tvc.setLayoutParams(lpWrap);
+        tvc.setLayoutParams(lp_W_W);
         tvc.setTextAppearance(context, R.style.comment);
         b1.addView(tvc);
 
         LinearLayout b2 = new LinearLayout(context);
-        b2.setLayoutParams(lpWrap);
+        b2.setLayoutParams(lp_W_W);
         b2.setOrientation(LinearLayout.VERTICAL);
         TextView tv = new TextView(context);
-        tv.setLayoutParams(lpWrap);
+        tv.setLayoutParams(lp_W_W);
         tv.setText(c.getTitle());
         tv.setTextAppearance(context, R.style.photo_title);
         b2.addView(tv);
 
         TextView tva = new TextView(context);
-        tva.setLayoutParams(lpWrap);
+        tva.setLayoutParams(lp_W_W);
         tva.setText(c.getAuthor());
         tva.setTextAppearance(context, R.style.photo_author);
         b2.addView(tva);
@@ -392,76 +447,9 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         return author;
     }
 
-    public void setAuthors(List<Author> a){
-
-    }
-
-    public void setAuthor(Author a){
-        View view = ((LayoutInflater) context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.news_author, null);
-        ImageView iv = (ImageView) view.findViewById(R.id.imv);
-        TextView name = (TextView) view.findViewById(R.id.name);
-        TextView post = (TextView) view.findViewById(R.id.post);
-        BitmapPool pool = Glide.get(context).getBitmapPool();
-        Glide.with(context).load(a.getAvatar()).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
-        name.setText(a.getName());
-        post.setText(a.getPost());
-        ll.addView(view);
-//        return view;
-    }
-
-
-    public void setSimilar(List<Similar> s){
-        TextView tv = new TextView(context);
-        tv.setText("Материал по теме");
-        tv.setLayoutParams(lpWrap);
-        tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_text));
-        LinearLayout lt = new LinearLayout(context);
-        lt.setLayoutParams(lpWrap);
-        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
-        int padSim = (int) context.getResources().getDimension(R.dimen.news_padding_similar);
-        lt.setPadding(padSim, padText, padSim, padSim);
-        lt.addView(tv);
-        ll.addView(lt);
-
-        int iMax = s.size();
-        View v = null;
-        for (int i=0; i<iMax;i++){
-            v = setS(s.get(i));
-            if (v != null) ll.addView(v);
-        }
-    }
-
-    public View setS(Article a){
-        ImageView iv;
-        TextView title;
-        TextView date;
-        TextView txt_views;
-        TextView txt_comment;
-
-        View view = ((LayoutInflater) context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
-        view.setClickable(true);
-        view.setOnClickListener(this);
-        iv = (ImageView) view.findViewById(R.id.imv_l);
-        title = (TextView) view.findViewById(R.id.title_l);
-        date = (TextView) view.findViewById(R.id.date_l);
-        txt_views = (TextView) view.findViewById(R.id.txt_views_l);
-        txt_comment = (TextView) view.findViewById(R.id.txt_comment_l);
-        Glide.with(context).load(a.getImage()).centerCrop().into(iv);
-        title.setText(a.getTitle());
-        date.setText(a.getPostDate());
-        txt_views.setText(a.getViwed());
-        txt_comment.setText(a.getCommentsAmount());
-
-        return view;
-    }
-
     public View setVideo(Content c){
         LinearLayout v = new LinearLayout(context);
-//        ViewGroup.LayoutParams lparam = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,R.dimen.news_video_h);
-        v.setLayoutParams(lpWrap);
+        v.setLayoutParams(lp_W_W);
         v.setBackgroundColor(context.getResources().getColor(R.color.news_color_test1));
 
 //        TextView tv = new TextView(context);
@@ -494,7 +482,76 @@ public class FormNewsPage implements Response.ErrorListener, View.OnClickListene
         return v;
     }
 
-*/
+    public void setAuthors(List<Author> a){
+          int iMax = a.size();
+        View v;
+        for (int i=0; i<iMax;i++){
+            setAuthor(a.get(i));
+        }
+    }
+
+    public void setAuthor(Author a){
+        View view = ((LayoutInflater) context.getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.news_author, null);
+        ImageView iv = (ImageView) view.findViewById(R.id.imv);
+        TextView name = (TextView) view.findViewById(R.id.name);
+        TextView post = (TextView) view.findViewById(R.id.post);
+        BitmapPool pool = Glide.get(context).getBitmapPool();
+        Glide.with(context).load(a.getAvatar()).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
+        name.setText(a.getTitle());
+        post.setText(a.getPosition());
+        ll.addView(view);
+//        return view;
+    }
+
+
+    public void setSimilar(List<Similar> s){
+        TextView tv = new TextView(context);
+        tv.setText("Материал по теме");
+        tv.setLayoutParams(lp_W_W);
+        tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_text));
+        LinearLayout lt = new LinearLayout(context);
+        lt.setLayoutParams(lp_W_W);
+        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
+        int padSim = (int) context.getResources().getDimension(R.dimen.news_padding_similar);
+        lt.setPadding(padSim, padText, padSim, padSim);
+        lt.addView(tv);
+        ll.addView(lt);
+
+        int iMax = s.size();
+        View v = null;
+        for (int i=0; i<iMax;i++){
+            v = setS(s.get(i));
+            if (v != null) ll.addView(v);
+        }
+    }
+
+    public View setS(Similar a){
+        ImageView iv;
+        TextView title;
+        TextView date;
+        TextView txt_views;
+        TextView txt_comment;
+
+        View view = ((LayoutInflater) context.getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
+        view.setClickable(true);
+        view.setOnClickListener(this);
+        iv = (ImageView) view.findViewById(R.id.imv_l);
+        title = (TextView) view.findViewById(R.id.title_l);
+        date = (TextView) view.findViewById(R.id.date_l);
+        txt_views = (TextView) view.findViewById(R.id.txt_views_l);
+        txt_comment = (TextView) view.findViewById(R.id.txt_comment_l);
+        Glide.with(context).load(a.getImage()).centerCrop().into(iv);
+        title.setText(a.getTitle());
+        date.setText(a.getPostDate());
+        txt_views.setText(a.getViwed());
+        txt_comment.setText(a.getCommentsAmount());
+
+        return view;
+    }
+
 
     @Override
     public void onErrorResponse(VolleyError error) {

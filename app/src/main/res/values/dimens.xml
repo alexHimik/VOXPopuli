@@ -68,7 +68,7 @@
     <dimen name="news_video_h">202dp</dimen>
     <dimen name="news_size_line">1dp</dimen>
     <dimen name="news_height_tag">32dp</dimen>
-    <dimen name="news_height_gallery">158dp</dimen>
+    <dimen name="news_height_img_com">56dp</dimen>
 
     <!-- Список комментариев -->
     <dimen name="com_size_img">40dp</dimen>
