@@ -1,5 +1,7 @@
 package kz.voxpopuli.voxapplication.network.request;
 
+import android.text.Html;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -48,7 +50,7 @@ public class GsonRequest<T> extends Request<T> {
                 return null;
             }
             return Response.success(
-                    gson.fromJson(json, clazz),
+                    gson.fromJson(Html.fromHtml(json).toString(), clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));

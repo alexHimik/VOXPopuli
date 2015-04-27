@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import java.io.Serializable;
+import java.net.UnknownHostException;
 
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
@@ -241,8 +242,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     /** error handler for network responses from the Volley */
     @Override
     public void onErrorResponse(VolleyError error) {
-        DialogTools.showInfoDialog(this, getString(R.string.error_dialog_title),
-                error.getMessage());
+        if(error.getCause() instanceof UnknownHostException) {
+            DialogTools.showNetworkErrorDialog(this, getString(R.string.error_dialog_title),
+                    getString(R.string.network_unreachable_alarm));
+        }
     }
 
     private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {

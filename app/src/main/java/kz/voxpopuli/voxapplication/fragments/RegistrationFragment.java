@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,22 @@ import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.github.gorbin.asne.vk.VkSocialNetwork;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.SignUpUserRequest;
+import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
+import kz.voxpopuli.voxapplication.network.wrappers.udata.UserData;
+import kz.voxpopuli.voxapplication.tools.DialogTools;
+import kz.voxpopuli.voxapplication.tools.MD5Hasher;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
+import kz.voxpopuli.voxapplication.tools.TextInputsValidators;
+import kz.voxpopuli.voxapplication.tools.UserInfoTools;
 
 /**
  * Created by user on 21.04.15.
@@ -54,6 +69,18 @@ public class RegistrationFragment extends BaseFragment {
         socialNetworkUtils = new SocialNetworkUtils();
         socialNetworkUtils.initSocialManager(this);
         return parent;
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -108,8 +135,42 @@ public class RegistrationFragment extends BaseFragment {
         showPassword = !showPassword;
     }
 
-    private void doUserregistration() {
+    private void doUserRegistration() {
+        if(TextInputsValidators.isInputEmpty(emailInput) ||
+                TextInputsValidators.isInputEmpty(nameInput) ||
+                TextInputsValidators.isInputEmpty(surnameInput) ||
+                TextInputsValidators.isInputEmpty(passwirdInput)) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.empty_field_alarm));
+        } else {
+            Map<String, String> params = new LinkedHashMap<>();
+            params.put("email", emailInput.getText().toString());
+            params.put("password", passwirdInput.getText().toString());
+            params.put("firstName", nameInput.getText().toString());
+            params.put("lastName", surnameInput.getText().toString());
+            params.put("", VoxProviderUrls.SALT);
 
+            String signature = MD5Hasher.getHash(params);
+            params.remove("");
+            params.put("signature", signature);
+
+            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
+                    new SignUpUserRequest(params, (MainActivity)getActivity()));
+        }
+    }
+
+    public void onEvent(UserData data) {
+        if(data != null) {
+            UserInfoTools.saveUserEmail(getActivity(), emailInput.getText().toString());
+            UserInfoTools.saveUserId(getActivity(), data.getId());
+            UserInfoTools.saveUserFirstName(getActivity(), data.getFirstName());
+            UserInfoTools.saveUserLastName(getActivity(), data.getLastName());
+            UserInfoTools.saveUserPassword(getActivity(), passwirdInput.getText().toString());
+            UserInfoTools.saveUserLogin(getActivity(), emailInput.getText().toString());
+
+            ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
+                    null);
+        }
     }
 
     @Override
@@ -128,7 +189,7 @@ public class RegistrationFragment extends BaseFragment {
             if(v.getId() == R.id.left_drawer_item) {
                 getActivity().onBackPressed();
             } else if(v.getId() == R.id.right_drawer_item) {
-                doUserregistration();
+                doUserRegistration();
             } else if(v.getId() == R.id.login_facebook) {
                 socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
             } else if(v.getId() == R.id.login_twitter) {

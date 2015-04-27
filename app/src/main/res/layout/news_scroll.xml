@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll"
-    android:layout_width="fill_parent"
-    android:scrollbars="none"
-    android:layout_height="wrap_content">
+    <include layout="@layout/comment_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/comment_bottom_bar">
+    </include>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/lineLayout_1"
-        android:background="@color/news_color_white">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/comment_bottom_bar"
+        android:scrollbars="none">
 
-    </LinearLayout>
-</ScrollView>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/lineLayout_1"
+            android:background="@color/news_color_white">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_image_height"
+                android:id="@+id/imageView" />
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>
+
+
 
 

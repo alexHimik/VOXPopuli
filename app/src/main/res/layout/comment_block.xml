@@ -1,4 +1,5 @@
 <RelativeLayout
+    android:id="@+id/comment_bottom_bar"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,13 +20,6 @@
             android:layout_gravity="center_vertical"
             />
     </LinearLayout>
-    <!--<ImageView-->
-        <!--android:layout_width="24dp"-->
-        <!--android:layout_height="24dp"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:id="@+id/imv_com_b"-->
-        <!--android:src="@drawable/vox_ic_red_comment"-->
-        <!--android:layout_margin="16dp" />-->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_alignParentRight="true"

@@ -1,6 +1,5 @@
 package kz.voxpopuli.voxapplication.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,12 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.devspark.robototextview.widget.RobotoTextView;
-import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
 
 import java.util.List;
 
@@ -42,7 +38,8 @@ import kz.voxpopuli.voxapplication.network.wrappers.article.Content;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Similar;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Tag;
 
-public class NewsPageFragment extends FaddingTitleBaseFragment implements Response.ErrorListener, View.OnClickListener {
+public class NewsPageFragment extends BaseFragment implements View.OnClickListener {
+
     public static final String TAG = "NewsPageFragment";
     public static final int FRAGMENT_ID = 3;
     public static final String ARTICLE_KEY = "article";
@@ -54,26 +51,18 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     private MediaController mediaControls;
     Article pn;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mArguments = getArguments();
-        mFadingHelper = new FadingActionBarHelper()
-                .actionBarBackground(R.drawable.default_action_bar_color)
-                .headerLayout(R.layout.news_image)
-                .contentLayout(R.layout.news_scroll);
-        mFadingHelper.initActionBar(activity);
-        parent = mFadingHelper.createView(activity);
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View customBar = getActionBarCustomView(inflater);
+        View customBar = super.getActionBarCustomView(inflater);
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
+
+        parent = inflater.inflate(R.layout.news_scroll, container, false);
+
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
-        String articleId = mArguments.getString(ARTICLE_KEY);
-        initActionBarItems();
+        Bundle data = getArguments();
+        String articleId = data.getString(ARTICLE_KEY);
         if(articleId != null) {
             VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new ArticleContentRequest(articleId,
                     (MainActivity)getActivity()));
@@ -102,10 +91,6 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         ((RobotoTextView)centerBatItem).setText(articleDataWrapper.getArticle().getTitle());
         pn = articleDataWrapper.getArticle();
         setNewsPage();
-    }
-
-    public void reStart(String id){
-
     }
 
     @Override
@@ -284,9 +269,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public void setBottom(String com){
-
-        View v = ((LayoutInflater) getActivity().getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comment_block, null);
+        View v = parent.findViewById(R.id.comment_bottom_bar);
         RobotoTextView rv = (RobotoTextView) v.findViewById(R.id.rt);
         LinearLayout iv_com = (LinearLayout) v.findViewById(R.id.imv_com_b);
         iv_com.setTag("com;"+pn.getId());
@@ -322,7 +305,6 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
 
     public View setV(Content c){
         String type = c.getType();
-//        Log.d("QWERT","T="+type);
         if (type.equals("title")) return setTitle(c);
         if (type.equals("txt")) return setTxt(c);
         if (type.equals("comment")) return setComment(c);
@@ -441,8 +423,6 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
             @Override
             public void onPageScrolled(int position, float positionOffset,
                                        int positionOffsetPixels) {
-//                Log.d("QWERT", "Pos = "+position+" Scroll = " + positionOffsetPixels + " FF = "+positionOffset+" AA="+(int) (256*positionOffset));
-//                pts.setBackgroundColor(Color.argb((int) (256 * positionOffset), 240, 130, 230));
             }
 
             @Override
@@ -643,11 +623,5 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         txt_comment.setText(a.getCommentsAmount());
 
         return view;
-    }
-
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
     }
 }

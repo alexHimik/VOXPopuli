@@ -85,16 +85,14 @@ public class ChangePasswordFragment extends BaseFragment {
 
     private void updateUserPassword() {
         Map<String, String> params = new LinkedHashMap<>();
-        params.put("email", UserInfoTools.getUserEmail(getActivity()));
-        params.put("password", UserInfoTools.getUserPassword(getActivity()));
-        params.put("", VoxProviderUrls.SALT);
-        String signature = MD5Hasher.getHash(params);
-        params.clear();
         params.put("id", UserInfoTools.getUSerId(getActivity()));
         params.put("password", newPassword.getText().toString());
         params.put("firstName", UserInfoTools.getUserFirstName(getActivity()));
         params.put("lastName", UserInfoTools.getUserLastName(getActivity()));
-        params.put("image", "");
+        params.put("", VoxProviderUrls.SALT);
+        String signature = MD5Hasher.getHash(params);
+        params.remove("");
+
         params.put("signature", signature);
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
                 new EditUserDataRequest(params, (MainActivity)getActivity()));
