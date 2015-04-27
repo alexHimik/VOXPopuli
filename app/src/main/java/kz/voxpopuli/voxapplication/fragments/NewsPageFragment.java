@@ -1,11 +1,11 @@
 package kz.voxpopuli.voxapplication.fragments;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.Display;
@@ -18,9 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.app.DialogFragment;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
@@ -134,9 +131,6 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         return FRAGMENT_ID;
     }
 
-
-// ***************************************************
-
     public void setNewsPage(){
         lp_W_W = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp_M_W = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -181,7 +175,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         }
         if (btn.equals("send")) {
             DialogFragment dlg = new SocialDialogFragment();
-            dlg.show(((MainActivity)getActivity()).getFragmentManager(), "dlg");
+            dlg.show(((MainActivity)getActivity()).getSupportFragmentManager(), "dlg");
             return;
         }
 
