@@ -153,4 +153,13 @@
     <style name="user_profile_comment_theme" parent="gray_info_text.size_14sp">
         <item name="android:textColor">@color/vox_red</item>
     </style>
+
+    <style name="social_share_dialog_title" parent="dark_grey_info_text">
+        <item name="android:textSize">@dimen/social_dialog_title_text_size</item>
+        <item name="android:textColor">@color/color_text_title_white</item>
+    </style>
+    <style name="social_share_dialog_item" parent="social_share_dialog_title">
+        <item name="android:textSize">@dimen/social_dialog_item_text_size</item>
+        <item name="android:textColor">@color/color_text_title_white</item>
+    </style>
 </resources>

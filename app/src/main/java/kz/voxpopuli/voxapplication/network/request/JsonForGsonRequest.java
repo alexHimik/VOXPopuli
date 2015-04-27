@@ -31,7 +31,7 @@ public class JsonForGsonRequest<T> extends Request<T> {
     private static final String PROTOCOL_CONTENT_TYPE =
             String.format("application/x-www-form-urlencoded; charset=%s", PROTOCOL_CHARSET);
 
-    private static final String ERROR_KEY = "error";
+    public static final String ERROR_KEY = "error";
 
     protected final Gson gson = new Gson();
     private final Class<T> clazz;
