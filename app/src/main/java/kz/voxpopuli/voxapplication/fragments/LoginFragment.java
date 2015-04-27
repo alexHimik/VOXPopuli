@@ -20,6 +20,7 @@ import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
 import com.github.gorbin.asne.vk.VkSocialNetwork;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -136,7 +137,7 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void doLogin() {
-        Map<String, String> params = new TreeMap<>();
+        Map<String, String> params = new LinkedHashMap<>();
         params.put("email", loginInput.getText().toString());
         params.put("password", passwordInput.getText().toString());
         params.put("", VoxProviderUrls.SALT);

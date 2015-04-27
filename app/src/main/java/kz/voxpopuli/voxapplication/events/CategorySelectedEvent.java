@@ -13,6 +13,7 @@ public class CategorySelectedEvent implements Serializable {
 
     private int categoryId;
     private String categoryName;
+    private boolean tag;
 
     public CategorySelectedEvent() {
     }
@@ -36,5 +37,13 @@ public class CategorySelectedEvent implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public boolean isTag() {
+        return tag;
+    }
+
+    public void setTag(boolean tag) {
+        this.tag = tag;
     }
 }

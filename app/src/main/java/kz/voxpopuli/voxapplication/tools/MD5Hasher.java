@@ -18,15 +18,18 @@ public class MD5Hasher {
 
     public static String getHash(Map<String, String> data) {
         StringBuilder builder = new StringBuilder();
-        builder.append("email");
-        builder.append("=");
-        builder.append(data.get("email"));
-        builder.append("&");
-        builder.append("password");
-        builder.append("=");
-        builder.append(data.get("password"));
-        builder.append("&");
-        builder.append(data.get(""));
+        for(String key : data.keySet()) {
+            if("".equals(key)) {
+                builder.deleteCharAt(builder.length() - 1);
+                builder.append("&");
+                builder.append(data.get(key));
+            } else {
+                builder.append(key);
+                builder.append("=");
+                builder.append(data.get(key));
+                builder.append("&");
+            }
+        }
         return DigestUtils.md5Hex(builder.toString());
     }
 }

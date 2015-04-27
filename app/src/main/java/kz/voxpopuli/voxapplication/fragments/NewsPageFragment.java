@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -35,6 +32,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
+import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.ArticleContentRequest;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Article;
@@ -48,7 +46,6 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     public static final String TAG = "NewsPageFragment";
     public static final int FRAGMENT_ID = 3;
     public static final String ARTICLE_KEY = "article";
-    public Context context;
     private LinearLayout ll;
     private View parent;
     int maxWidth;
@@ -66,13 +63,12 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
                 .headerLayout(R.layout.news_image)
                 .contentLayout(R.layout.news_scroll);
         mFadingHelper.initActionBar(activity);
+        parent = mFadingHelper.createView(activity);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        context = getActivity().getApplicationContext();
-        parent = mFadingHelper.createView(inflater);
         View customBar = getActionBarCustomView(inflater);
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
@@ -100,17 +96,11 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     };
 
 
-    /**Отримуємо розпаршені данні від сервера*/
     public void onEvent(ArticleDataWrapper articleDataWrapper) {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
-//        int maxWidth = display.getWidth();
         maxWidth = display.getWidth() - ((int) getResources().getDimension(R.dimen.news_padding_txt))*2;
         ((RobotoTextView)centerBatItem).setText(articleDataWrapper.getArticle().getTitle());
         pn = articleDataWrapper.getArticle();
-//        FormNewsPage fNP = new FormNewsPage(getActivity(), context, articleDataWrapper.getArticle(),
-//                ll, parent, maxWidth);
-//        fNP.setNewsPage();
-
         setNewsPage();
     }
 
@@ -168,7 +158,12 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         String btn = id.substring(0,i);
         id = id.substring(i+1);
         if (btn.equals("tag")) {
-
+            Bundle bundle = new Bundle();
+            CategorySelectedEvent forTagEvent = new CategorySelectedEvent(Integer.parseInt(id), "");
+            forTagEvent.setTag(true);
+            bundle.putSerializable(CategorySelectedEvent.CATEGORY_DATA, forTagEvent);
+            ((MainActivity)getActivity()).handleFragmentSwitching(CategoryFragment.FRAGMENT_ID,
+                    bundle);
             return;
         }
         if (btn.equals("art")) {
@@ -192,39 +187,39 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     public void setArticle(){
 //        Article article = pn.getArticle();
         ImageView iv = (ImageView)parent.findViewById(R.id.imageView);
-        Glide.with(context).load(pn.getImageMid()).into(iv);
+        Glide.with(this).load(pn.getImageMid()).into(iv);
 
-        LinearLayout la = new LinearLayout(context);
+        LinearLayout la = new LinearLayout(getActivity());
         la.setLayoutParams(lp_M_W);
         la.setOrientation(LinearLayout.VERTICAL);
-        int pad = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
+        int pad = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
         la.setPadding(pad, pad, pad, 0);
 
         la.addView(newRobTV(lp_W_W, pn.getTitle(), R.style.news_title, 0));
 
-        LinearLayout othe1 = new LinearLayout(context);
+        LinearLayout othe1 = new LinearLayout(getActivity());
         othe1.setLayoutParams(lp_M_W);
         othe1.setOrientation(LinearLayout.HORIZONTAL);
-        int pad1 = (int) context.getResources().getDimension(R.dimen.news_size_line);
+        int pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_size_line);
         othe1.setPadding(0, 0, 0, pad1);
-        othe1.setBackgroundColor(context.getResources().getColor(R.color.news_color_line));
+        othe1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
         la.addView(othe1);
-        LinearLayout othe2 = new LinearLayout(context);
+        LinearLayout othe2 = new LinearLayout(getActivity());
         othe2.setLayoutParams(lp_M_M);
         othe2.setOrientation(LinearLayout.HORIZONTAL);
-        pad1 = (int) context.getResources().getDimension(R.dimen.news_padding_betw_text);
+        pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_padding_betw_text);
         othe2.setPadding(0, pad1, 0, pad1);
         othe2.setGravity(Gravity.CENTER_VERTICAL);
-        othe2.setBackgroundColor(context.getResources().getColor(R.color.news_color_white));
+        othe2.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
         othe1.addView(othe2);
         othe2.addView(newRobTV(lp_W_W, pn.getPostDate(), R.style.com_datetime, 0));
-        ImageView iv1 = new ImageView(context);
+        ImageView iv1 = new ImageView(getActivity());
         iv1.setLayoutParams(lp_W_W);
         iv1.setPadding(12, 0, 12, 0);
         iv1.setImageResource(R.drawable.vox_ic_sm_grey_eye);
         othe2.addView(iv1);
         othe2.addView(newRobTV(lp_W_W, pn.getViwed(), R.style.com_datetime, 0));
-        iv1 = new ImageView(context);
+        iv1 = new ImageView(getActivity());
         iv1.setLayoutParams(lp_W_W);
         iv1.setPadding(12, 0, 12, 0);
         iv1.setImageResource(R.drawable.vox_ic_sm_grey_comment);
@@ -237,10 +232,10 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public RobotoTextView newRobTV(ViewGroup.LayoutParams lp, String txt, int style, int bg){
-        RobotoTextView tv = new RobotoTextView(context);
+        RobotoTextView tv = new RobotoTextView(getActivity());
         tv.setLayoutParams(lp);
         tv.setText(txt);
-        if (style >0) tv.setTextAppearance(context, style);
+        if (style >0) tv.setTextAppearance(getActivity(), style);
         if (bg>0) tv.setBackgroundResource(bg);
         return tv;
     }
@@ -249,32 +244,32 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         int width, widthAll;
         ViewGroup.LayoutParams lpWMW = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams lpM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                (int)context.getResources().getDimension(R.dimen.news_height_tag));
+                (int)getActivity().getResources().getDimension(R.dimen.news_height_tag));
         lpM.setMargins(0,0,5,0);
 
-        LinearLayout lt1 = new LinearLayout(context);
+        LinearLayout lt1 = new LinearLayout(getActivity());
         lt1.setLayoutParams(lpWMW);
-        lt1.setBackgroundColor(context.getResources().getColor(R.color.news_color_line));
-        int padLine = (int) context.getResources().getDimension(R.dimen.news_size_line);
+        lt1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
+        int padLine = (int) getActivity().getResources().getDimension(R.dimen.news_size_line);
         lt1.setPadding(0, 0, 0, padLine);
-        LinearLayout lt = new LinearLayout(context);
+        LinearLayout lt = new LinearLayout(getActivity());
         lt.setLayoutParams(lpWMW);
         lt.setOrientation(LinearLayout.VERTICAL);
-        lt.setBackgroundColor(context.getResources().getColor(R.color.news_color_white));
-        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
+        lt.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
+        int padText = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
         lt.setPadding(padText, padText, padText, padText);
         lt1.addView(lt);
 
-        LinearLayout line = newLayout(context, lp_W_W);
+        LinearLayout line = newLayout(getActivity(), lp_W_W);
         lt.addView(line);
         widthAll = 0;
         for (int i=0;i<tag.size();i++){
-            TextView tv = new TextView(context);
+            TextView tv = new TextView(getActivity());
             tv.setLayoutParams(lpM);
             tv.setText(tag.get(i).getTitle());
             tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
             tv.setBackgroundResource(R.drawable.tag_shape);
-            tv.setTextAppearance(context, R.style.news_tag);
+            tv.setTextAppearance(getActivity(), R.style.news_tag);
             tv.setTag("tag;"+tag.get(i).getId());
             tv.setClickable(true);
             tv.setOnClickListener(this);
@@ -283,7 +278,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
             widthAll += width;
             if (widthAll<maxWidth) line.addView(tv);
             else {
-                line = newLayout(context,lp_W_W);
+                line = newLayout(getActivity(),lp_W_W);
                 lt.addView(line);
                 line.addView(tv);
                 widthAll = width;
@@ -342,72 +337,72 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public View setTitle(Content c){
-        TextView tv = new TextView(context);
+        TextView tv = new TextView(getActivity());
         tv.setText(c.getData().get(0));
         tv.setLayoutParams(lp_W_W);
-        tv.setTextColor(context.getResources().getColor(R.color.news_color_title));
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_title));
-        LinearLayout lt = new LinearLayout(context);
+        tv.setTextColor(getActivity().getResources().getColor(R.color.news_color_title));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_title));
+        LinearLayout lt = new LinearLayout(getActivity());
         lt.setLayoutParams(lp_W_W);
-        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
-        int padDelt = (int) context.getResources().getDimension(R.dimen.news_padding_top_title);
+        int padText = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
+        int padDelt = (int) getActivity().getResources().getDimension(R.dimen.news_padding_top_title);
         lt.setPadding(padText, padDelt, padText, 0);
         lt.addView(tv);
         return lt;
     }
 
     public View setTxt(Content c){
-        TextView tv = new TextView(context);
+        TextView tv = new TextView(getActivity());
         tv.setText(c.getData().get(0));
         tv.setLayoutParams(lp_W_W);
-        tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_text));
-        LinearLayout lt = new LinearLayout(context);
+        tv.setTextColor(getActivity().getResources().getColor(R.color.news_color_text));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_text));
+        LinearLayout lt = new LinearLayout(getActivity());
         lt.setLayoutParams(lp_W_W);
-        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
+        int padText = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
         lt.setPadding(padText, padText, padText, padText);
         lt.addView(tv);
         return lt;
     }
 
     public View setPhoto(Content c){
-        ImageView iv = new ImageView(context);
+        ImageView iv = new ImageView(getActivity());
         iv.setLayoutParams(lp_W_W);
-        Glide.with(context).load(c.getData().get(0)).into(iv);
-        LinearLayout lt = new LinearLayout(context);
+        Glide.with(getActivity()).load(c.getData().get(0)).into(iv);
+        LinearLayout lt = new LinearLayout(getActivity());
         lt.setOrientation(LinearLayout.VERTICAL);
-        int pad = (int) context.getResources().getDimension(R.dimen.news_padding_img);
+        int pad = (int) getActivity().getResources().getDimension(R.dimen.news_padding_img);
         lt.setPadding(pad, 0, pad, 0);
         lt.addView(iv);
         if ((c.getTitle().length()>0) ||(c.getAuthor().length()>0)) {
-            LinearLayout author = new LinearLayout(context);
+            LinearLayout author = new LinearLayout(getActivity());
             author.setOrientation(LinearLayout.VERTICAL);
             author.setLayoutParams(lp_W_W);
-            int indent = (int) context.getResources().getDimension(R.dimen.news_indent48);
+            int indent = (int) getActivity().getResources().getDimension(R.dimen.news_indent48);
             author.setPadding(indent, 0, 0, 0);
-            LinearLayout b1 = new LinearLayout(context);
+            LinearLayout b1 = new LinearLayout(getActivity());
             author.setOrientation(LinearLayout.VERTICAL);
             b1.setLayoutParams(lp_W_W);
-            b1.setBackgroundColor(context.getResources().getColor(R.color.news_color_line));
-            int t = (int) context.getResources().getDimension(R.dimen.news_thickness_line);
+            b1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
+            int t = (int) getActivity().getResources().getDimension(R.dimen.news_thickness_line);
             b1.setPadding(t,0,0,0);
-            LinearLayout b2 = new LinearLayout(context);
+            LinearLayout b2 = new LinearLayout(getActivity());
             b2.setLayoutParams(lp_W_W);
-            b2.setBackgroundColor(context.getResources().getColor(R.color.news_color_white));
+            b2.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
             b2.setOrientation(LinearLayout.VERTICAL);
-            int in12 = (int) context.getResources().getDimension(R.dimen.news_indent12);
+            int in12 = (int) getActivity().getResources().getDimension(R.dimen.news_indent12);
             b2.setPadding(in12,pad,0,pad);
-            TextView tv = new TextView(context);
+            TextView tv = new TextView(getActivity());
             tv.setText(c.getTitle());
             tv.setLayoutParams(lp_W_W);
-            tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_photo));
+            tv.setTextColor(getActivity().getResources().getColor(R.color.news_color_text));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_photo));
             b2.addView(tv);
-            TextView tva = new TextView(context);
+            TextView tva = new TextView(getActivity());
             tva.setText(c.getAuthor());
             tva.setLayoutParams(lp_W_W);
-            tva.setTextColor(context.getResources().getColor(R.color.news_color_text));
-            tva.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_photo));
+            tva.setTextColor(getActivity().getResources().getColor(R.color.news_color_text));
+            tva.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_photo));
             b2.addView(tva);
             b1.addView(b2);
             author.addView(b1);
@@ -419,23 +414,23 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     public View setGallery(Content c){
 //        final String [] gal = c.getData().split(" ; ");
         final List<String> gal = c.getData();
-        final TextView numPhoto = new TextView(context);
+        final TextView numPhoto = new TextView(getActivity());
         numPhoto.setLayoutParams(lp_W_W);
-        numPhoto.setTextAppearance(context, R.style.photo_title);
+        numPhoto.setTextAppearance(getActivity(), R.style.photo_title);
         numPhoto.setText("1 из "+gal.size());
-        TextView txtGal = new TextView(context);
+        TextView txtGal = new TextView(getActivity());
         txtGal.setLayoutParams(lp_W_W);
-        txtGal.setTextAppearance(context, R.style.title_gallery);
+        txtGal.setTextAppearance(getActivity(), R.style.title_gallery);
         txtGal.setText("Галерея        ");
 
-        LinearLayout titleG = new LinearLayout(context);
+        LinearLayout titleG = new LinearLayout(getActivity());
         titleG.setOrientation(LinearLayout.HORIZONTAL);
-        int pad1 = (int) context.getResources().getDimension(R.dimen.news_pad_title_gallery);
+        int pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_pad_title_gallery);
         titleG.setPadding(pad1, 0, pad1, pad1);
         titleG.addView(txtGal);
         titleG.addView(numPhoto);
-        PageAdapter pa = new PageAdapter(context, gal);
-        ViewPager vp = new ViewPager(context);
+        PageAdapter pa = new PageAdapter(getActivity(), gal);
+        ViewPager vp = new ViewPager(getActivity());
         vp.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 (int) getResources().getDimension(R.dimen.news_video_h)));
         vp.setAdapter(pa);
@@ -459,44 +454,44 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
 
             }
         });
-        LinearLayout lt = new LinearLayout(context);
+        LinearLayout lt = new LinearLayout(getActivity());
         lt.setOrientation(LinearLayout.VERTICAL);
-        int pad = (int) context.getResources().getDimension(R.dimen.news_padding_img);
+        int pad = (int) getActivity().getResources().getDimension(R.dimen.news_padding_img);
         lt.setPadding(pad, 0, pad, 0);
         lt.addView(titleG);
         lt.addView(vp);
         if ((c.getTitle().length()>0) ||(c.getAuthor().length()>0)) {
-            LinearLayout author = new LinearLayout(context);
+            LinearLayout author = new LinearLayout(getActivity());
             author.setOrientation(LinearLayout.VERTICAL);
             author.setLayoutParams(lp_W_W);
-            int indent = (int) context.getResources().getDimension(R.dimen.news_indent48);
+            int indent = (int) getActivity().getResources().getDimension(R.dimen.news_indent48);
             author.setPadding(indent, 0, 0, 0);
-            LinearLayout b1 = new LinearLayout(context);
+            LinearLayout b1 = new LinearLayout(getActivity());
             author.setOrientation(LinearLayout.VERTICAL);
             b1.setLayoutParams(lp_W_W);
-            b1.setBackgroundColor(context.getResources().getColor(R.color.news_color_line));
-            int t = (int) context.getResources().getDimension(R.dimen.news_thickness_line);
+            b1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
+            int t = (int) getActivity().getResources().getDimension(R.dimen.news_thickness_line);
             b1.setPadding(t,0,0,0);
-            LinearLayout b2 = new LinearLayout(context);
+            LinearLayout b2 = new LinearLayout(getActivity());
             b2.setLayoutParams(lp_W_W);
-            b2.setBackgroundColor(context.getResources().getColor(R.color.news_color_white));
+            b2.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
             b2.setOrientation(LinearLayout.VERTICAL);
-            int in12 = (int) context.getResources().getDimension(R.dimen.news_indent12);
+            int in12 = (int) getActivity().getResources().getDimension(R.dimen.news_indent12);
             b2.setPadding(in12,pad,0,pad);
             if (c.getTitle().length()>0){
-                TextView tv = new TextView(context);
+                TextView tv = new TextView(getActivity());
                 tv.setText(c.getTitle());
                 tv.setLayoutParams(lp_W_W);
-                tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_photo));
+                tv.setTextColor(getActivity().getResources().getColor(R.color.news_color_text));
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_photo));
                 b2.addView(tv);
             }
             if (c.getAuthor().length()>0) {
-                TextView tva = new TextView(context);
+                TextView tva = new TextView(getActivity());
                 tva.setText(c.getAuthor());
                 tva.setLayoutParams(lp_W_W);
-                tva.setTextColor(context.getResources().getColor(R.color.news_color_text));
-                tva.setTextSize(TypedValue.COMPLEX_UNIT_PX, context.getResources().getDimension(R.dimen.news_fsize_photo));
+                tva.setTextColor(getActivity().getResources().getColor(R.color.news_color_text));
+                tva.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_photo));
                 b2.addView(tva);
             }
             b1.addView(b2);
@@ -507,41 +502,41 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public View setComment(Content c){
-        LinearLayout author = new LinearLayout(context);
+        LinearLayout author = new LinearLayout(getActivity());
         author.setOrientation(LinearLayout.HORIZONTAL);
         author.setLayoutParams(lp_W_W);
-        int indent = (int) context.getResources().getDimension(R.dimen.news_pad_comment_l);
-        int indR = (int) context.getResources().getDimension(R.dimen.news_pad_comment_r);
+        int indent = (int) getActivity().getResources().getDimension(R.dimen.news_pad_comment_l);
+        int indR = (int) getActivity().getResources().getDimension(R.dimen.news_pad_comment_r);
         author.setPadding(indent, 0, indR, 0);
-        ImageView iv = new ImageView(context);
+        ImageView iv = new ImageView(getActivity());
         iv.setLayoutParams(lp_W_W);
-        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.vox_ic_red_quote));
+        iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.vox_ic_red_quote));
         author.addView(iv);
 
-        LinearLayout b1 = new LinearLayout(context);
+        LinearLayout b1 = new LinearLayout(getActivity());
         b1.setOrientation(LinearLayout.VERTICAL);
         b1.setLayoutParams(lp_W_W);
-        int ind = (int) context.getResources().getDimension(R.dimen.news_pad_comment_t);
+        int ind = (int) getActivity().getResources().getDimension(R.dimen.news_pad_comment_t);
         b1.setPadding(ind, ind, 0, 0);
-        TextView tvc = new TextView(context);
+        TextView tvc = new TextView(getActivity());
         tvc.setText(c.getData().get(0));
         tvc.setLayoutParams(lp_W_W);
-        tvc.setTextAppearance(context, R.style.comment);
+        tvc.setTextAppearance(getActivity(), R.style.comment);
         b1.addView(tvc);
 
-        LinearLayout b2 = new LinearLayout(context);
+        LinearLayout b2 = new LinearLayout(getActivity());
         b2.setLayoutParams(lp_W_W);
         b2.setOrientation(LinearLayout.VERTICAL);
-        TextView tv = new TextView(context);
+        TextView tv = new TextView(getActivity());
         tv.setLayoutParams(lp_W_W);
         tv.setText(c.getTitle());
-        tv.setTextAppearance(context, R.style.photo_title);
+        tv.setTextAppearance(getActivity(), R.style.photo_title);
         b2.addView(tv);
 
-        TextView tva = new TextView(context);
+        TextView tva = new TextView(getActivity());
         tva.setLayoutParams(lp_W_W);
         tva.setText(c.getAuthor());
-        tva.setTextAppearance(context, R.style.photo_author);
+        tva.setTextAppearance(getActivity(), R.style.photo_author);
         b2.addView(tva);
         b1.addView(b2);
         author.addView(b1);
@@ -549,9 +544,9 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public View setVideo(Content c){
-        LinearLayout v = new LinearLayout(context);
+        LinearLayout v = new LinearLayout(getActivity());
         v.setLayoutParams(lp_W_W);
-        v.setBackgroundColor(context.getResources().getColor(R.color.news_color_test1));
+        v.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_test1));
 
 //        TextView tv = new TextView(context);
 //        tv.setText(c.getData());
@@ -566,10 +561,10 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
 //        lt.addView(tv);
 //        v.addView(lt);
 
-        VideoView myVideoView = new VideoView(context);
+        VideoView myVideoView = new VideoView(getActivity());
         myVideoView.setVideoURI(Uri.parse(c.getData().get(0)));
         if (mediaControls == null) {
-            mediaControls = new MediaController(context);
+            mediaControls = new MediaController(getActivity());
         }
         myVideoView.setMediaController(mediaControls);
         myVideoView.requestFocus(0);
@@ -592,13 +587,13 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public void setAuthor(Author a){
-        View view = ((LayoutInflater) context.getSystemService(
+        View view = ((LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.news_author, null);
         ImageView iv = (ImageView) view.findViewById(R.id.imv);
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView post = (TextView) view.findViewById(R.id.post);
-        BitmapPool pool = Glide.get(context).getBitmapPool();
-        Glide.with(context).load(a.getAvatar()).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
+        BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
+        Glide.with(this).load(a.getAvatar()).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
         name.setText(a.getTitle());
         post.setText(a.getPosition());
         ll.addView(view);
@@ -607,15 +602,15 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
 
 
     public void setSimilar(List<Similar> s){
-        TextView tv = new TextView(context);
+        TextView tv = new TextView(getActivity());
         tv.setText("Материал по теме");
         tv.setLayoutParams(lp_W_W);
-        tv.setTextColor(context.getResources().getColor(R.color.news_color_text));
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,context.getResources().getDimension(R.dimen.news_fsize_text));
-        LinearLayout lt = new LinearLayout(context);
+        tv.setTextColor(getActivity().getResources().getColor(R.color.news_color_text));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_text));
+        LinearLayout lt = new LinearLayout(getActivity());
         lt.setLayoutParams(lp_W_W);
-        int padText = (int) context.getResources().getDimension(R.dimen.news_padding_txt);
-        int padSim = (int) context.getResources().getDimension(R.dimen.news_padding_similar);
+        int padText = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
+        int padSim = (int) getActivity().getResources().getDimension(R.dimen.news_padding_similar);
         lt.setPadding(padSim, padText, padSim, padSim);
         lt.addView(tv);
         ll.addView(lt);
@@ -635,17 +630,17 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         TextView txt_views;
         TextView txt_comment;
 
-        View view = ((LayoutInflater) context.getSystemService(
+        View view = ((LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
         view.setClickable(true);
         view.setOnClickListener(this);
-        view.setTag("art;"+a.getId());
+        view.setTag("art;" + a.getId());
         iv = (ImageView) view.findViewById(R.id.imv_l);
         title = (TextView) view.findViewById(R.id.title_l);
         date = (TextView) view.findViewById(R.id.date_l);
         txt_views = (TextView) view.findViewById(R.id.txt_views_l);
         txt_comment = (TextView) view.findViewById(R.id.txt_comment_l);
-        Glide.with(context).load(a.getImage()).centerCrop().into(iv);
+        Glide.with(this).load(a.getImage()).centerCrop().into(iv);
         title.setText(a.getTitle());
         date.setText(a.getPostDate());
         txt_views.setText(a.getViwed());

@@ -17,7 +17,7 @@ import java.util.List;
 
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.model.rows.IRowItemModel;
-import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
+import kz.voxpopuli.voxapplication.network.wrappers.search.top.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.search.top.Group;
 
 /**
@@ -126,9 +126,11 @@ public class SearchByTopAdapter extends BaseAdapter {
                     if(!filled) {
                         twoItems = new LinkedList<>();
                         twoItems.add(atg);
+                        innerItems.add(twoItems);
+                        filled = true;
                     } else {
                         twoItems.add(atg);
-                        innerItems.add(twoItems);
+                        filled = false;
                     }
                 }
             }

@@ -3,6 +3,7 @@
     android:id="@+id/search_by_string_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
     android:divider="@null"
     >
 </ListView>

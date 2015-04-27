@@ -109,7 +109,7 @@ public class EditUserProfileFragment extends BaseFragment {
         params.put("password", UserInfoTools.getUserPassword(getActivity()));
         params.put("firstName", userName.getText().toString());
         params.put("lastName", userSurname.getText().toString());
-        //  params.put("image", "");
+        //params.put("image", "");
         params.put("", VoxProviderUrls.SALT);
 
         String signature = MD5Hasher.getHash(params);

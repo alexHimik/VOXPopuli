@@ -1,39 +1,41 @@
-package kz.voxpopuli.voxapplication.network.wrappers.search.top;
+package kz.voxpopuli.voxapplication.network.wrappers.tag;
 
 /**
- * Created by user on 16.04.15.
+ * Created by user on 27.04.15.
  */
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 
-public class Group {
+import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
+
+public class TagDataWrapper {
 
     @Expose
-    private String name;
+    private Tag tag;
     @Expose
     private List<Article> articles = new ArrayList<Article>();
 
     /**
      *
      * @return
-     * The name
+     * The tag
      */
-    public String getName() {
-        return name;
+    public Tag getTag() {
+        return tag;
     }
 
     /**
      *
-     * @param name
-     * The name
+     * @param tag
+     * The tag
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 
-    public Group withName(String name) {
-        this.name = name;
+    public TagDataWrapper withTag(Tag tag) {
+        this.tag = tag;
         return this;
     }
 
@@ -55,7 +57,7 @@ public class Group {
         this.articles = articles;
     }
 
-    public Group withArticles(List<Article> articles) {
+    public TagDataWrapper withArticles(List<Article> articles) {
         this.articles = articles;
         return this;
     }

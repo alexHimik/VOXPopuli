@@ -11,8 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,43 +23,36 @@ import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.MainPageContentRequest;
 import kz.voxpopuli.voxapplication.network.request.RubricContentRequest;
+import kz.voxpopuli.voxapplication.network.request.TagInfoRequest;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.MainPageDataWrapper;
-import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricContentWrapper;
+import kz.voxpopuli.voxapplication.network.wrappers.tag.TagDataWrapper;
 
 /**
  * Created by user on 09.04.15.
  */
-public class CategoryFragment extends BaseFragment implements ListView.OnItemClickListener,
-        SwipyRefreshLayout.OnRefreshListener {
+public class CategoryFragment extends BaseFragment implements ListView.OnItemClickListener {
 
     public static final String TAG = "CategoryFragment";
     public static final int FRAGMENT_ID = 2;
 
     private ListView lv;
-    private SwipyRefreshLayout swipeRefreshLayout;
     private List<Article> articles = new LinkedList<>();
     private ArticlesAdapter articlesAdapter;
 
     private int currentPage = 1;
-    private String currentRubricId;
+    private boolean tagShowing;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        swipeRefreshLayout = (SwipyRefreshLayout)inflater.inflate(R.layout.articles, container, false);
-        lv = (ListView) swipeRefreshLayout.findViewById(R.id.lv_articles);
+        lv = (ListView)inflater.inflate(R.layout.articles, container, false);
         articlesAdapter = new ArticlesAdapter(this, articles, true);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setRefreshing(true);
-        swipeRefreshLayout.setColorSchemeColors(getActivity().getResources().getColor(R.color.vox_red),
-                getActivity().getResources().getColor(R.color.vox_red),
-                getActivity().getResources().getColor(R.color.vox_red));
         lv.setAdapter(articlesAdapter);
         lv.setOnItemClickListener(this);
         handleCategoryContentGetting();
-        return swipeRefreshLayout;
+        return lv;
     }
 
     @Override
@@ -83,29 +74,6 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         bundle.putString(NewsPageFragment.ARTICLE_KEY, artice.getId());
         ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
                 bundle);
-    }
-
-    @Override
-    public void onRefresh(SwipyRefreshLayoutDirection swipyRefreshLayoutDirection) {
-        if(swipyRefreshLayoutDirection == SwipyRefreshLayoutDirection.TOP) {
-            if(currentPage > 1) {
-                currentPage = currentPage - 1;
-                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
-                        (MainActivity)getActivity());
-                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
-            } else {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        } else {
-            if(currentPage < 10) {
-                currentPage = currentPage + 1;
-                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
-                        (MainActivity)getActivity());
-                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
-            } else {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }
     }
 
     @Override
@@ -136,21 +104,21 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         if (!articles.isEmpty()) {
             articles.clear();
         }
+        tagShowing = false;
         articlesAdapter.setRedItemsUsing(true);
         articles.addAll(wrapper.getMain().getArticles());
         articlesAdapter.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
     }
 
-    public void onEvent(RubricContentWrapper rubricContentWrapper) {
+    public void onEvent(TagDataWrapper tagDataWrapper) {
         if(!articles.isEmpty() && currentPage == 1) {
             articles.clear();
         }
-        currentRubricId = rubricContentWrapper.getRubricId();
+        tagShowing = true;
+        ((TextView)centerBatItem).setText(tagDataWrapper.getTag().getTitle());
         articlesAdapter.setRedItemsUsing(false);
-        articles.addAll(rubricContentWrapper.getArticles());
+        articles.addAll(tagDataWrapper.getArticles());
         articlesAdapter.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void handleCategoryContentGetting() {
@@ -158,14 +126,18 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         CategorySelectedEvent selectedEvent = (CategorySelectedEvent)data.get(
                 CategorySelectedEvent.CATEGORY_DATA);
 
-        Request request;
-        if(getString(R.string.category_name_all).equals(selectedEvent.getCategoryName())) {
+        Request request = null;
+        if(getString(R.string.category_name_all).equals(selectedEvent.getCategoryName()) && !selectedEvent.isTag()) {
             request = new MainPageContentRequest((MainActivity)getActivity());
             ((TextView)centerBatItem).setText(getString(R.string.category_name_all));
-        } else {
+        } else if(!selectedEvent.isTag()) {
             request = new RubricContentRequest(String.valueOf(selectedEvent.getCategoryId()), 1,
                     (MainActivity)getActivity());
             ((TextView)centerBatItem).setText(selectedEvent.getCategoryName());
+        } else if(selectedEvent.isTag()) {
+            request = new TagInfoRequest(String.valueOf(selectedEvent.getCategoryId()),
+                    (MainActivity)getActivity());
+            leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
         }
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
     }
@@ -173,7 +145,11 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
     private View.OnClickListener barListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((MainActivity)getActivity()).onClick(v);
+            if(tagShowing) {
+                ((MainActivity)getActivity()).onBackPressed();
+            } else {
+                ((MainActivity)getActivity()).onClick(v);
+            }
         }
     };
 }
