@@ -28,6 +28,7 @@
     <string name="registration_screen_header_text">Регистрация</string>
     <string name="edit_profile_screen_header_text">Редактирование</string>
     <string name="password_change_screen_header">Изменение пароля</string>
+    <string name="article_comments_screen_header">Комментарии</string>
 
     <string name="search_bar_input_hint">Поиск</string>
     <string name="user_comments_text">Комментарии</string>

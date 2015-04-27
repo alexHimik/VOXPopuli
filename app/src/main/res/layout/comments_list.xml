@@ -17,12 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/comm_bg">
-            <!--<LinearLayout-->
-                <!--android:layout_width="56dp"-->
-                <!--android:layout_height="56dp"-->
-                <!--android:id="@+id/lim"-->
-                <!--android:padding="@dimen/com_padd_img12"-->
-                <!--android:layout_centerVertical="true">-->
                 <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
@@ -30,7 +24,6 @@
                         android:id="@+id/imv_com_b"
                         android:src="@color/news_color_test1"
                     android:layout_margin="@dimen/com_padd_img12" />
-            <!--</LinearLayout>-->
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="wrap_content"
@@ -50,18 +43,23 @@
                 android:textAppearance="@style/com_14_99"
                 android:id="@+id/rt"
                 android:layout_centerVertical="true" />
-
-
-
-
         </RelativeLayout>
     </LinearLayout>
-    <ListView
-        android:id="@+id/lv"
+    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_above="@id/tt"
         android:layout_height="wrap_content"
-        android:paddingTop="?attr/actionBarSize"
-        android:divider="@null">
-    </ListView>
+        android:layout_marginTop="?attr/actionBarSize"
+        app:direction="bottom"
+        >
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_above="@id/tt"
+            android:layout_height="wrap_content"
+            android:divider="@null">
+        </ListView>
+    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 </RelativeLayout>

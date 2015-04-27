@@ -19,14 +19,15 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.network.wrappers.comments.Comment;
+import kz.voxpopuli.voxapplication.network.wrappers.comments.article.ArcticleComment;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.tools.UserInfoTools;
 
 public class CommentsListAdapter extends BaseAdapter {
     private Fragment context;
-    private List<Comment> items;
+    private List<ArcticleComment> items;
 
-    public CommentsListAdapter(Fragment context, List<Comment> items) {
+    public CommentsListAdapter(Fragment context, List<ArcticleComment> items) {
         this.context = context;
         this.items = items;
     }
@@ -37,7 +38,7 @@ public class CommentsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Comment getItem(int position) {
+    public ArcticleComment getItem(int position) {
         return items == null ? null : items.get(position);
     }
 
@@ -55,11 +56,9 @@ public class CommentsListAdapter extends BaseAdapter {
         TextView textComment;
 
         BitmapPool pool;
-//        TextView txt_comment;
-//        LinearLayout ll;
 
         View view = convertView;
-        Comment com = items.get(position);
+        ArcticleComment com = items.get(position);
 
         view = ((LayoutInflater) context.getActivity().getSystemService(
                         Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comments_item, null);
@@ -69,11 +68,11 @@ public class CommentsListAdapter extends BaseAdapter {
         datetime = (TextView) view.findViewById(R.id.datetime);
         textComment = (TextView) view.findViewById(R.id.txt_comm);
 
-        author.setText(com.getAuthor());
-        datetime.setText(com.getDatetime());
-        textComment.setText(com.getTxt());
+        author.setText(com.getAuthorName());
+        datetime.setText(com.getCommentDate());
+        textComment.setText(com.getComment());
         pool = Glide.get(context.getActivity()).getBitmapPool();
-        Glide.with(context).load(com.getAvatar()).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
+        Glide.with(context).load(com.getAuthorAvatar()).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
 
         return view;
     }

@@ -123,10 +123,6 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         super.onStop();
     }
 
-//    public void onEvent(PageNewsWrapper wrapper) {
-//        pn = wrapper.getPnews();
-//    }
-
 
     @Override
     public String getFragmentTag() {
@@ -179,7 +175,7 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
         if (btn.equals("com")) {
             Bundle bundle = new Bundle();
             bundle.putString(NewsPageFragment.ARTICLE_KEY, id);
-            ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+            ((MainActivity)getActivity()).handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,
                     bundle);
             return;
         }
@@ -192,7 +188,6 @@ public class NewsPageFragment extends FaddingTitleBaseFragment implements Respon
     }
 
     public void setArticle(){
-//        Article article = pn.getArticle();
         ImageView iv = (ImageView)parent.findViewById(R.id.imageView);
         Glide.with(this).load(pn.getImageMid()).into(iv);
 

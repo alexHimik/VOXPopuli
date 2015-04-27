@@ -1,22 +1,21 @@
 package kz.voxpopuli.voxapplication.fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.devspark.robototextview.widget.RobotoEditText;
+import com.devspark.robototextview.widget.RobotoTextView;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,107 +24,40 @@ import de.greenrobot.event.EventBus;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
-import kz.voxpopuli.voxapplication.adapter.ArticlesAdapter;
 import kz.voxpopuli.voxapplication.adapter.CommentsListAdapter;
-import kz.voxpopuli.voxapplication.network.wrappers.comments.Comment;
-import kz.voxpopuli.voxapplication.network.wrappers.comments.CommentsList;
-import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
-import kz.voxpopuli.voxapplication.network.wrappers.pnews.PageNewsWrapper;
+import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.ArticleCommentsRequest;
+import kz.voxpopuli.voxapplication.network.wrappers.comments.article.ArcticleComment;
+import kz.voxpopuli.voxapplication.network.wrappers.comments.article.ArticleCommentsWrapper;
 import kz.voxpopuli.voxapplication.tools.UserInfoTools;
 
-public class CommentsListFragment extends FaddingTitleBaseFragment implements View.OnClickListener{
+public class CommentsListFragment extends BaseFragment implements SwipyRefreshLayout.OnRefreshListener {
+
     public static final String TAG = "CommentsListFragment";
     public static final int FRAGMENT_ID = 200;
 
-//    public Context context;
-
     private CommentsListAdapter commentsAdapter;
-    private List<Comment> comments = new LinkedList<>();
+    private List<ArcticleComment> comments = new LinkedList<>();
+
+    private ListView lv;
+    private ImageView send;
+    private ImageView iv;
+    private SwipyRefreshLayout refreshLayout;
+
+    private int page = 1;
+    private String articleId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Context context = getActivity().getApplicationContext();
-        Comment c = new Comment();
-            c.setId("125");
-            c.setAuthor("Ayala");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/90/50_tn.jpg");
-            c.setDatetime("Вчера 14:37");
-            c.setTxt("А чем отличаются дроны от коптеров? Недавно видела видео, на котором рыбачили с помощью дрона");
-        comments.add(c);
-        c = new Comment();
-            c.setId("126");
-            c.setAuthor("Ула Темир");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/86/52_tn.png");
-            c.setDatetime("Вчера 15:37");
-            c.setTxt("Дрон значит беспилотный летательный аппарат, он летает по заданному маршруту, постоянное управление с пульта ему не нужно. У дорогих мультикоптеров есть такая функция. ");
-        comments.add(c);
-        c = new Comment();
-            c.setId("127");
-            c.setAuthor("Ruslan Rimov");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/333/93_tn.png");
-            c.setDatetime("14 апреля 10:22");
-            c.setTxt("Дорогой ВОКС. Раз уж Вы пишите (постите и.т.п) про полуголых баб, то пожалуйста не пишите (постите и.т.п) реп`ы о светом.");
-        comments.add(c);
-        c = new Comment();
-            c.setId("125");
-            c.setAuthor("Ayala");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/90/50_tn.jpg");
-            c.setDatetime("Вчера 14:37");
-            c.setTxt("А чем отличаются дроны от коптеров? Недавно видела видео, на котором рыбачили с помощью дрона");
-        comments.add(c);
-        c = new Comment();
-            c.setId("126");
-            c.setAuthor("Ула Темир");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/86/52_tn.png");
-            c.setDatetime("Вчера 15:37");
-            c.setTxt("Дрон значит беспилотный летательный аппарат, он летает по заданному маршруту, постоянное управление с пульта ему не нужно. У дорогих мультикоптеров есть такая функция. ");
-        comments.add(c);
-        c = new Comment();
-            c.setId("127");
-            c.setAuthor("Ruslan Rimov");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/333/93_tn.png");
-            c.setDatetime("14 апреля 10:22");
-            c.setTxt("Дорогой ВОКС. Раз уж Вы пишите (постите и.т.п) про полуголых баб, то пожалуйста не пишите (постите и.т.п) реп`ы о светом.");
-        comments.add(c);
-        c = new Comment();
-            c.setId("125");
-            c.setAuthor("Ayala");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/90/50_tn.jpg");
-            c.setDatetime("Вчера 14:37");
-            c.setTxt("А чем отличаются дроны от коптеров? Недавно видела видео, на котором рыбачили с помощью дрона");
-        comments.add(c);
-        c = new Comment();
-            c.setId("126");
-            c.setAuthor("Ула Темир");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/86/52_tn.png");
-            c.setDatetime("Вчера 15:37");
-            c.setTxt("Дрон значит беспилотный летательный аппарат, он летает по заданному маршруту, постоянное управление с пульта ему не нужно. У дорогих мультикоптеров есть такая функция. ");
-        comments.add(c);
-        c = new Comment();
-            c.setId("127");
-            c.setAuthor("Ruslan Rimov");
-            c.setAvatar("http://www.voxpopuli.kz/img/user/333/93_tn.png");
-            c.setDatetime("14 апреля 10:22");
-            c.setTxt("Дорогой ВОКС. Раз уж Вы пишите (постите и.т.п) про полуголых баб, то пожалуйста не пишите (постите и.т.п) реп`ы о светом.");
-        comments.add(c);
-
+        super.onCreateView(inflater, container, savedInstanceState);
         View parent = inflater.inflate(R.layout.comments_list, container,false);
-//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        RobotoEditText rt = (RobotoEditText) parent.findViewById(R.id.rt);
-//        rt.requestFocus(false);
-        ListView lv = (ListView) parent.findViewById(R.id.lv);
-        commentsAdapter = new CommentsListAdapter(this, comments);
-        ImageView send = (ImageView) parent.findViewById(R.id.send);
-        send.setOnClickListener(this);
-        lv.setAdapter(commentsAdapter);
-        ImageView iv = (ImageView) parent.findViewById(R.id.imv_com_b);
-
-        UserInfoTools uit = new UserInfoTools();
-        BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
-//        Glide.with(context).load(uit.getUserAvatarUrl(context)).bitmapTransform(new CropCircleTransformation(pool)).into(iv);
-        Glide.with(context).load("http://www.voxpopuli.kz/img/user/379/20_main.png").bitmapTransform(new CropCircleTransformation(pool)).into(iv);
-
+        initViews(parent);
+        Bundle data = getArguments();
+        articleId = data.getString(NewsPageFragment.ARTICLE_KEY);
+        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
+                new ArticleCommentsRequest(articleId, String.valueOf(page),
+                        (MainActivity)getActivity()));
         return parent;
     }
 
@@ -133,11 +65,46 @@ public class CommentsListFragment extends FaddingTitleBaseFragment implements Vi
     public void initActionBarItems() {
         rightBarItem.setVisibility(View.INVISIBLE);
         leftbarItem.setOnClickListener(barClickListener);
+        leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
+        ((RobotoTextView)centerBatItem).setText(getString(R.string.article_comments_screen_header));
     }
+
+    @Override
+    public View getActionBarCustomView(LayoutInflater inflater) {
+        View customBar = super.getActionBarCustomView(inflater);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
+        return customBar;
+    }
+
+    private void initViews(View parent) {
+        lv = (ListView) parent.findViewById(R.id.lv);
+        commentsAdapter = new CommentsListAdapter(this, comments);
+        send = (ImageView) parent.findViewById(R.id.send);
+
+        refreshLayout = (SwipyRefreshLayout)parent.findViewById(R.id.swipe_refresh_layout);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorSchemeColors(getActivity().getResources().getColor(R.color.vox_red),
+                getActivity().getResources().getColor(R.color.vox_red),
+                getActivity().getResources().getColor(R.color.vox_red));
+
+        send.setOnClickListener(barClickListener);
+        lv.setAdapter(commentsAdapter);
+        iv = (ImageView) parent.findViewById(R.id.imv_com_b);
+
+        UserInfoTools uit = new UserInfoTools();
+        BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
+        Glide.with(this).load(uit.getUserAvatarUrl(getActivity())).bitmapTransform(
+                new CropCircleTransformation(pool)).into(iv);
+    }
+
     private View.OnClickListener barClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((MainActivity)getActivity()).onClick(v);
+            if(v.getId() == R.id.right_drawer_item) {
+                ((MainActivity)getActivity()).onBackPressed();
+            } else if(v.getId() == R.id.send) {
+
+            }
         }
     };
 
@@ -153,8 +120,26 @@ public class CommentsListFragment extends FaddingTitleBaseFragment implements Vi
         super.onStop();
     }
 
-    public void onEvent(CommentsList wrapper) {
-        comments = wrapper.getComments();
+    public void onEvent(ArticleCommentsWrapper wrapper) {
+        if(wrapper.getArcticleComments().size() > 0) {
+            comments.addAll(wrapper.getArcticleComments());
+            commentsAdapter.notifyDataSetChanged();
+            refreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onRefresh(SwipyRefreshLayoutDirection swipyRefreshLayoutDirection) {
+        if(swipyRefreshLayoutDirection == SwipyRefreshLayoutDirection.BOTTOM) {
+            if(page < 10) {
+                page = page + 1;
+                ArticleCommentsRequest request = new ArticleCommentsRequest(articleId, String.valueOf(page),
+                        (MainActivity)getActivity());
+                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
+            } else {
+                refreshLayout.setRefreshing(false);
+            }
+        }
     }
 
     @Override
@@ -165,10 +150,5 @@ public class CommentsListFragment extends FaddingTitleBaseFragment implements Vi
     @Override
     public int getFragmentId() {
         return FRAGMENT_ID;
-    }
-
-    @Override
-    public void onClick(View v) {
-        Log.d("QWERT", "SEND Comment");
     }
 }
