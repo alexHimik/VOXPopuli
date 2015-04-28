@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
     </View>
+
     <View
         android:id="@+id/hoster_row_right_item"
         android:layout_width="match_parent"

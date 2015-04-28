@@ -21,6 +21,7 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
 
     final String TAG = "SocialDialog";
     private SocialNetworkUtils socialNetworkUtils;
+    private String link;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,23 +37,29 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
         return sd;
     }
 
+    public void setLink(String l){link = l;}
+
     public void onClick(View v) {
         switch (((LinearLayout) v).getId()) {
             case R.id.l_facebook :
 Log.d("ASDF","l_facebook");
-                socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(FacebookSocialNetwork.ID, link, "", "");
+//                socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
                 break;
             case R.id.l_twitter :
 Log.d("ASDF","l_tweeter");
-                socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(TwitterSocialNetwork.ID, link, "", "");
+//                socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
                 break;
             case R.id.l_google :
 Log.d("ASDF","l_google");
-                socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(GooglePlusSocialNetwork.ID, link, "", "");
+//                socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
                 break;
             case R.id.l_vkontakt :
 Log.d("ASDF","l_vkontakt");
-                socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(VkSocialNetwork.ID, link, "", "");
+//                socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
                 break;
         }
         dismiss();

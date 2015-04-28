@@ -69,6 +69,9 @@
     <dimen name="news_size_line">1dp</dimen>
     <dimen name="news_height_tag">32dp</dimen>
     <dimen name="news_height_img_com">56dp</dimen>
+    <dimen name="news_8">8dp</dimen>
+    <dimen name="news_4">4dp</dimen>
+
 
     <!-- Список комментариев -->
     <dimen name="com_size_img">40dp</dimen>
