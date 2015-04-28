@@ -2,6 +2,7 @@ package kz.voxpopuli.voxapplication.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,8 @@ public class SearchByTopAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         List<ArticleAndGroup> item = innerItems.get(position);
         View view = convertView;
+//        int pad8 = (int) parent.getResources().getDimension(R.dimen.news_8);
+//        int pad4 = (int) parent.getResources().getDimension(R.dimen.news_4);
         if(item.size() == 1 && item.get(0).isGroup()) {
             view = item.get(0).initModelsViews(inflater);
             item.get(0).setModelDataToViews(fragment.getActivity());
@@ -82,6 +85,7 @@ public class SearchByTopAdapter extends BaseAdapter {
             leftCell.setId(item.get(0).getId());
             ((ViewGroup)row).removeView(left);
             ((ViewGroup)row).addView(leftCell, 0);
+//            leftCell.setPadding(pad8, pad8, pad4, 0);
             item.get(0).setModelDataToViews(fragment.getActivity());
 
             if(item.size() > 1) {
@@ -91,6 +95,7 @@ public class SearchByTopAdapter extends BaseAdapter {
                 rightCell.setId(item.get(1).getId());
                 ((ViewGroup)row).removeView(right);
                 ((ViewGroup)row).addView(rightCell, 1);
+//                rightCell.setPadding(pad4, pad8, pad8, 0);
                 item.get(1).setModelDataToViews(fragment.getActivity());
             }
             view = row;

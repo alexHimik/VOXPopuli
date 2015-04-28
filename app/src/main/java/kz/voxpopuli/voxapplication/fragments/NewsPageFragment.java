@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -159,7 +160,8 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
             return;
         }
         if (btn.equals("send")) {
-            DialogFragment dlg = new SocialDialogFragment();
+            SocialDialogFragment dlg = new SocialDialogFragment();
+            dlg.setLink(pn.getLink());
             dlg.show(((MainActivity)getActivity()).getSupportFragmentManager(), "dlg");
             return;
         }
@@ -305,6 +307,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
     public View setV(Content c){
         String type = c.getType();
+Log.d("ASDF","Type="+type);
         if (type.equals("title")) return setTitle(c);
         if (type.equals("txt")) return setTxt(c);
         if (type.equals("comment")) return setComment(c);

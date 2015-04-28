@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -31,9 +33,6 @@ import kz.voxpopuli.voxapplication.network.wrappers.comments.user.Comment;
 import kz.voxpopuli.voxapplication.network.wrappers.comments.user.UserCommentsWrapper;
 import kz.voxpopuli.voxapplication.tools.UserInfoTools;
 
-/**
- * Created by user on 22.04.15.
- */
 public class UserProfileFragment extends FaddingTitleBaseFragment {
 
     public static final String TAG = "UserProfileFragment";
@@ -45,6 +44,8 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
 
     private List<Comment> comments = new LinkedList<>();
     private UserProfileCommentsAdapter adapter;
+    private String authorAvatar, authorName, authorId;
+    private Boolean authorRead = true;
 
     @Override
     public void onAttach(Activity activity) {
@@ -60,6 +61,20 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle data = getArguments();
+        if (data !=null){
+            authorAvatar = data.getString("AUTHOR_AVATAR");
+            authorName = data.getString("AUTHOR_NAME");
+            authorId = data.getString("AUTHOR_ID");
+            authorRead = false;
+        }
+        else {
+            authorAvatar = UserInfoTools.getUserAvatarUrl(getActivity());
+            authorName = UserInfoTools.getUserFirstName(getActivity()) + " " +
+                    UserInfoTools.getUserLastName(getActivity());
+            authorId = UserInfoTools.getUSerId(getActivity());
+            authorRead = true;
+        }
         View customBar = getActionBarCustomView(inflater);
         View view = mFadingHelper.createView(inflater);
         fragmentList = (ListView)view.findViewById(android.R.id.list);
@@ -67,6 +82,7 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
         userAvatar = (ImageView)view.findViewById(R.id.user_avatar);
         userName = (RobotoTextView)view.findViewById(R.id.user_name);
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
+
         initViews();
         return view;
     }
@@ -78,7 +94,7 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
 //        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new UserCommentsRequest(
 //                UserInfoTools.getUSerId(getActivity()), ((MainActivity)getActivity())));
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new UserCommentsRequest(
-                "8914", ((MainActivity)getActivity())));
+                authorId, ((MainActivity)getActivity())));
     }
 
     @Override
@@ -90,23 +106,36 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     @Override
     public void initActionBarItems() {
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_hamburger);
-        rightBarItem.setBackgroundResource(R.drawable.vox_ic_white_edit);
         leftbarItem.setOnClickListener(clickListener);
-        rightBarItem.setOnClickListener(clickListener);
+        rightBarItem.setBackgroundResource(R.drawable.vox_ic_white_edit);
+        if (authorRead) rightBarItem.setOnClickListener(clickListener);
+        else rightBarItem.setVisibility(View.INVISIBLE);
+
         ((RobotoTextView)centerBatItem).setText("");
     }
 
     private void initViews() {
         BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
-        Glide.with(this).load(UserInfoTools.getUserAvatarUrl(getActivity())).centerCrop().
+        Glide.with(this).load(authorAvatar).centerCrop().
                 bitmapTransform(new BlurTransformation(getActivity(), pool, 7)).into(bluredBack);
-        Glide.with(this).load(UserInfoTools.getUserAvatarUrl(getActivity())).
+        Glide.with(this).load(authorAvatar).
                 centerCrop().bitmapTransform(new CropCircleTransformation(pool)).into(userAvatar);
 
-        userName.setText(UserInfoTools.getUserFirstName(getActivity()) + " " +
-                UserInfoTools.getUserLastName(getActivity()));
+        userName.setText(authorName);
         adapter = new UserProfileCommentsAdapter(getActivity(), comments);
         fragmentList.setAdapter(adapter);
+        fragmentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if (position>0) {
+                    Bundle bnd = new Bundle();
+                    bnd.putString(NewsPageFragment.ARTICLE_KEY, comments.get(position - 1).getId());
+                    ((MainActivity) getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+                            bnd);
+                }
+
+            }
+        });
     }
 
     public void onEvent(UserCommentsWrapper data) {

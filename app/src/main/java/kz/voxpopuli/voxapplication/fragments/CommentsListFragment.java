@@ -4,9 +4,12 @@ package kz.voxpopuli.voxapplication.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.widget.AdapterViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -30,6 +33,7 @@ import kz.voxpopuli.voxapplication.adapter.CommentsListAdapter;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.ArticleCommentsRequest;
 import kz.voxpopuli.voxapplication.network.request.PostUserCommentRequest;
+import kz.voxpopuli.voxapplication.network.request.UserCommentsRequest;
 import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
 import kz.voxpopuli.voxapplication.network.wrappers.comments.PostUserCommentWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.comments.article.ArcticleComment;
@@ -100,6 +104,20 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
         send.setOnClickListener(barClickListener);
         lv.setAdapter(commentsAdapter);
         iv = (ImageView) parent.findViewById(R.id.imv_com_b);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Bundle bnd = new Bundle();
+                bnd.putString("AUTHOR_ID",comments.get(position).getAuthorId());
+                bnd.putString("AUTHOR_NAME",comments.get(position).getAuthorName());
+                bnd.putString("AUTHOR_AVATAR",comments.get(position).getAuthorAvatar());
+
+                ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
+                        bnd);
+//                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new UserCommentsRequest(
+//                        comments.get(position).getAuthorId(), ((MainActivity)getActivity())));
+            }
+        });
 
         UserInfoTools uit = new UserInfoTools();
         BitmapPool pool = Glide.get(getActivity()).getBitmapPool();
@@ -118,7 +136,7 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
         }
     };
 
-    @Override
+     @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);

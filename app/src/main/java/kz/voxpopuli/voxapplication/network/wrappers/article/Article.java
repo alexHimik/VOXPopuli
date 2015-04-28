@@ -14,6 +14,8 @@ public class Article {
     private String id;
     @Expose
     private String title;
+    @Expose
+    private String link;
     @SerializedName("image_mid")
     @Expose
     private String imageMid;
@@ -79,6 +81,29 @@ public class Article {
 
     public Article withTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    /**
+     *
+     * @return
+     * The link
+     */
+    public String getLink() {
+        return link;
+    }
+
+    /**
+     *
+     * @param link
+     * The link
+     */
+    public void setLink(String link) {
+        this.title = link;
+    }
+
+    public Article withLink(String link) {
+        this.link = link;
         return this;
     }
 
