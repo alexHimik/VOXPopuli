@@ -74,6 +74,12 @@
 
     <string name="empty_field_alarm">Поля ввода не можут быть пустыми.\nПожалуйста, заполните необходимые поля.</string>
     <string name="network_unreachable_alarm">Сетевые подключения недоступны.\nПожалуйста, проверьте настройки подключений или попробуйте позже.</string>
+    <string name="file_creation_alarm">Не удалось сохранить фото. Возможно на устройстве не достаточно свободного дискового пространства.</string>
+
+    <string name="take_photo_dialog_item">Сделать фото</string>
+    <string name="chose_photo_dialog_item">Выбрать из галереи</string>
+    <string name="cancel_dialog_item">Отмена</string>
+    <string name="add_photo_dialog_title">Добавить фото</string>
 
     <string name="cancel_button_text">Отмена</string>
     <string name="ok_button_text">ОК</string>

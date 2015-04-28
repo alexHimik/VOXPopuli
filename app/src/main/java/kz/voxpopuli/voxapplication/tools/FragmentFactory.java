@@ -3,6 +3,7 @@ package kz.voxpopuli.voxapplication.tools;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import kz.voxpopuli.voxapplication.dialog.ProgressFragment;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.ChangePasswordFragment;
 import kz.voxpopuli.voxapplication.fragments.EditUserProfileFragment;
@@ -63,6 +64,9 @@ public class FragmentFactory {
             }
             case ChangePasswordFragment.FRAGMENT_ID: {
                 return new ChangePasswordFragment();
+            }
+            case ProgressFragment.FRAGMENT_ID: {
+                return new ProgressFragment();
             }
             default: {
                 return null;

@@ -539,9 +539,10 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
         VideoView myVideoView = new VideoView(getActivity());
         myVideoView.setVideoURI(Uri.parse(c.getData().get(0)));
-        if (mediaControls == null) {
+        myVideoView.setDrawingCacheEnabled(true);
+//        if (mediaControls == null) {
             mediaControls = new MediaController(getActivity());
-        }
+//        }
         myVideoView.setMediaController(mediaControls);
         myVideoView.requestFocus(0);
         myVideoView.setVisibility(View.VISIBLE);

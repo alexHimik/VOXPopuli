@@ -51,26 +51,11 @@
             android:layout_marginLeft="@dimen/login_page_side_padding"
             android:layout_marginRight="@dimen/login_page_side_padding"
             android:layout_marginTop="@dimen/profile_edit_input_top_margin"
-            android:inputType="textEmailAddress"
-            app:fontFamily="roboto"
-            app:textWeight="normal"
-            android:hint="@string/user_surname_hint"
-            />
-        <com.devspark.robototextview.widget.RobotoEditText
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_edit_nick_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            style="@style/edit_text_style"
-            android:layout_marginLeft="@dimen/login_page_side_padding"
-            android:layout_marginRight="@dimen/login_page_side_padding"
-            android:layout_marginTop="@dimen/profile_edit_input_top_margin"
             android:layout_marginBottom="@dimen/profile_edit_last_input_bottom_margin"
             android:inputType="textEmailAddress"
             app:fontFamily="roboto"
             app:textWeight="normal"
-            android:hint="@string/user_nick_hint"
+            android:hint="@string/user_surname_hint"
             />
         <View
             android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import kz.voxpopuli.voxapplication.dialog.QustomDialogBuilder;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.events.ErrorEvent;
 import kz.voxpopuli.voxapplication.events.RubricSelectedEvent;
+import kz.voxpopuli.voxapplication.events.UserAvatarSelectedEvent;
 import kz.voxpopuli.voxapplication.fragments.BackStackDataDescriber;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.CommentsListFragment;
@@ -43,12 +45,18 @@ import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
 import kz.voxpopuli.voxapplication.fragments.SearchFragment;
 import kz.voxpopuli.voxapplication.tools.DialogTools;
 import kz.voxpopuli.voxapplication.tools.FragmentFactory;
+import kz.voxpopuli.voxapplication.tools.ImageUtils;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 import kz.voxpopuli.voxapplication.tools.ViewTools;
 
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener,
         Response.ErrorListener {
+
+    public static final int GET_PICTURE_REQUEST = 111;
+    public static final int GET_FILE_CHOICER_REQUEST = 112;
+    public static final String IMAGE_PATH_GETTING_ACTION = "captured_image_path_event";
+    public static final String CAPTURED_IMAGE_PATH = "image_path";
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -62,30 +70,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         getWindow().setBackgroundDrawable(new ColorDrawable(
                 getResources().getColor(R.color.vox_white)));
         initViews();
-//        handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,null);
-//        readImageBytes();
     }
-
-//    private void readImageBytes() {
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.raw.splash);
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
-//
-//        String str = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-//
-//        File file = new File(Environment.getExternalStorageDirectory(), "test_img.png");
-//        try {
-//            if(!file.exists()) {
-//                file.createNewFile();
-//            }
-//            FileOutputStream fos = new FileOutputStream(file);
-//            fos.write(Base64.decode(str.getBytes(), Base64.DEFAULT));
-//        } catch (FileNotFoundException ex) {
-//            Log.e("MainActivity", ex.getMessage());
-//        } catch (IOException ex) {
-//            Log.e("MainActivity", ex.getMessage());
-//        }
-//    }
 
     @Override
     protected void onStart() {
@@ -142,6 +127,20 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 SocialNetworkUtils.SOCIAL_NETWORK_TAG);
         if (fragment != null) {
             fragment.onActivityResult(requestCode, resultCode, data);
+        }
+
+        if(resultCode == RESULT_OK) {
+            String filePath = null;
+            if(requestCode == GET_PICTURE_REQUEST) {
+                filePath = ImageUtils.mCurrentFilePhotoPath;
+            } else if(requestCode == GET_FILE_CHOICER_REQUEST) {
+                filePath = ImageUtils.getInstance().getFileFromGallery(data.getData(), this);
+            }
+            if(filePath != null) {
+                Intent intent = new Intent(MainActivity.IMAGE_PATH_GETTING_ACTION);
+                intent.putExtra(MainActivity.CAPTURED_IMAGE_PATH, filePath);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            }
         }
     }
 
