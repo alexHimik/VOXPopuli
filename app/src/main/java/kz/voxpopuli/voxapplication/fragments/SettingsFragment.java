@@ -119,11 +119,14 @@ public class SettingsFragment extends BaseFragment {
             } else if(v.getId() == R.id.settings_version_place) {
 
             } else if(v.getId() == R.id.settings_about_place) {
-
+                ((MainActivity)getActivity()).handleFragmentSwitching(
+                        About.FRAGMENT_ID, null);
             } else if(v.getId() == R.id.settings_rules_place) {
-
+                ((MainActivity)getActivity()).handleFragmentSwitching(
+                        RulesFragment.FRAGMENT_ID, null);
             } else if(v.getId() == R.id.settings_vacancy_place) {
-
+                ((MainActivity)getActivity()).handleFragmentSwitching(
+                        VacanciesFragment.FRAGMENT_ID, null);
             }
         }
     };

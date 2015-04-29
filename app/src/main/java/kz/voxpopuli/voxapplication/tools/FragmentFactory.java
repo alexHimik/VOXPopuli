@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import kz.voxpopuli.voxapplication.dialog.ProgressFragment;
+import kz.voxpopuli.voxapplication.fragments.About;
 import kz.voxpopuli.voxapplication.fragments.CategoryFragment;
 import kz.voxpopuli.voxapplication.fragments.ChangePasswordFragment;
 import kz.voxpopuli.voxapplication.fragments.EditUserProfileFragment;
@@ -13,9 +14,11 @@ import kz.voxpopuli.voxapplication.fragments.LoginFragment;
 import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RegistrationFragment;
 import kz.voxpopuli.voxapplication.fragments.RubricsFragment;
+import kz.voxpopuli.voxapplication.fragments.RulesFragment;
 import kz.voxpopuli.voxapplication.fragments.SearchFragment;
 import kz.voxpopuli.voxapplication.fragments.SettingsFragment;
 import kz.voxpopuli.voxapplication.fragments.UserProfileFragment;
+import kz.voxpopuli.voxapplication.fragments.VacanciesFragment;
 
 /**
  * Created by user on 25.03.15.
@@ -67,6 +70,15 @@ public class FragmentFactory {
             }
             case ProgressFragment.FRAGMENT_ID: {
                 return new ProgressFragment();
+            }
+            case About.FRAGMENT_ID: {
+                return new About();
+            }
+            case RulesFragment.FRAGMENT_ID: {
+                return new RulesFragment();
+            }
+            case VacanciesFragment.FRAGMENT_ID: {
+                return new VacanciesFragment();
             }
             default: {
                 return null;
