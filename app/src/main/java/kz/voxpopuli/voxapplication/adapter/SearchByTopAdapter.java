@@ -25,9 +25,6 @@ import kz.voxpopuli.voxapplication.model.rows.IRowItemModel;
 import kz.voxpopuli.voxapplication.network.wrappers.search.top.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.search.top.Group;
 
-/**
- * Created by user on 16.04.15.
- */
 public class SearchByTopAdapter extends BaseAdapter {
 
     public static final int VIEW_TYPES_COUNT = 2;
@@ -114,7 +111,7 @@ public class SearchByTopAdapter extends BaseAdapter {
                 boolean shareFlag = false;
                 itm.setGroup(true);
                 itm.setGroupName(group.getName());
-                if(group.getName().equals(fragment.getString(R.string.most_popular))) {
+                if(group.getName().equals(fragment.getString(R.string.most_share))) {
                     shareFlag = true;
                 }
                 List<ArticleAndGroup> list = new LinkedList<>();
@@ -126,7 +123,6 @@ public class SearchByTopAdapter extends BaseAdapter {
                     ArticleAndGroup atg = new ArticleAndGroup();
                     atg.setGroup(false);
                     atg.setShare(shareFlag);
-                    atg.setViwed(a.getViwed());
                     atg.setViwed(a.getViwed());
                     atg.setTitle(a.getTitle());
                     atg.setPostDate(a.getPostDate());
@@ -267,57 +263,16 @@ public class SearchByTopAdapter extends BaseAdapter {
             } else {
                 Glide.with(fragment).load(getImage()).centerCrop().into(imageView);
                 titleView.setText(getTitle());
-                if(isShare()) {
-                    bottomButton.setBackgroundDrawable(fragment.getResources().getDrawable(
-                            R.drawable.vox_ic_sm_grey_share));
-                    ClickableHolder tag = new ClickableHolder(true, getId());
-                    bottomButton.setTag(tag);
-                    bottomButton.setOnClickListener(clickListener);
-                } else {
-                    viewedView.setText(getViwed());
-                }
+                if(isShare()) bottomButton.setBackgroundDrawable(fragment.getResources().getDrawable(
+                        R.drawable.vox_ic_sm_grey_share));
+                viewedView.setText(getViwed());
             }
-        }
-    }
-
-    public class ClickableHolder {
-        private boolean forShare;
-        private int articleId;
-
-        public ClickableHolder() {
-        }
-
-        public ClickableHolder(boolean forShare, int articleId) {
-            this.forShare = forShare;
-            this.articleId = articleId;
-        }
-
-        public boolean isForShare() {
-            return forShare;
-        }
-
-        public void setForShare(boolean forShare) {
-            this.forShare = forShare;
-        }
-
-        public int getArticleId() {
-            return articleId;
-        }
-
-        public void setArticleId(int articleId) {
-            this.articleId = articleId;
         }
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            ClickableHolder holder = (ClickableHolder)v.getTag();
-//            if(holder != null && holder.isForShare()) {
-//                //TODO add event sending for article sharing
-//            } else {
-//                //TODO add event sending for going to the article details
-//            }
             Bundle bundle = new Bundle();
             bundle.putString(NewsPageFragment.ARTICLE_KEY, v.getTag().toString());
             ((MainActivity)fragment.getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,

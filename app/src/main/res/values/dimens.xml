@@ -65,7 +65,8 @@
     <dimen name="news_fsize_text">14sp</dimen>
     <dimen name="news_fsize_photo">12sp</dimen>
     <dimen name="news_fsize_subtitle">16sp</dimen>
-    <dimen name="news_video_h">202dp</dimen>
+    <dimen name="news_video_h">250dp</dimen>
+    <dimen name="news_gallery_h">230dp</dimen>
     <dimen name="news_size_line">1dp</dimen>
     <dimen name="news_height_tag">32dp</dimen>
     <dimen name="news_height_img_com">56dp</dimen>

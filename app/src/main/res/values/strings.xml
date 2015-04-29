@@ -32,7 +32,8 @@
 
     <string name="search_bar_input_hint">Поиск</string>
     <string name="user_comments_text">Комментарии</string>
-    <string name="most_popular">Самые обсуждаемые</string>
+    <string name="most_popular">Обсуждают</string>
+    <string name="most_share">Делятся</string>
     <string name="login_hint">Логин</string>
     <string name="password_hint">Пароль</string>
     <string name="forgot_password_text">Забыли пароль?</string>

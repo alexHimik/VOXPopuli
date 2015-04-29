@@ -1,12 +1,10 @@
 package kz.voxpopuli.voxapplication.fragments;
 
-import android.app.ActionBar;
-import android.app.Activity;
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
@@ -21,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.devspark.robototextview.widget.RobotoTextView;
@@ -42,20 +41,18 @@ import kz.voxpopuli.voxapplication.network.wrappers.article.Content;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Similar;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Tag;
 
-public class NewsPageFragment extends BaseFragment implements View.OnClickListener {
-
-    public static final String TAG = "NewsPageFragment";
-    public static final int FRAGMENT_ID = 3;
+public class About extends BaseFragment {
+    public static final String TAG = "About";
+    public static final int FRAGMENT_ID = 121;
     public static final String ARTICLE_KEY = "article";
     private LinearLayout ll;
     private View parent;
     int maxWidth;
-    Activity actv;
 
     public ViewGroup.LayoutParams lp_W_W, lp_M_W, lp_M_M;
     private MediaController mediaControls;
     Article pn;
-    String mWebViewText = "";
+
     WebView mWebView;
 
 
@@ -65,17 +62,34 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         View customBar = super.getActionBarCustomView(inflater);
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
 
-        parent = inflater.inflate(R.layout.news_scroll, container, false);
-        actv = getActivity();
+        parent = inflater.inflate(R.layout.video_proba, container, false);
 
-        ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
-        Bundle data = getArguments();
-        String articleId = data.getString(ARTICLE_KEY);
-//        articleId = "11817";
-        if(articleId != null) {
-            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new ArticleContentRequest(articleId,
-                    (MainActivity)getActivity()));
-        }
+//        ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
+
+
+        mWebView = (WebView) parent.findViewById(R.id.webview);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+//        mWebView.loadUrl("http://www.voxpopuli.kz/about.html");
+
+//        String htmlText = "<html><body><div><div><iframe width=\"580\" height=\"390\" src=\"http://www.youtube.com/v/t4_obAM7Irk\" frameborder=\"0\" allowfullscreen=\"\"></iframe></div></div></body></html>";
+
+//        String htmlText =
+//                "<html><body><div><iframe src=\"http://www.youtube.com/embed/xFa2_PVMeDQ?rel=0\" allowfullscreen=\"\" frameborder=\"0\"></iframe></div>"+
+//                "</body></html>";
+        String htmlText =
+                "<html><body><div><iframe width='350' height='220' src='http://www.youtube.com/embed/VCxBlM73qpc' frameborder='0'></iframe></div>"+
+                        "</body></html>";
+        mWebView.loadDataWithBaseURL(null, htmlText, "text/html", "en_US","");
+
+//        mWebView.loadUrl("http://www.voxpopuli.kz/main/baykonur-kak-zapuskayut-proton-m-i-soyuz-tma-11893.html");
+////        Bundle data = getArguments();
+////        String articleId = data.getString(ARTICLE_KEY);
+//        String articleId = "10092";
+//        if(articleId != null) {
+//            VolleyNetworkProvider.getInstance(getActivity()).
+//                    addToRequestQueue(new ArticleContentRequest(articleId,
+//                            (MainActivity) getActivity()));
+//        }
         return parent;
     }
 
@@ -95,6 +109,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
 
     public void onEvent(ArticleDataWrapper articleDataWrapper) {
+Log.d("ZXCV","11111111");
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         maxWidth = display.getWidth() - ((int) getResources().getDimension(R.dimen.news_padding_txt))*2;
         ((RobotoTextView)centerBatItem).setText(articleDataWrapper.getArticle().getTitle());
@@ -126,101 +141,102 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
     }
 
     public void setNewsPage(){
+Log.d("ZXCV","VVVVVV");
         lp_W_W = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp_M_W = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp_M_M = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-        setArticle();
+//        setArticle();
         setContent();
-        setAuthors(pn.getAuthors());
-        setTags(ll,pn.getTags());
-        setSimilar(pn.getSimilar());
-        setBottom(pn.getCommentsAmount());
+//        setAuthors(pn.getAuthors());
+//        setTags(ll,pn.getTags());
+//        setSimilar(pn.getSimilar());
+//        setBottom(pn.getCommentsAmount());
     }
 
-    @Override
-    public void onClick(View v) {
-        String id = v.getTag().toString();
-        int i = id.indexOf(";");
-        String btn = id.substring(0,i);
-        id = id.substring(i+1);
-        if (btn.equals("tag")) {
-            Bundle bundle = new Bundle();
-            CategorySelectedEvent forTagEvent = new CategorySelectedEvent(Integer.parseInt(id), "");
-            forTagEvent.setTag(true);
-            bundle.putSerializable(CategorySelectedEvent.CATEGORY_DATA, forTagEvent);
-            ((MainActivity)getActivity()).handleFragmentSwitching(CategoryFragment.FRAGMENT_ID,
-                    bundle);
-            return;
-        }
-        if (btn.equals("art")) {
-            Bundle bundle = new Bundle();
-            bundle.putString(NewsPageFragment.ARTICLE_KEY, id);
-            ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
-                    bundle);
-            return;
-        }
-        if (btn.equals("com")) {
-            Bundle bundle = new Bundle();
-            bundle.putString(NewsPageFragment.ARTICLE_KEY, id);
-            ((MainActivity)getActivity()).handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,
-                    bundle);
-            return;
-        }
-        if (btn.equals("send")) {
-            SocialDialogFragment dlg = new SocialDialogFragment();
-            dlg.setLink(pn.getLink());
-            dlg.show(((MainActivity)getActivity()).getSupportFragmentManager(), "dlg");
-            return;
-        }
+//    @Override
+//    public void onClick(View v) {
+//        String id = v.getTag().toString();
+//        int i = id.indexOf(";");
+//        String btn = id.substring(0,i);
+//        id = id.substring(i+1);
+//        if (btn.equals("tag")) {
+//            Bundle bundle = new Bundle();
+//            CategorySelectedEvent forTagEvent = new CategorySelectedEvent(Integer.parseInt(id), "");
+//            forTagEvent.setTag(true);
+//            bundle.putSerializable(CategorySelectedEvent.CATEGORY_DATA, forTagEvent);
+//            ((MainActivity)getActivity()).handleFragmentSwitching(CategoryFragment.FRAGMENT_ID,
+//                    bundle);
+//            return;
+//        }
+//        if (btn.equals("art")) {
+//            Bundle bundle = new Bundle();
+//            bundle.putString(NewsPageFragment.ARTICLE_KEY, id);
+//            ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+//                    bundle);
+//            return;
+//        }
+//        if (btn.equals("com")) {
+//            Bundle bundle = new Bundle();
+//            bundle.putString(NewsPageFragment.ARTICLE_KEY, id);
+//            ((MainActivity)getActivity()).handleFragmentSwitching(CommentsListFragment.FRAGMENT_ID,
+//                    bundle);
+//            return;
+//        }
+//        if (btn.equals("send")) {
+//            SocialDialogFragment dlg = new SocialDialogFragment();
+//            dlg.setLink(pn.getLink());
+//            dlg.show(((MainActivity)getActivity()).getSupportFragmentManager(), "dlg");
+//            return;
+//        }
+//
+//    }
 
-    }
-
-    public void setArticle(){
-        ImageView iv = (ImageView)parent.findViewById(R.id.imageView);
-        Glide.with(this).load(pn.getImageMid()).into(iv);
-
-        LinearLayout la = new LinearLayout(getActivity());
-        la.setLayoutParams(lp_M_W);
-        la.setOrientation(LinearLayout.VERTICAL);
-        int pad = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
-        la.setPadding(pad, pad, pad, 0);
-
-        la.addView(newRobTV(lp_W_W, pn.getTitle(), R.style.news_title, 0));
-
-        LinearLayout othe1 = new LinearLayout(getActivity());
-        othe1.setLayoutParams(lp_M_W);
-        othe1.setOrientation(LinearLayout.HORIZONTAL);
-        int pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_size_line);
-        othe1.setPadding(0, 0, 0, pad1);
-        othe1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
-        la.addView(othe1);
-        LinearLayout othe2 = new LinearLayout(getActivity());
-        othe2.setLayoutParams(lp_M_M);
-        othe2.setOrientation(LinearLayout.HORIZONTAL);
-        pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_padding_betw_text);
-        othe2.setPadding(0, pad1, 0, pad1);
-        othe2.setGravity(Gravity.CENTER_VERTICAL);
-        othe2.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
-        othe1.addView(othe2);
-        othe2.addView(newRobTV(lp_W_W, pn.getPostDate(), R.style.com_datetime, 0));
-        ImageView iv1 = new ImageView(getActivity());
-        iv1.setLayoutParams(lp_W_W);
-        iv1.setPadding(12, 0, 12, 0);
-        iv1.setImageResource(R.drawable.vox_ic_sm_grey_eye);
-        othe2.addView(iv1);
-        othe2.addView(newRobTV(lp_W_W, pn.getViwed(), R.style.com_datetime, 0));
-        iv1 = new ImageView(getActivity());
-        iv1.setLayoutParams(lp_W_W);
-        iv1.setPadding(12, 0, 12, 0);
-        iv1.setImageResource(R.drawable.vox_ic_sm_grey_comment);
-        othe2.addView(iv1);
-        othe2.addView(newRobTV(lp_W_W, pn.getCommentsAmount(), R.style.com_datetime, 0));
-
-        la.addView(newRobTV(lp_W_W, pn.getDescription(), R.style.news_descr, 0));
-
-        ll.addView(la);
-    }
+//    public void setArticle(){
+//        ImageView iv = (ImageView)parent.findViewById(R.id.imageView);
+//        Glide.with(this).load(pn.getImageMid()).into(iv);
+//
+//        LinearLayout la = new LinearLayout(getActivity());
+//        la.setLayoutParams(lp_M_W);
+//        la.setOrientation(LinearLayout.VERTICAL);
+//        int pad = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
+//        la.setPadding(pad, pad, pad, 0);
+//
+//        la.addView(newRobTV(lp_W_W, pn.getTitle(), R.style.news_title, 0));
+//
+//        LinearLayout othe1 = new LinearLayout(getActivity());
+//        othe1.setLayoutParams(lp_M_W);
+//        othe1.setOrientation(LinearLayout.HORIZONTAL);
+//        int pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_size_line);
+//        othe1.setPadding(0, 0, 0, pad1);
+//        othe1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
+//        la.addView(othe1);
+//        LinearLayout othe2 = new LinearLayout(getActivity());
+//        othe2.setLayoutParams(lp_M_M);
+//        othe2.setOrientation(LinearLayout.HORIZONTAL);
+//        pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_padding_betw_text);
+//        othe2.setPadding(0, pad1, 0, pad1);
+//        othe2.setGravity(Gravity.CENTER_VERTICAL);
+//        othe2.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
+//        othe1.addView(othe2);
+//        othe2.addView(newRobTV(lp_W_W, pn.getPostDate(), R.style.com_datetime, 0));
+//        ImageView iv1 = new ImageView(getActivity());
+//        iv1.setLayoutParams(lp_W_W);
+//        iv1.setPadding(12, 0, 12, 0);
+//        iv1.setImageResource(R.drawable.vox_ic_sm_grey_eye);
+//        othe2.addView(iv1);
+//        othe2.addView(newRobTV(lp_W_W, pn.getViwed(), R.style.com_datetime, 0));
+//        iv1 = new ImageView(getActivity());
+//        iv1.setLayoutParams(lp_W_W);
+//        iv1.setPadding(12, 0, 12, 0);
+//        iv1.setImageResource(R.drawable.vox_ic_sm_grey_comment);
+//        othe2.addView(iv1);
+//        othe2.addView(newRobTV(lp_W_W, pn.getCommentsAmount(), R.style.com_datetime, 0));
+//
+//        la.addView(newRobTV(lp_W_W, pn.getDescription(), R.style.news_descr, 0));
+//
+//        ll.addView(la);
+//    }
 
     public RobotoTextView newRobTV(ViewGroup.LayoutParams lp, String txt, int style, int bg){
         RobotoTextView tv = new RobotoTextView(getActivity());
@@ -231,66 +247,66 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         return tv;
     }
 
-    public void setTags(LinearLayout linerL, List<Tag> tag){
-        int width, widthAll;
-        ViewGroup.LayoutParams lpWMW = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams lpM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                (int)getActivity().getResources().getDimension(R.dimen.news_height_tag));
-        lpM.setMargins(0,0,5,0);
-
-        LinearLayout lt1 = new LinearLayout(getActivity());
-        lt1.setLayoutParams(lpWMW);
-        lt1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
-        int padLine = (int) getActivity().getResources().getDimension(R.dimen.news_size_line);
-        lt1.setPadding(0, 0, 0, padLine);
-        LinearLayout lt = new LinearLayout(getActivity());
-        lt.setLayoutParams(lpWMW);
-        lt.setOrientation(LinearLayout.VERTICAL);
-        lt.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
-        int padText = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
-        lt.setPadding(padText, padText, padText, padText);
-        lt1.addView(lt);
-
-        LinearLayout line = newLayout(getActivity(), lp_W_W);
-        lt.addView(line);
-        widthAll = 0;
-        for (int i=0;i<tag.size();i++){
-            TextView tv = new TextView(getActivity());
-            tv.setLayoutParams(lpM);
-            tv.setText(tag.get(i).getTitle());
-            tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-            tv.setBackgroundResource(R.drawable.tag_shape);
-            tv.setTextAppearance(getActivity(), R.style.news_tag);
-            tv.setTag("tag;"+tag.get(i).getId());
-            tv.setClickable(true);
-            tv.setOnClickListener(this);
-            tv.measure(0, 0);
-            width = tv.getMeasuredWidth()+5;
-            widthAll += width;
-            if (widthAll<maxWidth) line.addView(tv);
-            else {
-                line = newLayout(getActivity(),lp_W_W);
-                lt.addView(line);
-                line.addView(tv);
-                widthAll = width;
-            }
-        }
-        linerL.addView(lt1);
-    }
-
-    public void setBottom(String com){
-        View v = parent.findViewById(R.id.comment_bottom_bar);
-        RobotoTextView rv = (RobotoTextView) v.findViewById(R.id.rt);
-        LinearLayout iv_com = (LinearLayout) v.findViewById(R.id.imv_com_b);
-        iv_com.setTag("com;"+pn.getId());
-        iv_com.setClickable(true);
-        iv_com.setOnClickListener(this);
-        LinearLayout iv_send = (LinearLayout) v.findViewById(R.id.send);
-        iv_send.setTag("send;" + pn.getId());
-        iv_send.setClickable(true);
-        iv_send.setOnClickListener(this);
-        rv.setText(com + " комментариев");
-    }
+//    public void setTags(LinearLayout linerL, List<Tag> tag){
+//        int width, widthAll;
+//        ViewGroup.LayoutParams lpWMW = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        LinearLayout.LayoutParams lpM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+//                (int)getActivity().getResources().getDimension(R.dimen.news_height_tag));
+//        lpM.setMargins(0,0,5,0);
+//
+//        LinearLayout lt1 = new LinearLayout(getActivity());
+//        lt1.setLayoutParams(lpWMW);
+//        lt1.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_line));
+//        int padLine = (int) getActivity().getResources().getDimension(R.dimen.news_size_line);
+//        lt1.setPadding(0, 0, 0, padLine);
+//        LinearLayout lt = new LinearLayout(getActivity());
+//        lt.setLayoutParams(lpWMW);
+//        lt.setOrientation(LinearLayout.VERTICAL);
+//        lt.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_white));
+//        int padText = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
+//        lt.setPadding(padText, padText, padText, padText);
+//        lt1.addView(lt);
+//
+//        LinearLayout line = newLayout(getActivity(), lp_W_W);
+//        lt.addView(line);
+//        widthAll = 0;
+//        for (int i=0;i<tag.size();i++){
+//            TextView tv = new TextView(getActivity());
+//            tv.setLayoutParams(lpM);
+//            tv.setText(tag.get(i).getTitle());
+//            tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+//            tv.setBackgroundResource(R.drawable.tag_shape);
+//            tv.setTextAppearance(getActivity(), R.style.news_tag);
+//            tv.setTag("tag;"+tag.get(i).getId());
+////            tv.setClickable(true);
+////            tv.setOnClickListener(this);
+//            tv.measure(0, 0);
+//            width = tv.getMeasuredWidth()+5;
+//            widthAll += width;
+//            if (widthAll<maxWidth) line.addView(tv);
+//            else {
+//                line = newLayout(getActivity(),lp_W_W);
+//                lt.addView(line);
+//                line.addView(tv);
+//                widthAll = width;
+//            }
+//        }
+//        linerL.addView(lt1);
+//    }
+//
+//    public void setBottom(String com){
+//        View v = parent.findViewById(R.id.comment_bottom_bar);
+//        RobotoTextView rv = (RobotoTextView) v.findViewById(R.id.rt);
+//        LinearLayout iv_com = (LinearLayout) v.findViewById(R.id.imv_com_b);
+//        iv_com.setTag("com;"+pn.getId());
+////        iv_com.setClickable(true);
+////        iv_com.setOnClickListener(this);
+//        LinearLayout iv_send = (LinearLayout) v.findViewById(R.id.send);
+//        iv_send.setTag("send;"+pn.getId());
+////        iv_send.setClickable(true);
+////        iv_send.setOnClickListener(this);
+//        rv.setText(com + " комментариев");
+//    }
 
     public LinearLayout newLayout(Context context, ViewGroup.LayoutParams lp){
         LinearLayout line1 = new LinearLayout(context);
@@ -303,6 +319,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
 
     public void setContent(){
+Log.d("ZXCV","SetContent");
         List<Content> content = pn.getContent();
         int iMax = content.size();
         View v;
@@ -314,6 +331,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
     public View setV(Content c){
         String type = c.getType();
+Log.d("ZXCV","Type="+type);
         if (type.equals("title")) return setTitle(c);
         if (type.equals("txt")) return setTxt(c);
         if (type.equals("comment")) return setComment(c);
@@ -422,7 +440,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         PageAdapter pa = new PageAdapter(getActivity(), gal);
         ViewPager vp = new ViewPager(getActivity());
         vp.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                (int) getResources().getDimension(R.dimen.news_gallery_h)));
+                (int) getResources().getDimension(R.dimen.news_video_h)));
         vp.setAdapter(pa);
         vp.setCurrentItem(0);
         vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -533,20 +551,37 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
     public View setVideo(Content c){
         LinearLayout v = new LinearLayout(getActivity());
-        v.setLayoutParams(lp_M_W);
+        v.setLayoutParams(lp_W_W);
         v.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_test1));
-        mWebView = new WebView(actv);
-        ViewGroup.LayoutParams lp = lp_M_W;
-        mWebView.setLayoutParams(lp);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        String htmlText =
-                "<html><body><div align='center'><iframe src='http://www.youtube.com/embed/"+
-                        c.getUrl().substring(c.getUrl().lastIndexOf("/"))+
-                        "' frameborder='0'></iframe></div></body></html>";
-        mWebViewText = htmlText;
-        mWebView.loadDataWithBaseURL(null, htmlText, "text/html", "en_US","");
 
-        v.addView(mWebView);
+//        TextView tv = new TextView(context);
+//        tv.setText(c.getData());
+//        tv.setLayoutParams(lpWrap);
+//        tv.setTextColor(getResources().getColor(R.color.news_color_title));
+//        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.news_fsize_title));
+//        LinearLayout lt = new LinearLayout(context);
+//        lt.setLayoutParams(lpWrap);
+//        int padText = (int) getResources().getDimension(R.dimen.news_padding_txt);
+//        int padDelt = (int) getResources().getDimension(R.dimen.news_padding_top_title);
+//        lt.setPadding(padText, padDelt, padText, 0);
+//        lt.addView(tv);
+//        v.addView(lt);
+
+        VideoView myVideoView = new VideoView(getActivity());
+        myVideoView.setVideoURI(Uri.parse(c.getData().get(0)));
+        myVideoView.setDrawingCacheEnabled(true);
+//        if (mediaControls == null) {
+        mediaControls = new MediaController(getActivity());
+//        }
+        myVideoView.setMediaController(mediaControls);
+        myVideoView.requestFocus(0);
+        myVideoView.setVisibility(View.VISIBLE);
+
+
+
+//        myVideoView.start();
+//        myVideoView.pause();
+        v.addView(myVideoView);
         return v;
     }
 
@@ -569,6 +604,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         name.setText(a.getTitle());
         post.setText(a.getPosition());
         ll.addView(view);
+//        return view;
     }
 
 
@@ -603,8 +639,8 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
         View view = ((LayoutInflater) getActivity().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.item_little, null);
-        view.setClickable(true);
-        view.setOnClickListener(this);
+//        view.setClickable(true);
+//        view.setOnClickListener(this);
         view.setTag("art;" + a.getId());
         iv = (ImageView) view.findViewById(R.id.imv_l);
         title = (TextView) view.findViewById(R.id.title_l);
