@@ -1,6 +1,7 @@
 package kz.voxpopuli.voxapplication.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.devspark.robototextview.widget.RobotoTextView;
@@ -17,6 +19,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.model.rows.IRowItemModel;
 import kz.voxpopuli.voxapplication.network.wrappers.search.top.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.search.top.Group;
@@ -72,8 +76,8 @@ public class SearchByTopAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         List<ArticleAndGroup> item = innerItems.get(position);
         View view = convertView;
-//        int pad8 = (int) parent.getResources().getDimension(R.dimen.news_8);
-//        int pad4 = (int) parent.getResources().getDimension(R.dimen.news_4);
+        int pad8 = (int) parent.getResources().getDimension(R.dimen.news_8);
+        int pad4 = (int) parent.getResources().getDimension(R.dimen.news_4);
         if(item.size() == 1 && item.get(0).isGroup()) {
             view = item.get(0).initModelsViews(inflater);
             item.get(0).setModelDataToViews(fragment.getActivity());
@@ -85,7 +89,7 @@ public class SearchByTopAdapter extends BaseAdapter {
             leftCell.setId(item.get(0).getId());
             ((ViewGroup)row).removeView(left);
             ((ViewGroup)row).addView(leftCell, 0);
-//            leftCell.setPadding(pad8, pad8, pad4, 0);
+            leftCell.setPadding(pad8, pad8, pad4, 0);
             item.get(0).setModelDataToViews(fragment.getActivity());
 
             if(item.size() > 1) {
@@ -95,7 +99,7 @@ public class SearchByTopAdapter extends BaseAdapter {
                 rightCell.setId(item.get(1).getId());
                 ((ViewGroup)row).removeView(right);
                 ((ViewGroup)row).addView(rightCell, 1);
-//                rightCell.setPadding(pad4, pad8, pad8, 0);
+                rightCell.setPadding(pad4, pad8, pad8, 0);
                 item.get(1).setModelDataToViews(fragment.getActivity());
             }
             view = row;
@@ -222,6 +226,10 @@ public class SearchByTopAdapter extends BaseAdapter {
             this.id = id;
         }
 
+        public String getIdArticle() {
+            return id;
+        }
+
         @Override
         public int getId() {
             return Integer.parseInt(id);
@@ -242,8 +250,8 @@ public class SearchByTopAdapter extends BaseAdapter {
             } else {
                 view = inflater.inflate(R.layout.default_search_item, null);
                 view.setOnClickListener(clickListener);
-                ClickableHolder tag = new ClickableHolder(false, getId());
-                view.setTag(tag);
+//                ClickableHolder tag = new ClickableHolder(false, getId());
+                view.setTag(getIdArticle());
                 titleView = (RobotoTextView)view.findViewById(R.id.card_title);
                 imageView = (ImageView)view.findViewById(R.id.card_image);
                 viewedView = (RobotoTextView)view.findViewById(R.id.card_viewed_amount);
@@ -304,12 +312,16 @@ public class SearchByTopAdapter extends BaseAdapter {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ClickableHolder holder = (ClickableHolder)v.getTag();
-            if(holder != null && holder.isForShare()) {
-                //TODO add event sending for article sharing
-            } else {
-                //TODO add event sending for going to the article details
-            }
+//            ClickableHolder holder = (ClickableHolder)v.getTag();
+//            if(holder != null && holder.isForShare()) {
+//                //TODO add event sending for article sharing
+//            } else {
+//                //TODO add event sending for going to the article details
+//            }
+            Bundle bundle = new Bundle();
+            bundle.putString(NewsPageFragment.ARTICLE_KEY, v.getTag().toString());
+            ((MainActivity)fragment.getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+                    bundle);
         }
     };
 }

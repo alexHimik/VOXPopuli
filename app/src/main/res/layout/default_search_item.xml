@@ -3,9 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/news_4"
-    android:paddingTop="@dimen/news_4"
-    android:paddingRight="@dimen/news_4">
+    android:id="@+id/ll_search">
 
     <LinearLayout
         android:orientation="vertical"
