@@ -28,4 +28,6 @@ public interface VoxProviderUrls {
     public static final String POST_ARTICLE_COMMENT_REQUEST = "http://www.voxpopuli.kz/api/comment.json";
 
     public static final String RULES_INFO_REQUEST = "http://www.voxpopuli.kz/api/news/10093.json";
+    public static final String ABOUT_INFO_REQUEST = "http://www.voxpopuli.kz/api/news/10092.json";
+    public static final String VACANCY_INFO_REQUEST = "http://www.voxpopuli.kz/api/news/11641.json";
 }

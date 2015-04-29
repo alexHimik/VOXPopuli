@@ -7,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.android.volley.Request;
 import com.devspark.robototextview.widget.RobotoTextView;
 
+import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.AboutProjectRequest;
 import kz.voxpopuli.voxapplication.network.request.RulesInfoRequest;
+import kz.voxpopuli.voxapplication.network.request.VacancyInfoRequest;
 import kz.voxpopuli.voxapplication.network.wrappers.info.InfoDataWrapper;
 
 /**
@@ -24,34 +28,53 @@ public class InfoFragment extends BaseFragment {
     public static final int FRAGMENT_ID = 100501;
 
     public static final String INFO_TITLE_KEY = "info_title";
+    public static final String REQUEST_KEY = "request";
 
-    private WebView container;
+    private final String HTML_BODY = "<html><body>%content%</body></html>";
+
+    private WebView webView;
+    private String title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                new RulesInfoRequest((MainActivity)getActivity()));
+        Bundle data = getArguments();
+        title = data.getString(INFO_TITLE_KEY);
+        Request request = getRequest(data.getInt(REQUEST_KEY));
+        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
+        webView = (WebView)inflater.inflate(R.layout.info_fragment_layout, container, false);
         View customBar = getActionBarCustomView(inflater);
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
-        container = (WebView)inflater.inflate(R.layout.info_fragment_layout, null);
         initViews();
-        return container;
+        return webView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
     public void initActionBarItems() {
         rightBarItem.setVisibility(View.INVISIBLE);
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
-        String title = getArguments().getString(INFO_TITLE_KEY);
         ((RobotoTextView)centerBatItem).setText(title);
+        leftbarItem.setOnClickListener(clickListener);
     }
 
     private void initViews() {
-        container.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptEnabled(true);
     }
 
     public void onEvent(InfoDataWrapper infoDataWrapper) {
-
+        webView.loadDataWithBaseURL(null, HTML_BODY.replaceAll("%content%",
+                infoDataWrapper.getArticle().getContent().get(0).getData()), "text/html", "en_US","");
     }
 
     @Override
@@ -62,5 +85,29 @@ public class InfoFragment extends BaseFragment {
     @Override
     public int getFragmentId() {
         return FRAGMENT_ID;
+    }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            getActivity().onBackPressed();
+        }
+    };
+
+    private Request getRequest(int type) {
+        switch(type) {
+            case 0: {
+                return new RulesInfoRequest((MainActivity)getActivity());
+            }
+            case 1: {
+                return new VacancyInfoRequest((MainActivity)getActivity());
+            }
+            case 2: {
+                return new AboutProjectRequest((MainActivity)getActivity());
+            }
+            default: {
+                return null;
+            }
+        }
     }
 }

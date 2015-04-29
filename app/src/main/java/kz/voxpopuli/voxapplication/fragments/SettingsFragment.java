@@ -128,6 +128,26 @@ public class SettingsFragment extends BaseFragment {
                 ((MainActivity)getActivity()).handleFragmentSwitching(
                         VacanciesFragment.FRAGMENT_ID, null);
             }
+
+//            else if(v.getId() == R.id.settings_about_place) {
+//                Bundle data = new Bundle();
+//                data.putInt(InfoFragment.REQUEST_KEY, 2);
+//                data.putString(InfoFragment.INFO_TITLE_KEY, "О проекте");
+//                ((MainActivity)getActivity()).handleFragmentSwitching(
+//                        InfoFragment.FRAGMENT_ID, data);
+//            } else if(v.getId() == R.id.settings_rules_place) {
+//                Bundle data = new Bundle();
+//                data.putInt(InfoFragment.REQUEST_KEY, 0);
+//                data.putString(InfoFragment.INFO_TITLE_KEY, "Правила");
+//                ((MainActivity)getActivity()).handleFragmentSwitching(
+//                        InfoFragment.FRAGMENT_ID, data);
+//            } else if(v.getId() == R.id.settings_vacancy_place) {
+//                Bundle data = new Bundle();
+//                data.putInt(InfoFragment.REQUEST_KEY, 1);
+//                data.putString(InfoFragment.INFO_TITLE_KEY, "Вакансии");
+//                ((MainActivity)getActivity()).handleFragmentSwitching(
+//                        InfoFragment.FRAGMENT_ID, data);
+//            }
         }
     };
 
