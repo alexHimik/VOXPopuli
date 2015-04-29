@@ -47,6 +47,7 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parent = super.onCreateView(inflater, container, savedInstanceState);
         articlesAdapter = new ArticlesAdapter(this, articles, false);
+        fragmentList.setOnItemClickListener(this);
         fragmentList.setAdapter(articlesAdapter);
         swipyRefreshLayout.setOnRefreshListener(this);
         swipyRefreshLayout.setColorSchemeColors(getActivity().getResources().getColor(R.color.vox_red),
@@ -93,7 +94,14 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        //hack!!! for some reason upper item returns position 1
+        if(position > 0) {
+            Article artice = articlesAdapter.getItem(position - 1);
+            Bundle bundle = new Bundle();
+            bundle.putString(NewsPageFragment.ARTICLE_KEY, artice.getId());
+            ((MainActivity)getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+                    bundle);
+        }
     }
 
     @Override
@@ -120,12 +128,15 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     }
 
     public void onEvent(RubricContentWrapper rubricContentWrapper) {
-        currentRubricId = rubricContentWrapper.getRubricId();
-        articles.addAll(rubricContentWrapper.getArticles());
-        articlesAdapter.notifyDataSetChanged();
-        swipyRefreshLayout.setRefreshing(false);
         Glide.with(this).load(rubricContentWrapper.getRubricImage()).
                 centerCrop().into(faddingHeader);
+        if(currentPage == 1 && !articles.isEmpty()) {
+            articles.clear();
+        }
+        currentRubricId = rubricContentWrapper.getRubricId();
+        articles.addAll(rubricContentWrapper.getArticles());
+        swipyRefreshLayout.setRefreshing(false);
+        articlesAdapter.notifyDataSetChanged();
     }
 
     private void getRubricData(Bundle data) {
@@ -139,11 +150,7 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     private View.OnClickListener barClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.right_drawer_item) {
-                ((MainActivity)getActivity()).onClick(v);
-//                ((MainActivity)getActivity()).getSupportFragmentManager().popBackStack();
-//                ((MainActivity)getActivity()).handleFragmentSwitching(SearchFragment.FRAGMENT_ID, null);
-            }
+            ((MainActivity)getActivity()).onClick(v);
         }
     };
 }

@@ -282,7 +282,6 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         iv_send.setClickable(true);
         iv_send.setOnClickListener(this);
         rv.setText(com + " комментариев");
-        ll.addView(v);
     }
 
     public LinearLayout newLayout(Context context, ViewGroup.LayoutParams lp){
@@ -307,7 +306,6 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
     public View setV(Content c){
         String type = c.getType();
-Log.d("ASDF","Type="+type);
         if (type.equals("title")) return setTitle(c);
         if (type.equals("txt")) return setTxt(c);
         if (type.equals("comment")) return setComment(c);
@@ -349,13 +347,14 @@ Log.d("ASDF","Type="+type);
     public View setPhoto(Content c){
         ImageView iv = new ImageView(getActivity());
         iv.setLayoutParams(lp_W_W);
-        Glide.with(getActivity()).load(c.getData().get(0)).into(iv);
+        Glide.with(getActivity()).load(c.getUrl()).into(iv);
         LinearLayout lt = new LinearLayout(getActivity());
         lt.setOrientation(LinearLayout.VERTICAL);
         int pad = (int) getActivity().getResources().getDimension(R.dimen.news_padding_img);
         lt.setPadding(pad, 0, pad, 0);
         lt.addView(iv);
-        if ((c.getTitle().length()>0) ||(c.getAuthor().length()>0)) {
+        if ((c.getTitle() != null && c.getTitle().length() > 0) ||
+                (c.getAuthor() != null && c.getAuthor().length() > 0)) {
             LinearLayout author = new LinearLayout(getActivity());
             author.setOrientation(LinearLayout.VERTICAL);
             author.setLayoutParams(lp_W_W);
@@ -373,12 +372,14 @@ Log.d("ASDF","Type="+type);
             b2.setOrientation(LinearLayout.VERTICAL);
             int in12 = (int) getActivity().getResources().getDimension(R.dimen.news_indent12);
             b2.setPadding(in12,pad,0,pad);
+
             TextView tv = new TextView(getActivity());
             tv.setText(c.getTitle());
             tv.setLayoutParams(lp_W_W);
             tv.setTextColor(getActivity().getResources().getColor(R.color.news_color_text));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getActivity().getResources().getDimension(R.dimen.news_fsize_photo));
             b2.addView(tv);
+
             TextView tva = new TextView(getActivity());
             tva.setText(c.getAuthor());
             tva.setLayoutParams(lp_W_W);
@@ -542,9 +543,10 @@ Log.d("ASDF","Type="+type);
 
         VideoView myVideoView = new VideoView(getActivity());
         myVideoView.setVideoURI(Uri.parse(c.getData().get(0)));
-        if (mediaControls == null) {
+        myVideoView.setDrawingCacheEnabled(true);
+//        if (mediaControls == null) {
             mediaControls = new MediaController(getActivity());
-        }
+//        }
         myVideoView.setMediaController(mediaControls);
         myVideoView.requestFocus(0);
         myVideoView.setVisibility(View.VISIBLE);

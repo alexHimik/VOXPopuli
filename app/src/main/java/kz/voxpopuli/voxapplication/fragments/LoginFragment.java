@@ -32,8 +32,10 @@ import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.SignInRequest;
 import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
 import kz.voxpopuli.voxapplication.network.wrappers.udata.UserDataWrapper;
+import kz.voxpopuli.voxapplication.tools.DialogTools;
 import kz.voxpopuli.voxapplication.tools.MD5Hasher;
 import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
+import kz.voxpopuli.voxapplication.tools.TextInputsValidators;
 import kz.voxpopuli.voxapplication.tools.UserInfoTools;
 
 /**
@@ -137,6 +139,22 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void doLogin() {
+        if(TextInputsValidators.isInputEmpty(loginInput) ||
+                TextInputsValidators.isInputEmpty(passwordInput)) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.empty_field_alarm));
+            return;
+        }
+        if(!TextInputsValidators.isInputEmail(loginInput)) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.wrong_email_format_alarm));
+            return;
+        }
+        if(!TextInputsValidators.isInputLengthEnought(passwordInput, 5)) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.wrong_password_length));
+            return;
+        }
         Map<String, String> params = new LinkedHashMap<>();
         params.put("email", loginInput.getText().toString());
         params.put("password", passwordInput.getText().toString());
