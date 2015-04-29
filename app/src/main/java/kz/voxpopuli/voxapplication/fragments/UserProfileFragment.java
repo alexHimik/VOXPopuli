@@ -91,8 +91,6 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-//        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new UserCommentsRequest(
-//                UserInfoTools.getUSerId(getActivity()), ((MainActivity)getActivity())));
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new UserCommentsRequest(
                 authorId, ((MainActivity)getActivity())));
     }
@@ -105,11 +103,15 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
 
     @Override
     public void initActionBarItems() {
-        leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_hamburger);
+        leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
         leftbarItem.setOnClickListener(clickListener);
         rightBarItem.setBackgroundResource(R.drawable.vox_ic_white_edit);
-        if (authorRead) rightBarItem.setOnClickListener(clickListener);
-        else rightBarItem.setVisibility(View.INVISIBLE);
+
+        if(authorRead) {
+            rightBarItem.setOnClickListener(clickListener);
+        } else {
+            rightBarItem.setVisibility(View.INVISIBLE);
+        }
 
         ((RobotoTextView)centerBatItem).setText("");
     }
@@ -160,7 +162,7 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.left_drawer_item) {
-                ((MainActivity)getActivity()).togleLeftDrawer();
+                ((MainActivity)getActivity()).onBackPressed();
             } else if(v.getId() == R.id.right_drawer_item) {
                 ((MainActivity)getActivity()).getSupportFragmentManager().popBackStack();
                 ((MainActivity)getActivity()).handleFragmentSwitching(

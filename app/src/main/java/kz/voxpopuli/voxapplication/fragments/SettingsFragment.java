@@ -56,7 +56,7 @@ public class SettingsFragment extends BaseFragment {
     public void initActionBarItems() {
         leftbarItem.setOnClickListener(clickListener);
         rightBarItem.setVisibility(View.INVISIBLE);
-        ((RobotoTextView)centerBatItem).setText(getString(R.string.registration_screen_header_text));
+        ((RobotoTextView)centerBatItem).setText(getString(R.string.settings_string));
     }
 
     private void initViews(View parent) {

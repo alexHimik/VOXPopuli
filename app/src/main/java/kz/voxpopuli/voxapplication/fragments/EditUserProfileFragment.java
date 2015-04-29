@@ -97,6 +97,7 @@ public class EditUserProfileFragment extends BaseFragment {
     @Override
     public void initActionBarItems() {
         leftbarItem.setOnClickListener(clickListener);
+        leftbarItem.setBackgroundResource(R.drawable.vox_ic_red_arrow);
         rightBarItem.setOnClickListener(clickListener);
         ((RobotoTextView)centerBatItem).setText(getString(R.string.edit_profile_screen_header_text));
     }
@@ -128,7 +129,6 @@ public class EditUserProfileFragment extends BaseFragment {
 
         avatarChangeBtn.setOnClickListener(clickListener);
         changePassword.setOnClickListener(clickListener);
-
         prefilData();
     }
 

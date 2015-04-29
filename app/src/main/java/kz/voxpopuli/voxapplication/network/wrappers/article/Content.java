@@ -12,15 +12,13 @@ public class Content {
     @Expose
     private String type;
     @Expose
-    private List<String> data = new ArrayList<String>();
-    @Expose
     private String url;
     @Expose
     private String title;
     @Expose
-    private String author;
+    private List<String> data = new ArrayList<String>();
     @Expose
-    private String code;
+    private String author;
 
     /**
      *
@@ -42,29 +40,6 @@ public class Content {
 
     public Content withType(String type) {
         this.type = type;
-        return this;
-    }
-
-    /**
-     *
-     * @return
-     * The data
-     */
-    public List<String> getData() {
-        return data;
-    }
-
-    /**
-     *
-     * @param data
-     * The data
-     */
-    public void setData(List<String> data) {
-        this.data = data;
-    }
-
-    public Content withData(List<String> data) {
-        this.data = data;
         return this;
     }
 
@@ -117,6 +92,29 @@ public class Content {
     /**
      *
      * @return
+     * The data
+     */
+    public List<String> getData() {
+        return data;
+    }
+
+    /**
+     *
+     * @param data
+     * The data
+     */
+    public void setData(List<String> data) {
+        this.data = data;
+    }
+
+    public Content withData(List<String> data) {
+        this.data = data;
+        return this;
+    }
+
+    /**
+     *
+     * @return
      * The author
      */
     public String getAuthor() {
@@ -134,29 +132,6 @@ public class Content {
 
     public Content withAuthor(String author) {
         this.author = author;
-        return this;
-    }
-
-    /**
-     *
-     * @return
-     * The code
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     *
-     * @param code
-     * The code
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Content withCode(String code) {
-        this.code = code;
         return this;
     }
 

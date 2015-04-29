@@ -26,6 +26,7 @@ import kz.voxpopuli.voxapplication.network.request.RubricContentRequest;
 import kz.voxpopuli.voxapplication.network.request.TagInfoRequest;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.MainPageDataWrapper;
+import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricContentWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.tag.TagDataWrapper;
 
 /**
@@ -107,6 +108,16 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         tagShowing = false;
         articlesAdapter.setRedItemsUsing(true);
         articles.addAll(wrapper.getMain().getArticles());
+        articlesAdapter.notifyDataSetChanged();
+    }
+
+    public void onEvent(RubricContentWrapper wrapper) {
+        if (!articles.isEmpty()) {
+            articles.clear();
+        }
+        tagShowing = false;
+        articlesAdapter.setRedItemsUsing(true);
+        articles.addAll(wrapper.getArticles());
         articlesAdapter.notifyDataSetChanged();
     }
 

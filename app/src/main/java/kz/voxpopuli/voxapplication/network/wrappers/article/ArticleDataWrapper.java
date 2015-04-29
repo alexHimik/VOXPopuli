@@ -5,7 +5,7 @@ package kz.voxpopuli.voxapplication.network.wrappers.article;
  */
 import com.google.gson.annotations.Expose;
 
-    public class ArticleDataWrapper {
+public class ArticleDataWrapper {
 
     @Expose
     private Article article;

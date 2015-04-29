@@ -26,7 +26,6 @@
         android:layout_height="@dimen/default_search_card_img_height"
         android:minWidth="@dimen/default_search_card_img_width"
         android:minHeight="@dimen/default_search_card_img_height"
-        android:background="@drawable/splash"
         />
     
     <com.devspark.robototextview.widget.RobotoTextView
@@ -40,7 +39,6 @@
         android:ellipsize="end"
         app:fontFamily="roboto"
         app:textWeight="normal"
-        android:text="fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
         />
     
     <LinearLayout

@@ -72,8 +72,6 @@ public class SearchByTopAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         List<ArticleAndGroup> item = innerItems.get(position);
         View view = convertView;
-//        int pad8 = (int) parent.getResources().getDimension(R.dimen.news_8);
-//        int pad4 = (int) parent.getResources().getDimension(R.dimen.news_4);
         if(item.size() == 1 && item.get(0).isGroup()) {
             view = item.get(0).initModelsViews(inflater);
             item.get(0).setModelDataToViews(fragment.getActivity());
@@ -85,7 +83,6 @@ public class SearchByTopAdapter extends BaseAdapter {
             leftCell.setId(item.get(0).getId());
             ((ViewGroup)row).removeView(left);
             ((ViewGroup)row).addView(leftCell, 0);
-//            leftCell.setPadding(pad8, pad8, pad4, 0);
             item.get(0).setModelDataToViews(fragment.getActivity());
 
             if(item.size() > 1) {
