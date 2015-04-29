@@ -310,7 +310,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         if (type.equals("txt")) return setTxt(c);
         if (type.equals("comment")) return setComment(c);
         if (type.equals("photo")) return setPhoto(c);
-        if (type.equals("video")) return setVideo(c);
+//        if (type.equals("video")) return setVideo(c);
         if (type.equals("gallery")) return setGallery(c);
         return null;
     }
@@ -542,7 +542,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 //        v.addView(lt);
 
         VideoView myVideoView = new VideoView(getActivity());
-        myVideoView.setVideoURI(Uri.parse(c.getData().get(0)));
+        myVideoView.setVideoURI(Uri.parse(c.getUrl()));
         myVideoView.setDrawingCacheEnabled(true);
 //        if (mediaControls == null) {
             mediaControls = new MediaController(getActivity());
