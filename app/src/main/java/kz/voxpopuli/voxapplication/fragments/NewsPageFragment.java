@@ -548,14 +548,12 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         v.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_test1));
         mWebView = new WebView(actv);
         ViewGroup.LayoutParams lp = lp_M_W;
-//        lp.height = (int)getActivity().getResources().getDimension(R.dimen.news_video_h);
+        lp.height = (int)getActivity().getResources().getDimension(R.dimen.news_video_h);
+//        lp.width = (int)getActivity().getResources().getDimension(R.dimen.news_video_w);
+
         mWebView.setLayoutParams(lp);
 
         mWebView.getSettings().setJavaScriptEnabled(true);
-//        String htmlText =
-//                "<html><body><div align='center'><iframe src='http://www.youtube.com/embed/"+
-//                        st +
-//                        "' frameborder='0'></iframe></div></body></html>";
         String htmlText = setVideoHTML(st);
         mWebViewText = htmlText;
         mWebView.loadDataWithBaseURL(null, htmlText, "text/html", "en_US","");
@@ -565,8 +563,8 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
     }
 
     public String setVideoHTML(String st){
-        return "<html><body><div width='100%' heigth='100%' align='center'>" +
-                "<iframe src='http://www.youtube.com/embed/"+
+        return "<html><body><div align='center'>" +
+                "<iframe width='100%' height='100%' src='http://www.youtube.com/embed/"+
                 st + "' frameborder='0'></iframe></div></body></html>";
     }
 
