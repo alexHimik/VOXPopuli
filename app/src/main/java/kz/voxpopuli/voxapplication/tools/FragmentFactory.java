@@ -19,6 +19,7 @@ import kz.voxpopuli.voxapplication.fragments.SearchFragment;
 import kz.voxpopuli.voxapplication.fragments.SettingsFragment;
 import kz.voxpopuli.voxapplication.fragments.UserProfileFragment;
 import kz.voxpopuli.voxapplication.fragments.VacanciesFragment;
+import kz.voxpopuli.voxapplication.fragments.VersionFragment;
 
 /**
  * Created by user on 25.03.15.
@@ -79,6 +80,9 @@ public class FragmentFactory {
             }
             case VacanciesFragment.FRAGMENT_ID: {
                 return new VacanciesFragment();
+            }
+            case VersionFragment.FRAGMENT_ID: {
+                return new VersionFragment();
             }
             default: {
                 return null;

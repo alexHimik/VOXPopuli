@@ -1,8 +1,5 @@
 package kz.voxpopuli.voxapplication.network.wrappers.article;
 
-/**
- * Created by user on 23.04.15.
- */
 import com.google.gson.annotations.Expose;
 
 public class Author {

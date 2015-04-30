@@ -117,7 +117,8 @@ public class SettingsFragment extends BaseFragment {
                             RegistrationFragment.FRAGMENT_ID, null);
                 }
             } else if(v.getId() == R.id.settings_version_place) {
-
+                ((MainActivity)getActivity()).handleFragmentSwitching(
+                        VersionFragment.FRAGMENT_ID, null);
             } else if(v.getId() == R.id.settings_about_place) {
                 ((MainActivity)getActivity()).handleFragmentSwitching(
                         About.FRAGMENT_ID, null);

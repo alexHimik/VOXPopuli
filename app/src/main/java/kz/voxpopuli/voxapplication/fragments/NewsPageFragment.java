@@ -25,7 +25,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.devspark.robototextview.widget.RobotoTextView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -57,6 +59,8 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
     Article pn;
     String mWebViewText = "";
     WebView mWebView;
+    Map<String, WebView> videoHTML = new HashMap();
+
 
 
     @Nullable
@@ -67,7 +71,6 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
         parent = inflater.inflate(R.layout.news_scroll, container, false);
         actv = getActivity();
-
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
         Bundle data = getArguments();
         String articleId = data.getString(ARTICLE_KEY);
@@ -110,7 +113,15 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onStop() {
+        WebView v;
+        String st;
         EventBus.getDefault().unregister(this);
+
+        for (Map.Entry entry: videoHTML.entrySet()) {
+            st = (String)entry.getKey();
+            v = (WebView)entry.getValue();
+            v.loadDataWithBaseURL(null, st, "text/html", "en_US","");
+        }
         super.onStop();
     }
 
@@ -532,22 +543,32 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
     }
 
     public View setVideo(Content c){
+        String st = c.getUrl().substring(c.getUrl().lastIndexOf("/"));
         LinearLayout v = new LinearLayout(getActivity());
         v.setLayoutParams(lp_M_W);
         v.setBackgroundColor(getActivity().getResources().getColor(R.color.news_color_test1));
         mWebView = new WebView(actv);
         ViewGroup.LayoutParams lp = lp_M_W;
+//        lp.height = (int)getActivity().getResources().getDimension(R.dimen.news_video_h);
         mWebView.setLayoutParams(lp);
+
         mWebView.getSettings().setJavaScriptEnabled(true);
-        String htmlText =
-                "<html><body><div align='center'><iframe src='http://www.youtube.com/embed/"+
-                        c.getUrl().substring(c.getUrl().lastIndexOf("/"))+
-                        "' frameborder='0'></iframe></div></body></html>";
+//        String htmlText =
+//                "<html><body><div align='center'><iframe src='http://www.youtube.com/embed/"+
+//                        st +
+//                        "' frameborder='0'></iframe></div></body></html>";
+        String htmlText = setVideoHTML(st);
         mWebViewText = htmlText;
         mWebView.loadDataWithBaseURL(null, htmlText, "text/html", "en_US","");
-
+        videoHTML.put(st, mWebView);
         v.addView(mWebView);
         return v;
+    }
+
+    public String setVideoHTML(String st){
+        return "<html><body><div width='100%' heigth='100%' align='center'>" +
+                "<iframe src='http://www.youtube.com/embed/"+
+                st + "' frameborder='0'></iframe></div></body></html>";
     }
 
     public void setAuthors(List<Author> a){
