@@ -74,6 +74,8 @@
     <string name="social_dialog_goo">Google+</string>
     <string name="social_dialog_vkont">Вконтакте</string>
 
+    <string name="string_search_header" formatted="false">Найдено %amount% новостей</string>
+
     <string name="empty_field_alarm">Поля ввода не можут быть пустыми.\nПожалуйста, заполните необходимые поля.</string>
     <string name="network_unreachable_alarm">Сетевые подключения недоступны.\nПожалуйста, проверьте настройки подключений или попробуйте позже.</string>
     <string name="file_creation_alarm">Не удалось сохранить фото. Возможно на устройстве не достаточно свободного дискового пространства.</string>

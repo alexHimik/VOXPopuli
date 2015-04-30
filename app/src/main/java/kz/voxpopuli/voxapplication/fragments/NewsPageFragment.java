@@ -74,7 +74,6 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
         Bundle data = getArguments();
         String articleId = data.getString(ARTICLE_KEY);
-//        articleId = "11817";
         if(articleId != null) {
             VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new ArticleContentRequest(articleId,
                     (MainActivity)getActivity()));
@@ -297,7 +296,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         iv_com.setClickable(true);
         iv_com.setOnClickListener(this);
         LinearLayout iv_send = (LinearLayout) v.findViewById(R.id.send);
-        iv_send.setTag("send;" + pn.getId());
+        iv_send.setTag("send;"+pn.getId());
         iv_send.setClickable(true);
         iv_send.setOnClickListener(this);
         rv.setText(com + " комментариев");
@@ -590,6 +589,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         name.setText(a.getTitle());
         post.setText(a.getPosition());
         ll.addView(view);
+//        return view;
     }
 
 

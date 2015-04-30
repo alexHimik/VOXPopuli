@@ -164,6 +164,8 @@ public class SearchFragment extends BaseFragment {
     public void onEvent(SearchByStringWrapper searchByStringWrapper) {
         stringModeData.clear();
         List<Article> data = searchByStringWrapper.getSearchResponse().getArticles();
+        headerText.setText(getString(R.string.string_search_header).replaceAll("%amount%",
+                String.valueOf(data.size())));
         if(data != null && data.size() > 0) {
             stringModeData.addAll(data);
             listAdapter = new SearchByStringAdapter(this, stringModeData);

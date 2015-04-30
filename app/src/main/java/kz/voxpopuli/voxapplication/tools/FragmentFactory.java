@@ -10,6 +10,7 @@ import kz.voxpopuli.voxapplication.fragments.ChangePasswordFragment;
 import kz.voxpopuli.voxapplication.fragments.EditUserProfileFragment;
 import kz.voxpopuli.voxapplication.fragments.CommentsListFragment;
 import kz.voxpopuli.voxapplication.fragments.ForgotPasswordFragment;
+import kz.voxpopuli.voxapplication.fragments.InfoFragment;
 import kz.voxpopuli.voxapplication.fragments.LoginFragment;
 import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.fragments.RegistrationFragment;
@@ -83,6 +84,9 @@ public class FragmentFactory {
             }
             case VersionFragment.FRAGMENT_ID: {
                 return new VersionFragment();
+            }
+            case InfoFragment.FRAGMENT_ID: {
+                return new InfoFragment();
             }
             default: {
                 return null;

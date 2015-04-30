@@ -1,6 +1,7 @@
 package kz.voxpopuli.voxapplication.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.fragments.NewsPageFragment;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 
 /**
@@ -62,6 +65,7 @@ public class SearchByStringAdapter extends BaseAdapter {
             holder.txt_views = (TextView) recycled.findViewById(R.id.txt_views_l);
             holder.txt_comment = (TextView) recycled.findViewById(R.id.txt_comment_l);
 
+            recycled.setOnClickListener(clickListener);
             recycled.setTag(holder);
         }
 
@@ -72,6 +76,7 @@ public class SearchByStringAdapter extends BaseAdapter {
         holder.date.setText(article.getPostDate());
         holder.txt_views.setText(article.getViwed());
         holder.txt_comment.setText(article.getCommentsAmount());
+        holder.articleId = article.getId();
 
         return recycled;
     }
@@ -92,5 +97,18 @@ public class SearchByStringAdapter extends BaseAdapter {
         public TextView txt_views;
         public TextView txt_comment;
         public LinearLayout ll;
+
+        public String articleId;
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ItemHolder tag = (ItemHolder)v.getTag();
+            Bundle bundle = new Bundle();
+            bundle.putString(NewsPageFragment.ARTICLE_KEY, tag.articleId);
+            ((MainActivity)context.getActivity()).handleFragmentSwitching(NewsPageFragment.FRAGMENT_ID,
+                    bundle);
+        }
+    };
 }
