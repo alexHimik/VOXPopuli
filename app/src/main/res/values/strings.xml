@@ -67,6 +67,9 @@
     <string name="alert_dialog_color">#FFD10A00</string>
     <string name="error_dialog_title">Внимание</string>
     <string name="version_title">Версия приложения</string>
+    <string name="about_title">О проекте</string>
+    <string name="rules_title">Правила</string>
+    <string name="vacans_title">Вакансии</string>
 
     <string name="social_dialog_title">Поделиться</string>
     <string name="social_dialog_fb">Facebook</string>

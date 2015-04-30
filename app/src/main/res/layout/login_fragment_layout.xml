@@ -137,7 +137,8 @@
             app:fontFamily="roboto"
             app:textWeight="normal"
             style="@style/create_account_btn_style"
-            android:text="@string/create_account_btn_text"/>
+            android:text="@string/create_account_btn_text"
+            android:background="@drawable/hdpi_button_white" />
 
     </LinearLayout>
 </ScrollView>

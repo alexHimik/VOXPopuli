@@ -65,6 +65,7 @@ public class About extends BaseFragment {
     public void initActionBarItems() {
         rightBarItem.setVisibility(View.INVISIBLE);
         leftbarItem.setOnClickListener(barClickListener);
+        ((RobotoTextView)centerBatItem).setText(getString(R.string.about_title));
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
     }
 

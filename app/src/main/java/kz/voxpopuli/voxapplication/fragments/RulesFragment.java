@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.devspark.robototextview.widget.RobotoTextView;
+
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 
@@ -34,6 +36,7 @@ public class RulesFragment extends BaseFragment {
     public void initActionBarItems() {
         rightBarItem.setVisibility(View.INVISIBLE);
         leftbarItem.setOnClickListener(barClickListener);
+        ((RobotoTextView)centerBatItem).setText(getString(R.string.rules_title));
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
     }
 
