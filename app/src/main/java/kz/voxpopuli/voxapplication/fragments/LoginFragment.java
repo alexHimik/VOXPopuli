@@ -181,6 +181,7 @@ public class LoginFragment extends BaseFragment {
     }
 
     public void onEvent(PersonInformationEvent event) {
+        UserInfoTools.saveUserLogin(getActivity(), event.getUserEmail());
         UserInfoTools.saveUserEmail(getActivity(), event.getUserEmail());
         UserInfoTools.saveUserFirstName(getActivity(), event.getUserName());
         UserInfoTools.saveUserAvatarUrl(getActivity(), event.getUserAvatarUrl());

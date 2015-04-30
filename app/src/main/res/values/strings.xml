@@ -11,12 +11,12 @@
     <string name="category_name_vox_populi">Vox Populi</string>
 
     <!--keys for social networks-->
-    <string name="facebook_app_id">832927450084182</string>
-    <string name="facebook_secret">d3fa8e1af8adc849af05ef4a2158d811</string>
-    <string name="twitter_consumer_key">7SkPxD6MromT2s6i6qd5XUt6A</string>
-    <string name="twitter_consumer_secret">w5Dlfg6kAhOhT6S6ik8txW5HNyLJVxWTMFAxBq3S7gnjatLRHR</string>
-    <string name="vk_app_id">4653112</string>
-    <string name="vk_secret">Dtw5IiS6cE1LrNJ2Nw0m</string>
+    <string name="facebook_app_id">741580999288129</string>
+    <string name="facebook_secret">152ed9470cb88b3ef67fa03624ea6353</string>
+    <string name="twitter_consumer_key">9z32hUU1nBBVpKxXhXTGts1oU</string>
+    <string name="twitter_consumer_secret">e7TAVl0QkviwxnhMuxPyMzo8dGEXxMOVyBNYjgjlevej4Fnt6m</string>
+    <string name="vk_app_id">4899846</string>
+    <string name="vk_secret">c3cjWSMOXSgfbdWO6jYE</string>
 
 
     <string name="vox_url">http://voxpopuli.kz</string>
