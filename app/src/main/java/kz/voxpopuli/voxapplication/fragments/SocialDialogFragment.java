@@ -21,11 +21,11 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
 
     final String TAG = "SocialDialog";
     private SocialNetworkUtils socialNetworkUtils;
-    private String link;
+    private Bundle data;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        getDialog().setTitle("Title!");
+        data = getArguments();
         getDialog().setTitle(R.string.social_dialog_title);
         View sd = inflater.inflate(R.layout.social_share_layout, null);
         sd.findViewById(R.id.l_facebook).setOnClickListener(this);
@@ -37,29 +37,23 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
         return sd;
     }
 
-    public void setLink(String l){link = l;}
-
     public void onClick(View v) {
+        String link = data.getString("link");
+        String title = data.getString("title");
+        String descr = data.getString("descr");
+
         switch (((LinearLayout) v).getId()) {
             case R.id.l_facebook :
-Log.d("ASDF","l_facebook");
-                socialNetworkUtils.postArticleLinkToSocial(FacebookSocialNetwork.ID, link, "", "");
-//                socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(FacebookSocialNetwork.ID, link, title, descr);
                 break;
             case R.id.l_twitter :
-Log.d("ASDF","l_tweeter");
-                socialNetworkUtils.postArticleLinkToSocial(TwitterSocialNetwork.ID, link, "", "");
-//                socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(TwitterSocialNetwork.ID, link, title, descr);
                 break;
             case R.id.l_google :
-Log.d("ASDF","l_google");
-                socialNetworkUtils.postArticleLinkToSocial(GooglePlusSocialNetwork.ID, link, "", "");
-//                socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(GooglePlusSocialNetwork.ID, link, title, descr);
                 break;
             case R.id.l_vkontakt :
-Log.d("ASDF","l_vkontakt");
-                socialNetworkUtils.postArticleLinkToSocial(VkSocialNetwork.ID, link, "", "");
-//                socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
+                socialNetworkUtils.postArticleLinkToSocial(VkSocialNetwork.ID, link, title, descr);
                 break;
         }
         dismiss();

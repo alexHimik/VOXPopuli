@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
@@ -35,6 +36,7 @@ import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
+import kz.voxpopuli.voxapplication.events.SuccessPostToSocialEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.ArticleContentRequest;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Article;
@@ -102,6 +104,11 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         ((RobotoTextView)centerBatItem).setText(articleDataWrapper.getArticle().getTitle());
         pn = articleDataWrapper.getArticle();
         setNewsPage();
+    }
+
+    public void onEvent(SuccessPostToSocialEvent successPostToSocialEvent) {
+        Toast.makeText(getActivity(), getString(R.string.success_post_to_social_msg),
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -179,7 +186,11 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         }
         if (btn.equals("send")) {
             SocialDialogFragment dlg = new SocialDialogFragment();
-            dlg.setLink(pn.getLink());
+            Bundle data = new Bundle();
+            data.putString("link", pn.getLink());
+            data.putString("title", pn.getTitle());
+            data.putString("descr", pn.getDescription());
+            dlg.setArguments(data);
             dlg.show(((MainActivity)getActivity()).getSupportFragmentManager(), "dlg");
             return;
         }
@@ -246,7 +257,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         ViewGroup.LayoutParams lpWMW = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams lpM = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 (int)getActivity().getResources().getDimension(R.dimen.news_height_tag));
-        lpM.setMargins(0,0,5,0);
+        lpM.setMargins(0, 0, 5, 0);
 
         LinearLayout lt1 = new LinearLayout(getActivity());
         lt1.setLayoutParams(lpWMW);
@@ -292,7 +303,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         View v = parent.findViewById(R.id.comment_bottom_bar);
         RobotoTextView rv = (RobotoTextView) v.findViewById(R.id.rt);
         LinearLayout iv_com = (LinearLayout) v.findViewById(R.id.imv_com_b);
-        iv_com.setTag("com;"+pn.getId());
+        iv_com.setTag("com;" + pn.getId());
         iv_com.setClickable(true);
         iv_com.setOnClickListener(this);
         LinearLayout iv_send = (LinearLayout) v.findViewById(R.id.send);

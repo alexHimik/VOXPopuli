@@ -36,6 +36,9 @@ public class ImageUtils {
     public static String mCurrentViewActionPhotoPath;
     public static String mCurrentFilePhotoPath;
 
+    public static final int DEFAULT_IMAGE_WIDTH = 320;
+    public static final int DEFAULT_IMAGE_HEIGHT = 240;
+
     private static ImageUtils instance;
 
     private ImageUtils() {
@@ -162,14 +165,14 @@ public class ImageUtils {
         final int width = options.outWidth;
         int inSampleSize = 1;
 
-        if (height > 240 || width > 320) {
+        if (height > DEFAULT_IMAGE_HEIGHT || width > DEFAULT_IMAGE_WIDTH) {
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
             // Calculate the largest inSampleSize value that is a power of 2 and keeps both
             // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > 240
-                    && (halfWidth / inSampleSize) > 320) {
+            while ((halfHeight / inSampleSize) > DEFAULT_IMAGE_HEIGHT
+                    && (halfWidth / inSampleSize) > DEFAULT_IMAGE_WIDTH) {
                 inSampleSize *= 2;
             }
         }

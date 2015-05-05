@@ -18,7 +18,9 @@ import com.vk.sdk.VKScope;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
@@ -38,6 +40,15 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     public static final int FB_SOCIAL_NETWORK = 2;
     public static final int GP_SOCIAL_NETWORK = 3;
     public static final int TW_SOCIAL_NETWORK = 4;
+
+    public static Map<Integer, Integer> asneToVoxProviders = new HashMap<>();
+
+    static {
+        asneToVoxProviders.put(VkSocialNetwork.ID, VK_SOCIAL_NETWORK);
+        asneToVoxProviders.put(FacebookSocialNetwork.ID, FB_SOCIAL_NETWORK);
+        asneToVoxProviders.put(GooglePlusSocialNetwork.ID, GP_SOCIAL_NETWORK);
+        asneToVoxProviders.put(TwitterSocialNetwork.ID, TW_SOCIAL_NETWORK);
+    }
 
     private SocialNetworkManager socialNetworkManager;
 
