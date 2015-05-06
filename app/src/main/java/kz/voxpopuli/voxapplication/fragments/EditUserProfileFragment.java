@@ -88,6 +88,7 @@ public class EditUserProfileFragment extends BaseFragment {
         leftbarItem = barLayout.findViewById(R.id.left_drawer_item);
         rightBarItem = barLayout.findViewById(R.id.right_drawer_item);
         centerBatItem = barLayout.findViewById(R.id.action_bar_title);
+        leftItemTouch = barLayout.findViewById(R.id.left_drawer_item_touch);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getResources().getColor(R.color.vox_white)));
         initActionBarItems();
@@ -96,7 +97,7 @@ public class EditUserProfileFragment extends BaseFragment {
 
     @Override
     public void initActionBarItems() {
-        leftbarItem.setOnClickListener(clickListener);
+        leftItemTouch.setOnClickListener(clickListener);
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_red_arrow);
         rightBarItem.setOnClickListener(clickListener);
         ((RobotoTextView)centerBatItem).setText(getString(R.string.edit_profile_screen_header_text));
@@ -245,8 +246,9 @@ public class EditUserProfileFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             if(!saving) {
-                if(v.getId() == R.id.left_drawer_item) {
-                    restartPreviousFragment();
+                if(v.getId() == R.id.left_drawer_item_touch) {
+//                    restartPreviousFragment();
+                    ((MainActivity)getActivity()).onBackPressed();
                 } else if(v.getId() == R.id.right_drawer_item) {
                     saveUserChanges();
                 } else if(v.getId() == R.id.avatar_change_button) {

@@ -83,6 +83,7 @@ public class SearchFragment extends BaseFragment {
         leftbarItem = customBar.findViewById(R.id.left_drawer_item);
         centerBatItem = customBar.findViewById(R.id.search_input);
         rightBarItem = customBar.findViewById(R.id.right_drawer_item);
+        leftItemTouch = customBar.findViewById(R.id.left_drawer_item_touch);
         initActionBarItems();
         ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getResources().getColor(R.color.vox_white)));
@@ -92,7 +93,7 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     public void initActionBarItems() {
-        leftbarItem.setOnClickListener(backListener);
+        leftItemTouch.setOnClickListener(backListener);
         ((EditText)centerBatItem).addTextChangedListener(searchInputListener);
         rightBarItem.setOnClickListener(backListener);
     }
@@ -190,7 +191,7 @@ public class SearchFragment extends BaseFragment {
         public void onClick(View v) {
             if(v.getId() == R.id.right_drawer_item) {
                 ((EditText)centerBatItem).setText("");
-            } else if(v.getId() == R.id.left_drawer_item) {
+            } else if(v.getId() == R.id.left_drawer_item_touch) {
                 ((MainActivity)getActivity()).onBackPressed();
             }
         }

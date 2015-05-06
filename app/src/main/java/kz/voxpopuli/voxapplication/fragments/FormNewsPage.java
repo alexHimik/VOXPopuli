@@ -3,11 +3,9 @@ package kz.voxpopuli.voxapplication.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,17 +27,12 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kz.voxpopuli.voxapplication.R;
-import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Author;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Content;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Similar;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Tag;
-//import kz.voxpopuli.voxapplication.network.wrappers.pnews.Author;
-//import kz.voxpopuli.voxapplication.network.wrappers.pnews.Content;
-//import kz.voxpopuli.voxapplication.network.wrappers.pnews.NewsTag;
-//import kz.voxpopuli.voxapplication.network.wrappers.pnews.Pnews;
 
 public class FormNewsPage implements Response.ErrorListener, View.OnClickListener {
     int maxWidth;

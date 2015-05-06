@@ -20,6 +20,8 @@ public class UserInfoTools {
     private static final String USER_PHOTO_URL = "user_avatar_url";
     private static final String USER_NICK = "user_nick";
     private static final String USER_ID = "user_id";
+    private static final String USER_SOCIAL_PROVIDER = "user_social_provider";
+    private static final String USER_SOCIALLY_LOGGED_IN = "social_login";
 
 
     public static void saveUserFirstName(Context context, String firstName) {
@@ -87,7 +89,24 @@ public class UserInfoTools {
     }
 
     public static boolean isUserLoggedIn(Context context) {
-        return getUserLogin(context) != null && getUserPassword(context) != null;
+        return (getUserLogin(context) != null && getUserPassword(context) != null)
+                || isUserLoggedInSocially(context);
+    }
+
+    public static void saveUserSocialProvider(Context context, int providerId) {
+        getEditor(context).putInt(USER_SOCIAL_PROVIDER, providerId).commit();
+    }
+
+    public static int getUserSocialProvider(Context context) {
+        return getSharedPreferences(context).getInt(USER_SOCIAL_PROVIDER, -1);
+    }
+
+    public static void saveUserLoggedInSocially(Context context, boolean loggedInSocially) {
+        getEditor(context).putBoolean(USER_SOCIALLY_LOGGED_IN, loggedInSocially).commit();
+    }
+
+    public static boolean isUserLoggedInSocially(Context context) {
+        return getSharedPreferences(context).getBoolean(USER_SOCIALLY_LOGGED_IN, false);
     }
 
     public static void clearUserData(Context context) {

@@ -77,7 +77,7 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
     @Override
     public void initActionBarItems() {
         rightBarItem.setVisibility(View.INVISIBLE);
-        leftbarItem.setOnClickListener(barClickListener);
+        leftItemTouch.setOnClickListener(barClickListener);
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
         ((RobotoTextView)centerBatItem).setText(getString(R.string.article_comments_screen_header));
     }
@@ -128,7 +128,7 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
     private View.OnClickListener barClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.left_drawer_item) {
+            if(v.getId() == R.id.left_drawer_item_touch) {
                 ((MainActivity)getActivity()).onBackPressed();
             } else if(v.getId() == R.id.send) {
                 postUserComment();

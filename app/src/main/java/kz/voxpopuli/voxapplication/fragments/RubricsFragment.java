@@ -113,7 +113,7 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
 
     @Override
     public void initActionBarItems() {
-        leftbarItem.setOnClickListener(barClickListener);
+        leftItemTouch.setOnClickListener(barClickListener);
         rightBarItem.setOnClickListener(barClickListener);
     }
 

@@ -21,6 +21,7 @@ public abstract class BaseFragment extends Fragment implements BackStackDataDesc
     protected View leftbarItem;
     protected View centerBatItem;
     protected View rightBarItem;
+    protected View leftItemTouch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public abstract class BaseFragment extends Fragment implements BackStackDataDesc
         leftbarItem = barLayout.findViewById(R.id.left_drawer_item);
         rightBarItem = barLayout.findViewById(R.id.right_drawer_item);
         centerBatItem = barLayout.findViewById(R.id.action_bar_title);
+        leftItemTouch = barLayout.findViewById(R.id.left_drawer_item_touch);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getResources().getColor(R.color.vox_red)));
         initActionBarItems();

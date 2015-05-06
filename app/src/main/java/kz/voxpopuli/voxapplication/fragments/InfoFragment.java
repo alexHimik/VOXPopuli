@@ -65,7 +65,7 @@ public class InfoFragment extends BaseFragment {
         rightBarItem.setVisibility(View.INVISIBLE);
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
         ((RobotoTextView)centerBatItem).setText(title);
-        leftbarItem.setOnClickListener(clickListener);
+        leftItemTouch.setOnClickListener(clickListener);
     }
 
     private void initViews() {

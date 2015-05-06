@@ -93,6 +93,7 @@
     <dimen name="action_bar_title_felt_padding">32dp</dimen>
     <dimen name="action_bar_title_text_size">20sp</dimen>
     <dimen name="action_bar_icons_size">24dp</dimen>
+    <dimen name="action_bar_left_item_touch_size">32dp</dimen>
 
     <!--left side bar values-->
     <dimen name="blured_photo_height">164dp</dimen>

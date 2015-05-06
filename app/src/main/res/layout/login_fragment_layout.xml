@@ -138,7 +138,7 @@
             app:textWeight="normal"
             style="@style/create_account_btn_style"
             android:text="@string/create_account_btn_text"
-            android:background="@drawable/hdpi_button_white" />
+            android:background="@drawable/button_white" />
 
     </LinearLayout>
 </ScrollView>

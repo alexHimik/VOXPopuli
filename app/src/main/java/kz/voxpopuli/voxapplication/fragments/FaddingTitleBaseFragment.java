@@ -30,6 +30,7 @@ public abstract class FaddingTitleBaseFragment extends Fragment implements BackS
     protected View leftbarItem;
     protected View centerBatItem;
     protected View rightBarItem;
+    protected View leftItemTouch;
 
     @Override
     public void onAttach(Activity activity) {
@@ -67,6 +68,7 @@ public abstract class FaddingTitleBaseFragment extends Fragment implements BackS
         leftbarItem = barLayout.findViewById(R.id.left_drawer_item);
         rightBarItem = barLayout.findViewById(R.id.right_drawer_item);
         centerBatItem = barLayout.findViewById(R.id.action_bar_title);
+        leftItemTouch = barLayout.findViewById(R.id.left_drawer_item_touch);
         initActionBarItems();
         return barLayout;
     }
