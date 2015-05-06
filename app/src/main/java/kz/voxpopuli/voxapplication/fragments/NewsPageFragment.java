@@ -86,7 +86,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void initActionBarItems() {
         rightBarItem.setVisibility(View.INVISIBLE);
-        leftbarItem.setOnClickListener(barClickListener);
+        leftItemTouch.setOnClickListener(barClickListener);
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
     }
 

@@ -112,7 +112,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.left_drawer_item) {
+        if(v.getId() == R.id.left_drawer_item_touch) {
             togleLeftDrawer();
         } else if(v.getId() == R.id.right_drawer_item) {
             handleFragmentSwitching(SearchFragment.FRAGMENT_ID, null);

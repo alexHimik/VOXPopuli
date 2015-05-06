@@ -74,7 +74,7 @@ public class JsonForGsonRequest<T> extends Request<T> {
     @Override
     protected void deliverResponse(T response) {
         if(response != null) {
-            EventBus.getDefault().post(response);
+                EventBus.getDefault().post(response);
         }
     }
 

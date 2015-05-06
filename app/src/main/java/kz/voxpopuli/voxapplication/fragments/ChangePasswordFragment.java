@@ -65,6 +65,7 @@ public class ChangePasswordFragment extends BaseFragment {
         leftbarItem = barLayout.findViewById(R.id.left_drawer_item);
         rightBarItem = barLayout.findViewById(R.id.right_drawer_item);
         centerBatItem = barLayout.findViewById(R.id.action_bar_title);
+        leftItemTouch = barLayout.findViewById(R.id.left_drawer_item_touch);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getResources().getColor(R.color.vox_white)));
         initActionBarItems();
@@ -73,7 +74,7 @@ public class ChangePasswordFragment extends BaseFragment {
 
     @Override
     public void initActionBarItems() {
-        leftbarItem.setOnClickListener(clickListener);
+        leftItemTouch.setOnClickListener(clickListener);
         rightBarItem.setOnClickListener(clickListener);
         ((RobotoTextView)centerBatItem).setText(getString(R.string.password_change_screen_header));
     }
@@ -125,7 +126,7 @@ public class ChangePasswordFragment extends BaseFragment {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.left_drawer_item) {
+            if(v.getId() == R.id.left_drawer_item_touch) {
                 getActivity().onBackPressed();
             } else if(v.getId() == R.id.right_drawer_item) {
                 updateUserPassword();

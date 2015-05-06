@@ -87,7 +87,7 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
     @Override
     public void initActionBarItems() {
         rightBarItem.setOnClickListener(barListener);
-        leftbarItem.setOnClickListener(barListener);
+        leftItemTouch.setOnClickListener(barListener);
     }
 
     @Override

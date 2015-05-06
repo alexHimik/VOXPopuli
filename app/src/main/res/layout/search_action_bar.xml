@@ -3,16 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/left_drawer_item"
-        android:layout_width="@dimen/action_bar_icons_size"
-        android:layout_height="@dimen/action_bar_icons_size"
+    <LinearLayout
+        android:id="@+id/left_drawer_item_touch"
+        android:layout_width="@dimen/action_bar_left_item_touch_size"
+        android:layout_height="@dimen/action_bar_left_item_touch_size"
+        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/padding_16dp"
         android:layout_marginTop="@dimen/padding_16dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/vox_ic_red_arrow"
-        />
+        android:clickable="true"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/left_drawer_item"
+            android:layout_width="@dimen/action_bar_icons_size"
+            android:layout_height="@dimen/action_bar_icons_size"
+            android:clickable="false"
+            android:focusable="false"
+            android:background="@drawable/vox_ic_red_arrow"
+            />
+        </LinearLayout>
+
 
     <com.devspark.robototextview.widget.RobotoEditText
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +37,7 @@
         app:textWeight="normal"
         style="@style/search_action_bar_input"
         android:layout_marginLeft="@dimen/action_bar_title_felt_padding"
-        android:layout_toRightOf="@id/left_drawer_item"
+        android:layout_toRightOf="@id/left_drawer_item_touch"
         android:layout_toLeftOf="@id/right_drawer_item"/>
 
     <ImageButton

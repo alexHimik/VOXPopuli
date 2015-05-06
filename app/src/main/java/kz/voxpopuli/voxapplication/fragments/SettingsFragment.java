@@ -46,6 +46,7 @@ public class SettingsFragment extends BaseFragment {
         leftbarItem = barLayout.findViewById(R.id.left_drawer_item);
         rightBarItem = barLayout.findViewById(R.id.right_drawer_item);
         centerBatItem = barLayout.findViewById(R.id.action_bar_title);
+        leftItemTouch = barLayout.findViewById(R.id.left_drawer_item_touch);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getResources().getColor(R.color.vox_white)));
         initActionBarItems();
@@ -54,7 +55,7 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     public void initActionBarItems() {
-        leftbarItem.setOnClickListener(clickListener);
+        leftItemTouch.setOnClickListener(clickListener);
         rightBarItem.setVisibility(View.INVISIBLE);
         ((RobotoTextView)centerBatItem).setText(getString(R.string.settings_string));
     }
@@ -96,7 +97,7 @@ public class SettingsFragment extends BaseFragment {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.left_drawer_item) {
+            if(v.getId() == R.id.left_drawer_item_touch) {
                 getActivity().onBackPressed();
             } else if(v.getId() == R.id.settings_enter_place) {
                 if(UserInfoTools.isUserLoggedIn(getActivity())) {

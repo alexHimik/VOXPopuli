@@ -104,7 +104,7 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     @Override
     public void initActionBarItems() {
         leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
-        leftbarItem.setOnClickListener(clickListener);
+        leftItemTouch.setOnClickListener(clickListener);
         rightBarItem.setBackgroundResource(R.drawable.vox_ic_white_edit);
 
         if(authorRead) {
@@ -161,7 +161,7 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.left_drawer_item) {
+            if(v.getId() == R.id.left_drawer_item_touch) {
                 ((MainActivity)getActivity()).onBackPressed();
             } else if(v.getId() == R.id.right_drawer_item) {
                 ((MainActivity)getActivity()).getSupportFragmentManager().popBackStack();
