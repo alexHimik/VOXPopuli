@@ -20,7 +20,6 @@ import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 public class SocialDialogFragment extends DialogFragment implements View.OnClickListener {
 
     final String TAG = "SocialDialog";
-    private SocialNetworkUtils socialNetworkUtils;
     private Bundle data;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,14 +31,7 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
         sd.findViewById(R.id.l_twitter).setOnClickListener(this);
         sd.findViewById(R.id.l_google).setOnClickListener(this);
         sd.findViewById(R.id.l_vkontakt).setOnClickListener(this);
-
         return sd;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        socialNetworkUtils = SocialNetworkUtils.getInstance(this);
     }
 
     public void onClick(View v) {
@@ -49,16 +41,20 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
 
         switch (((LinearLayout) v).getId()) {
             case R.id.l_facebook :
-                socialNetworkUtils.postArticleLinkToSocial(FacebookSocialNetwork.ID, link, title, descr);
+                CategoryFragment.socialNetworkUtils.postArticleLinkToSocial(
+                        FacebookSocialNetwork.ID, link, title, descr);
                 break;
             case R.id.l_twitter :
-                socialNetworkUtils.postArticleLinkToSocial(TwitterSocialNetwork.ID, link, title, descr);
+                CategoryFragment.socialNetworkUtils.postArticleLinkToSocial(
+                        TwitterSocialNetwork.ID, link, title, descr);
                 break;
             case R.id.l_google :
-                socialNetworkUtils.postArticleLinkToSocial(GooglePlusSocialNetwork.ID, link, title, descr);
+                CategoryFragment.socialNetworkUtils.postArticleLinkToSocial(
+                        GooglePlusSocialNetwork.ID, link, title, descr);
                 break;
             case R.id.l_vkontakt :
-                socialNetworkUtils.postArticleLinkToSocial(VkSocialNetwork.ID, link, title, descr);
+                CategoryFragment.socialNetworkUtils.postArticleLinkToSocial(
+                        VkSocialNetwork.ID, link, title, descr);
                 break;
         }
         dismiss();

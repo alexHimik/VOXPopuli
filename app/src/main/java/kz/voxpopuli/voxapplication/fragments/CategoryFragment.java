@@ -28,6 +28,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.mpage.Article;
 import kz.voxpopuli.voxapplication.network.wrappers.mpage.MainPageDataWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricContentWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.tag.TagDataWrapper;
+import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 
 /**
  * Created by user on 09.04.15.
@@ -36,6 +37,8 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
 
     public static final String TAG = "CategoryFragment";
     public static final int FRAGMENT_ID = 2;
+
+    public static SocialNetworkUtils socialNetworkUtils;
 
     private ListView lv;
     private List<Article> articles = new LinkedList<>();
@@ -53,6 +56,7 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         lv.setAdapter(articlesAdapter);
         lv.setOnItemClickListener(this);
         handleCategoryContentGetting();
+        socialNetworkUtils = SocialNetworkUtils.getInstance(this);
         return lv;
     }
 
