@@ -53,6 +53,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
     public static final String ARTICLE_KEY = "article";
     private LinearLayout ll;
     private View parent;
+    private RobotoTextView rtw;
     int maxWidth;
     Activity actv;
 
@@ -72,6 +73,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
 
         parent = inflater.inflate(R.layout.news_scroll, container, false);
+        rtw = (RobotoTextView) inflater.inflate(R.layout.newsrobot, container, false);
         actv = getActivity();
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
         Bundle data = getArguments();
@@ -237,11 +239,27 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         iv1.setImageResource(R.drawable.vox_ic_sm_grey_comment);
         othe2.addView(iv1);
         othe2.addView(newRobTV(lp_W_W, pn.getCommentsAmount(), R.style.com_datetime, 0));
-
-        la.addView(newRobTV(lp_W_W, pn.getDescription(), R.style.news_descr, 0));
+        la.addView(setLine(getActivity(), (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt), 0));
+        rtw.setText(pn.getDescription());
+        la.addView(rtw);
+        la.addView(setLine(getActivity(),(int) getActivity().getResources().getDimension(R.dimen.news_padding_txt),0));
+        la.addView(setLine(getActivity(),(int) getActivity().getResources().getDimension(R.dimen.news_size_line),
+                getActivity().getResources().getColor(R.color.news_color_line)));
+        la.addView(setLine(getActivity(),(int) getActivity().getResources().getDimension(R.dimen.news_padding_txt),0));
 
         ll.addView(la);
     }
+
+    public LinearLayout setLine(Context context, int h, int color){
+        LinearLayout line1 = new LinearLayout(context);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (h!=0) lp.height = h;
+        line1.setLayoutParams(lp);
+//        line1.setPadding(0,h,0,0);
+        line1.setOrientation(LinearLayout.HORIZONTAL);
+        if (color!=0) line1.setBackgroundColor(color);
+        return line1;
+    };
 
     public RobotoTextView newRobTV(ViewGroup.LayoutParams lp, String txt, int style, int bg){
         RobotoTextView tv = new RobotoTextView(getActivity());
