@@ -25,6 +25,8 @@ public class Article {
     private String viwed;
     @Expose
     private String commentsAmount;
+    @Expose
+    private String shares;
 
     /**
      *
@@ -167,6 +169,30 @@ public class Article {
     /**
      *
      * @return
+     * The shares
+     */
+    public String getShares() {
+        return shares;
+    }
+
+    /**
+     *
+     * @param shares
+     * The shares
+     */
+    public void setShares(String shares) {
+        this.shares = shares;
+    }
+
+    public Article withShares(String shares) {
+        this.shares = shares;
+        return this;
+    }
+
+
+    /**
+     *
+     * @return
      * The viwed
      */
     public String getViwed() {
@@ -186,6 +212,9 @@ public class Article {
         this.viwed = viwed;
         return this;
     }
+
+
+
 
     /**
      *

@@ -31,6 +31,10 @@ public class SearchByTopAdapter extends BaseAdapter {
     public static final int VIEW_TYPE_GROUP = 0;
     public static final int VIEW_TYPE_ARTICLE = 1;
 
+    public static final int TYPE_VIEW = 0;
+    public static final int TYPE_COMMENT = 1;
+    public static final int TYPE_SHARE = 2;
+
     private Fragment fragment;
     private LayoutInflater inflater;
     private List<Group> items = new LinkedList<>();
@@ -108,12 +112,12 @@ public class SearchByTopAdapter extends BaseAdapter {
         if(data != null && data.size() > 0) {
             for(Group group : data) {
                 ArticleAndGroup itm = new ArticleAndGroup();
-                boolean shareFlag = false;
+//                boolean shareFlag = false;
                 itm.setGroup(true);
                 itm.setGroupName(group.getName());
-                if(group.getName().equals(fragment.getString(R.string.most_share))) {
-                    shareFlag = true;
-                }
+                int typeT = TYPE_VIEW;
+                if (group.getName().equals(fragment.getString(R.string.most_share))) typeT = TYPE_SHARE;
+                else if (group.getName().equals(fragment.getString(R.string.most_popular))) typeT = TYPE_COMMENT;
                 List<ArticleAndGroup> list = new LinkedList<>();
                 list.add(itm);
                 innerItems.add(list);
@@ -122,8 +126,18 @@ public class SearchByTopAdapter extends BaseAdapter {
                 for(Article a : group.getArticles()) {
                     ArticleAndGroup atg = new ArticleAndGroup();
                     atg.setGroup(false);
-                    atg.setShare(shareFlag);
-                    atg.setViwed(a.getViwed());
+                    atg.setType(typeT);
+                    switch (typeT){
+                        case TYPE_VIEW :
+                            atg.setViwed(a.getViwed());
+                            break;
+                        case TYPE_COMMENT :
+                            atg.setViwed(a.getCommentsAmount());
+                            break;
+                        case TYPE_SHARE :
+                            atg.setViwed(a.getShares());
+                    }
+
                     atg.setTitle(a.getTitle());
                     atg.setPostDate(a.getPostDate());
                     atg.setId(a.getId());
@@ -151,7 +165,8 @@ public class SearchByTopAdapter extends BaseAdapter {
         ImageButton bottomButton;
 
         private boolean group;
-        private boolean share;
+//        private boolean share;
+        private int type;
         private String groupName;
         private String title;
         private String image;
@@ -170,12 +185,12 @@ public class SearchByTopAdapter extends BaseAdapter {
             this.group = group;
         }
 
-        public boolean isShare() {
-            return share;
+        public int getType() {
+            return type;
         }
 
-        public void setShare(boolean share) {
-            this.share = share;
+        public void setType(int t) {
+            this.type = t;
         }
 
         public String getGroupName() {
@@ -263,8 +278,19 @@ public class SearchByTopAdapter extends BaseAdapter {
             } else {
                 Glide.with(fragment).load(getImage()).centerCrop().into(imageView);
                 titleView.setText(getTitle());
-                if(isShare()) bottomButton.setBackgroundDrawable(fragment.getResources().getDrawable(
-                        R.drawable.vox_ic_sm_grey_share));
+                switch (getType()) {
+                    case TYPE_VIEW :
+                        bottomButton.setBackgroundDrawable(fragment.getResources().getDrawable(
+                                R.drawable.vox_ic_sm_grey_eye));
+                        break;
+                    case TYPE_COMMENT :
+                        bottomButton.setBackgroundDrawable(fragment.getResources().getDrawable(
+                                R.drawable.vox_ic_sm_grey_comment));
+                        break;
+                    case TYPE_SHARE :
+                        bottomButton.setBackgroundDrawable(fragment.getResources().getDrawable(
+                                R.drawable.vox_ic_sm_grey_share));
+                }
                 viewedView.setText(getViwed());
             }
         }

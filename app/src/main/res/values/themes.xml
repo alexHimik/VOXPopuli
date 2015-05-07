@@ -10,5 +10,6 @@
         <item name="actionBarStyle">@style/Widget.ActionBar.Transparent</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@drawable/splash</item>
+        <item name="colorAccent">@color/color_edittext</item>
     </style>
 </resources>

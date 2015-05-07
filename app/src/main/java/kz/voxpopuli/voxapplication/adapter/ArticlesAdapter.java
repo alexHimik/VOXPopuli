@@ -78,6 +78,8 @@ public class ArticlesAdapter extends BaseAdapter {
         TextView txt_views;
         TextView txt_comment;
         LinearLayout ll;
+        String postD;
+        String [] arrD;
 
         View view = convertView;
         Article ma = items.get(position);
@@ -135,7 +137,13 @@ public class ArticlesAdapter extends BaseAdapter {
                 txt_comment = (TextView) view.findViewById(R.id.txt_comment_l);
                 Glide.with(context).load(ma.getImage()).centerCrop().into(iv);
                 title.setText(ma.getTitle());
-                date.setText(ma.getPostDate());
+                postD = ma.getPostDate();
+                arrD = postD.split(" ");
+                if (arrD.length>2) {
+                    arrD[1] = arrD[1].substring(0,3);
+                    postD = arrD[0] + " " + arrD[1] + " " + arrD[2];
+                }
+                date.setText(postD);
                 txt_views.setText(ma.getViwed());
                 txt_comment.setText(ma.getCommentsAmount());
         }
