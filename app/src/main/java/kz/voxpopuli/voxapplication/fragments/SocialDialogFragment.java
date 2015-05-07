@@ -32,9 +32,15 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
         sd.findViewById(R.id.l_twitter).setOnClickListener(this);
         sd.findViewById(R.id.l_google).setOnClickListener(this);
         sd.findViewById(R.id.l_vkontakt).setOnClickListener(this);
+
+        return sd;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         socialNetworkUtils = new SocialNetworkUtils();
         socialNetworkUtils.initSocialManager(this);
-        return sd;
     }
 
     public void onClick(View v) {
@@ -58,5 +64,4 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
         }
         dismiss();
     }
-
 }

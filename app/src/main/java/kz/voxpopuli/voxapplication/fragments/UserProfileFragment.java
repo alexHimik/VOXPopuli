@@ -1,10 +1,8 @@
 package kz.voxpopuli.voxapplication.fragments;
 
 import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.devspark.robototextview.widget.RobotoTextView;
 import com.manuelpeinado.fadingactionbar.FadingActionBarHelper;
-import com.pkmmte.view.CircularImageView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -92,7 +89,7 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
         super.onStart();
         EventBus.getDefault().register(this);
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new UserCommentsRequest(
-                authorId, ((MainActivity)getActivity())));
+               getActivity(), authorId, ((MainActivity)getActivity())));
     }
 
     @Override

@@ -79,8 +79,8 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         Bundle data = getArguments();
         String articleId = data.getString(ARTICLE_KEY);
         if(articleId != null) {
-            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new ArticleContentRequest(articleId,
-                    (MainActivity)getActivity()));
+            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new ArticleContentRequest(
+                    getActivity(), articleId, (MainActivity)getActivity()));
         }
         return parent;
     }

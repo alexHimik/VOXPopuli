@@ -152,7 +152,7 @@ public class EditUserProfileFragment extends BaseFragment {
 
         params.put("signature", signature);
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                new EditUserDataRequest(params, (MainActivity)getActivity()));
+                new EditUserDataRequest(getActivity(), params, (MainActivity)getActivity()));
     }
 
     public void onEvent(EditUserDataWrapper editUserDataWrapper) {
@@ -196,7 +196,7 @@ public class EditUserProfileFragment extends BaseFragment {
         params.remove("");
         params.put("signature", signature);
 
-        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new SignInRequest(params,
+        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new SignInRequest(getActivity(), params,
                 ((MainActivity)getActivity())));
     }
 

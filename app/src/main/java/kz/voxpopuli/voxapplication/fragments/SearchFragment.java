@@ -122,7 +122,7 @@ public class SearchFragment extends BaseFragment {
         initFragmentForStringSearch(contentList);
         Map<String, String> params = new HashMap<>();
         params.put(SearchByStringRequest.SEARCH_STRING_PARAM, forSearch);
-        Request request = new SearchByStringRequest(params,
+        Request request = new SearchByStringRequest(getActivity(), params,
                 ((MainActivity)getActivity()));
         request.setTag(TAG);
         VolleyNetworkProvider provider = VolleyNetworkProvider.getInstance(getActivity());
@@ -134,7 +134,7 @@ public class SearchFragment extends BaseFragment {
         initFragmentForTopSearch(contentList);
         Map<String, String> params = new HashMap<>();
         params.put(SearchByTopRequest.TOP_MATERIALS_PARAM, "true");
-        Request request = new SearchByTopRequest(params,
+        Request request = new SearchByTopRequest(getActivity(), params,
                 ((MainActivity)getActivity()));
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
     }

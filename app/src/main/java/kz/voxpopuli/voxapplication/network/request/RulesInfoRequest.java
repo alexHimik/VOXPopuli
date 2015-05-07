@@ -1,5 +1,7 @@
 package kz.voxpopuli.voxapplication.network.request;
 
+import android.content.Context;
+
 import com.android.volley.Response;
 
 import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
@@ -10,8 +12,8 @@ import kz.voxpopuli.voxapplication.network.wrappers.info.InfoDataWrapper;
  */
 public class RulesInfoRequest extends GsonRequest<InfoDataWrapper> {
 
-    public RulesInfoRequest(Response.ErrorListener errorListener) {
-        super(Method.GET, VoxProviderUrls.RULES_INFO_REQUEST, InfoDataWrapper.class,
+    public RulesInfoRequest(Context context, Response.ErrorListener errorListener) {
+        super(context, Method.GET, VoxProviderUrls.RULES_INFO_REQUEST, InfoDataWrapper.class,
                 null, errorListener);
     }
 }

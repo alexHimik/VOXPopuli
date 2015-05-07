@@ -1,5 +1,7 @@
 package kz.voxpopuli.voxapplication.network.request;
 
+import android.content.Context;
+
 import com.android.volley.Response;
 
 import java.util.Map;
@@ -12,8 +14,8 @@ import kz.voxpopuli.voxapplication.network.wrappers.udata.EditUserDataWrapper;
  */
 public class TransferSocialDataRequest extends JsonForGsonRequest<EditUserDataWrapper> {
 
-    public TransferSocialDataRequest(Map<String, String> params, Response.ErrorListener errorListener) {
-        super(VoxProviderUrls.SEND_SOCIAL_USER_DATA_REQUEST, params,
+    public TransferSocialDataRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
+        super(context, VoxProviderUrls.SEND_SOCIAL_USER_DATA_REQUEST, params,
                 EditUserDataWrapper.class, null, errorListener);
     }
 }

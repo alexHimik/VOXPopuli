@@ -97,7 +97,7 @@ public class LeftSideBarFragment extends Fragment {
     private void fillHosterWithData() {
         rowHoster.initHoster(R.layout.left_bar_host_header, R.layout.hoster_row);
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                new RubricsInfoRequest((MainActivity)getActivity()));
+                new RubricsInfoRequest(getActivity(), (MainActivity)getActivity()));
     }
 
     public void onEvent(RubricsDataWrapper rubricsDataWrapper) {

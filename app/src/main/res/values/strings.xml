@@ -18,7 +18,6 @@
     <string name="vk_app_id">4899846</string>
     <string name="vk_secret">c3cjWSMOXSgfbdWO6jYE</string>
 
-
     <string name="vox_url">http://voxpopuli.kz</string>
 
     <string name="settings_string">Настройки</string>
@@ -85,6 +84,7 @@
     <string name="file_creation_alarm">Не удалось сохранить фото. Возможно на устройстве не достаточно свободного дискового пространства.</string>
     <string name="wrong_email_format_alarm">Введенный логин не является почтовый адресом.\nПожалуйста, введите коррекный почтовый адрес для использования в качестве Вашего логина.</string>
     <string name="wrong_password_length">Длинна введенного пароля не удовлетворяет установленный критерий. \nПожалуйста, введите пароль длинной не менее 5 символов.</string>
+    <string name="unlogined_user_comment_alarm">Для отправки комментария Вам нужно войти в систему под своими именем и логином.\nЕсли Вы не зарегистрированны в системе, пожалуйста, пройдите процедуру регистрации.</string>
 
     <string name="take_photo_dialog_item">Сделать фото</string>
     <string name="chose_photo_dialog_item">Выбрать из галереи</string>

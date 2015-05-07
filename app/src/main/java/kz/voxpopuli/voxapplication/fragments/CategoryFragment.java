@@ -139,14 +139,14 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
 
         Request request = null;
         if(getString(R.string.category_name_all).equals(selectedEvent.getCategoryName()) && !selectedEvent.isTag()) {
-            request = new MainPageContentRequest((MainActivity)getActivity());
+            request = new MainPageContentRequest(getActivity(), (MainActivity)getActivity());
             ((TextView)centerBatItem).setText(getString(R.string.category_name_all));
         } else if(!selectedEvent.isTag()) {
-            request = new RubricContentRequest(String.valueOf(selectedEvent.getCategoryId()), 1,
+            request = new RubricContentRequest(getActivity(), String.valueOf(selectedEvent.getCategoryId()), 1,
                     (MainActivity)getActivity());
             ((TextView)centerBatItem).setText(selectedEvent.getCategoryName());
         } else if(selectedEvent.isTag()) {
-            request = new TagInfoRequest(String.valueOf(selectedEvent.getCategoryId()),
+            request = new TagInfoRequest(getActivity(), String.valueOf(selectedEvent.getCategoryId()),
                     (MainActivity)getActivity());
             leftbarItem.setBackgroundResource(R.drawable.vox_ic_white_arrow);
         }

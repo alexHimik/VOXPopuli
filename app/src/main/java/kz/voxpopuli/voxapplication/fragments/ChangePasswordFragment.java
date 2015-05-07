@@ -96,7 +96,7 @@ public class ChangePasswordFragment extends BaseFragment {
 
         params.put("signature", signature);
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                new EditUserDataRequest(params, (MainActivity)getActivity()));
+                new EditUserDataRequest(getActivity(), params, (MainActivity)getActivity()));
     }
 
     public void onEvent(EditUserDataWrapper editUserDataWrapper) {
