@@ -33,7 +33,7 @@
     <string name="user_comments_text">Комментарии</string>
     <string name="most_popular">Обсуждают</string>
     <string name="most_share">Делятся</string>
-    <string name="login_hint">Логин</string>
+    <string name="login_hint">E-mail</string>
     <string name="password_hint">Пароль</string>
     <string name="forgot_password_text">Забыли пароль?</string>
     <string name="create_account_btn_text">СОЗДАТЬ АККАУНТ</string>

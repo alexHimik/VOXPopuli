@@ -3,6 +3,8 @@
     <color name="vox_red">#FFD10A00</color>
     <color name="vox_white">#fffafafa</color>
 
+    <color name="color_edittext">#FF333333</color>
+
     <color name="side_bar_category_text">#FF333333</color>
     <color name="side_bar_rubrics_header_color">#FF999999</color>
     <color name="side_bar_divider_color">#FFDCDCDC</color>

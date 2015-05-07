@@ -82,7 +82,7 @@
             style="@style/gray_info_text.size_14sp"
             app:fontFamily="roboto"
             app:textWeight="normal"
-            android:text="@string/settings_profile_header"/>
+            android:text="@string/settings_info_header"/>
         <RelativeLayout
             android:id="@+id/settings_version_place"
             android:layout_width="match_parent"
