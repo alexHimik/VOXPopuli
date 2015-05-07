@@ -1,5 +1,7 @@
 package kz.voxpopuli.voxapplication.network.request;
 
+import android.content.Context;
+
 import com.android.volley.Response;
 
 import java.util.Map;
@@ -15,7 +17,7 @@ public class SearchByStringRequest extends JsonForGsonRequest<SearchByStringWrap
     public static final String SEARCH_STRING_PARAM = "searchString";
     public static final String PAGE_PARAM = "page";
 
-    public SearchByStringRequest(Map<String, String> params, Response.ErrorListener errorListener) {
-        super(VoxProviderUrls.SEARCH_REQUEST, params, SearchByStringWrapper.class, null, errorListener);
+    public SearchByStringRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
+        super(context, VoxProviderUrls.SEARCH_REQUEST, params, SearchByStringWrapper.class, null, errorListener);
     }
 }

@@ -77,9 +77,14 @@ public class LoginFragment extends BaseFragment {
         initViews(parent);
         View customBar = getActionBarCustomView(inflater);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
+        return parent;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         socialNetworkUtils = new SocialNetworkUtils();
         socialNetworkUtils.initSocialManager(this);
-        return parent;
     }
 
     @Override
@@ -92,7 +97,7 @@ public class LoginFragment extends BaseFragment {
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-        socialNetworkUtils.disconectConnectedNetworks();
+        //socialNetworkUtils.disconectConnectedNetworks();
     }
 
     @Override
@@ -173,7 +178,7 @@ public class LoginFragment extends BaseFragment {
         params.remove("");
         params.put("signature", signature);
 
-        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new SignInRequest(params,
+        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new SignInRequest(getActivity(), params,
                 ((MainActivity)getActivity())));
     }
 
@@ -221,7 +226,7 @@ public class LoginFragment extends BaseFragment {
         params.put("signature", signature);
 
             VolleyNetworkProvider.getInstance(LoginFragment.this.getActivity()).addToRequestQueue(
-                    new TransferSocialDataRequest(params,
+                    new TransferSocialDataRequest(getActivity(), params,
                             (MainActivity)LoginFragment.this.getActivity()));
     }
 

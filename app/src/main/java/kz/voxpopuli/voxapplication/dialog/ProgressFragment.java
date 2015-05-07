@@ -25,7 +25,6 @@ public class ProgressFragment extends DialogFragment implements BackStackDataDes
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Test");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setOnCancelListener(this);
         progressDialog.show();
         return progressDialog;
     }

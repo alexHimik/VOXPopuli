@@ -157,4 +157,7 @@
     <dimen name="social_dialog_item_diameter">56dp</dimen>
     <dimen name="social_dialog_title_text_size">20sp</dimen>
     <dimen name="social_dialog_item_text_size">16sp</dimen>
+
+    <dimen name="progress_bar_size">64dp</dimen>
+    <dimen name="progress_fragment_size">120dp</dimen>
 </resources>

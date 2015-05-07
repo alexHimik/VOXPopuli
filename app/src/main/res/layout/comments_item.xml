@@ -29,8 +29,8 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp">
+            android:paddingTop="@dimen/padding_10dp"
+            android:paddingBottom="@dimen/padding_10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,33 +47,33 @@
                 android:textAppearance="@style/com_datetime" />
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/com_padding_line">
+
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/com_padding_line">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="@dimen/news_size_line"
+            android:background="@color/news_color_line">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:paddingLeft="@dimen/news_size_line"
-                android:background="@color/news_color_line">
+                android:background="@color/news_color_white"
+                android:paddingBottom="@dimen/com_padding_img_lr"
+                android:paddingLeft="@dimen/com_padding_line">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@color/news_color_white"
-                    android:paddingBottom="@dimen/com_padding_img_lr"
-                    android:paddingLeft="@dimen/com_padding_line">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="New Text"
-                        android:id="@+id/txt_comm" />
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/txt_comm" />
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -66,9 +66,14 @@ public class RegistrationFragment extends BaseFragment {
         initViews(parent);
         View customBar = getActionBarCustomView(inflater);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
+        return parent;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         socialNetworkUtils = new SocialNetworkUtils();
         socialNetworkUtils.initSocialManager(this);
-        return parent;
     }
 
     @Override
@@ -156,7 +161,7 @@ public class RegistrationFragment extends BaseFragment {
             params.put("signature", signature);
 
             VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                    new SignUpUserRequest(params, (MainActivity)getActivity()));
+                    new SignUpUserRequest(getActivity(), params, (MainActivity)getActivity()));
         }
     }
 

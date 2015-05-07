@@ -1,5 +1,7 @@
 package kz.voxpopuli.voxapplication.network.request;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.text.Html;
 
 import com.android.volley.AuthFailureError;
@@ -16,6 +18,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.dialog.TransparentProgressDialog;
 import kz.voxpopuli.voxapplication.events.ErrorEvent;
 import kz.voxpopuli.voxapplication.network.util.ServerErrorContainer;
 
@@ -28,11 +32,16 @@ public class GsonRequest<T> extends Request<T> {
     private final Class<T> clazz;
     private final Map<String, String> headers;
 
-    public GsonRequest(int method, String url, Class<T> clazz,
+    private TransparentProgressDialog progress;
+
+    public GsonRequest(Context context, int method, String url, Class<T> clazz,
                        Map<String, String> headers, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
+        progress = new TransparentProgressDialog(context, R.drawable.spinner_white);
+        progress.setCancelable(false);
+        progress.show();
     }
 
     @Override
@@ -53,14 +62,20 @@ public class GsonRequest<T> extends Request<T> {
                     gson.fromJson(Html.fromHtml(json).toString(), clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
+            progress.dismiss();
+            progress = null;
             return Response.error(new ParseError(e));
         } catch (JsonSyntaxException e) {
+            progress.dismiss();
+            progress = null;
             return Response.error(new ParseError(e));
         }
     }
 
     @Override
     protected void deliverResponse(T response) {
+        progress.dismiss();
+        progress = null;
         EventBus.getDefault().post(response);
     }
 

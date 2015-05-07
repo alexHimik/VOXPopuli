@@ -74,7 +74,7 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
         if(swipyRefreshLayoutDirection == SwipyRefreshLayoutDirection.TOP) {
             if(currentPage > 1) {
                 currentPage = currentPage - 1;
-                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
+                RubricContentRequest request = new RubricContentRequest(getActivity(), currentRubricId, currentPage,
                         (MainActivity)getActivity());
                 VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
             } else {
@@ -83,7 +83,7 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
         } else {
             if(currentPage < 10) {
                 currentPage = currentPage + 1;
-                RubricContentRequest request = new RubricContentRequest(currentRubricId, currentPage,
+                RubricContentRequest request = new RubricContentRequest(getActivity(), currentRubricId, currentPage,
                         (MainActivity)getActivity());
                 VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
             } else {
@@ -142,7 +142,7 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     private void getRubricData(Bundle data) {
         RubricSelectedEvent event = (RubricSelectedEvent)data.get(RubricSelectedEvent.RUBRIC_DATA);
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                new RubricContentRequest(String.valueOf(event.getRubricId()), 1,
+                new RubricContentRequest(getActivity(), String.valueOf(event.getRubricId()), 1,
                         (MainActivity)getActivity()));
         ((TextView)centerBatItem).setText(event.getRubricName());
     }

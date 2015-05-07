@@ -97,13 +97,13 @@ public class InfoFragment extends BaseFragment {
     private Request getRequest(int type) {
         switch(type) {
             case 0: {
-                return new RulesInfoRequest((MainActivity)getActivity());
+                return new RulesInfoRequest(getActivity(), (MainActivity)getActivity());
             }
             case 1: {
-                return new VacancyInfoRequest((MainActivity)getActivity());
+                return new VacancyInfoRequest(getActivity(), (MainActivity)getActivity());
             }
             case 2: {
-                return new AboutProjectRequest((MainActivity)getActivity());
+                return new AboutProjectRequest(getActivity(), (MainActivity)getActivity());
             }
             default: {
                 return null;

@@ -1,6 +1,7 @@
 package kz.voxpopuli.voxapplication.tools;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 
 import com.github.gorbin.asne.core.SocialNetwork;
@@ -51,6 +52,98 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     }
 
     private SocialNetworkManager socialNetworkManager;
+    private static SocialNetworkUtils instance;
+
+    private Bundle postingData;
+    private String postingMsg;
+
+    private boolean postingProcess;
+
+//    private SocialNetworkUtils(Fragment fragment) {
+//        initSocialManager(fragment);
+//    }
+//
+//    public static SocialNetworkUtils getInstance(Fragment fragment) {
+//        if(instance == null) {
+//            instance = new SocialNetworkUtils(fragment);
+//        }
+//        return instance;
+//    }
+
+    public boolean isSocialManagerInitialized() {
+        return socialNetworkManager != null;
+    }
+
+    public void requestUserLogin(int socialNetworkId) {
+        if(socialNetworkManager != null) {
+            SocialNetwork network = socialNetworkManager.getSocialNetwork(socialNetworkId);
+            if(network != null && !network.isConnected()) {
+                network.requestLogin();
+            }
+        }
+    }
+
+    public void postArticleLinkToSocial(int socialNetworkId, String link, String title, String message) {
+        if(socialNetworkManager != null) {
+            SocialNetwork network = socialNetworkManager.getSocialNetwork(socialNetworkId);
+            Bundle postParams = new Bundle();
+            if(network != null && network.isConnected()) {
+                postParams.putString(SocialNetwork.BUNDLE_LINK, link);
+                postParams.putString(SocialNetwork.BUNDLE_NAME, title);
+                if(socialNetworkId == GooglePlusSocialNetwork.ID) {
+                    network.requestPostDialog(postParams, postingComplete);
+                } else {
+                    network.requestPostLink(postParams, message, postingComplete);
+                }
+            } else if(network != null && !network.isConnected()) {
+                postingData = postParams;
+                postingMsg = message;
+                postingProcess = true;
+                network.requestLogin();
+            }
+        }
+    }
+
+    @Override
+    public void onSocialNetworkManagerInitialized() {
+        for (SocialNetwork socialNetwork : socialNetworkManager.getInitializedSocialNetworks()) {
+            socialNetwork.setOnLoginCompleteListener(this);
+            socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
+            socialNetwork.setOnRequestDetailedSocialPersonCompleteListener(this);
+            socialNetwork.setOnPostingLinkCompleteListener(postingComplete);
+        }
+    }
+
+    @Override
+    public void onError(int i, String s, String s2, Object o) {
+        EventBus.getDefault().post(new ErrorEvent(s, i));
+    }
+
+    @Override
+    public void onLoginSuccess(final int i) {
+        SocialNetwork network = socialNetworkManager.getSocialNetwork(i);
+        if(network != null && network.isConnected() && !postingProcess) {
+            network.requestCurrentPerson();
+        } else if(postingProcess && postingData != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    postArticleLinkToSocial(i, postingData.getString(SocialNetwork.BUNDLE_LINK),
+                            postingData.getString(SocialNetwork.BUNDLE_NAME), postingMsg);
+                }
+            }, 1500);
+        }
+    }
+
+    @Override
+    public void onRequestSocialPersonSuccess(int i, SocialPerson socialPerson) {
+        postSocialPersonInfoEvent(socialPerson, i);
+    }
+
+    @Override
+    public void onRequestDetailedSocialPersonSuccess(int i, SocialPerson socialPerson) {
+        postSocialPersonInfoEvent(socialPerson, i);
+    }
 
     public void initSocialManager(Fragment fragment) {
         socialNetworkManager = (SocialNetworkManager)fragment.getFragmentManager().
@@ -93,62 +186,10 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
                     socialNetwork.setOnLoginCompleteListener(this);
                     socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
                     socialNetwork.setOnRequestDetailedSocialPersonCompleteListener(this);
+                    socialNetwork.setOnPostingLinkCompleteListener(postingComplete);
                 }
             }
         }
-    }
-
-    public void requestUserLogin(int socialNetworkId) {
-        if(socialNetworkManager != null) {
-            SocialNetwork network = socialNetworkManager.getSocialNetwork(socialNetworkId);
-            if(network != null && !network.isConnected()) {
-                network.requestLogin();
-            }
-        }
-    }
-
-    public void postArticleLinkToSocial(int socialNetworkId, String link, String title, String message) {
-        if(socialNetworkManager != null) {
-            SocialNetwork network = socialNetworkManager.getSocialNetwork(socialNetworkId);
-            if(network != null && network.isConnected()) {
-                Bundle postParams = new Bundle();
-                postParams.putString(SocialNetwork.BUNDLE_LINK, link);
-                postParams.putString(SocialNetwork.BUNDLE_NAME, title);
-                network.requestPostLink(postParams, message, postingComplete);
-            }
-        }
-    }
-
-    @Override
-    public void onSocialNetworkManagerInitialized() {
-        for (SocialNetwork socialNetwork : socialNetworkManager.getInitializedSocialNetworks()) {
-            socialNetwork.setOnLoginCompleteListener(this);
-            socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
-            socialNetwork.setOnRequestDetailedSocialPersonCompleteListener(this);
-        }
-    }
-
-    @Override
-    public void onError(int i, String s, String s2, Object o) {
-        EventBus.getDefault().post(new ErrorEvent(s, i));
-    }
-
-    @Override
-    public void onLoginSuccess(int i) {
-        SocialNetwork network = socialNetworkManager.getSocialNetwork(i);
-        if(network != null && network.isConnected()) {
-            network.requestCurrentPerson();
-        }
-    }
-
-    @Override
-    public void onRequestSocialPersonSuccess(int i, SocialPerson socialPerson) {
-        postSocialPersonInfoEvent(socialPerson, i);
-    }
-
-    @Override
-    public void onRequestDetailedSocialPersonSuccess(int i, SocialPerson socialPerson) {
-        postSocialPersonInfoEvent(socialPerson, i);
     }
 
     private void postSocialPersonInfoEvent(SocialPerson socialPerson, int socialNetworkId) {
@@ -160,6 +201,9 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     private OnPostingCompleteListener postingComplete = new OnPostingCompleteListener() {
         @Override
         public void onPostSuccessfully(int socialNetworkID) {
+            postingData = null;
+            postingMsg = null;
+            postingProcess = false;
             EventBus.getDefault().post(new SuccessPostToSocialEvent(socialNetworkID));
         }
 

@@ -60,8 +60,10 @@ public class CommentsListAdapter extends BaseAdapter {
         View view = convertView;
         ArcticleComment com = items.get(position);
 
-        view = ((LayoutInflater) context.getActivity().getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comments_item, null);
+        if(view == null) {
+            view = ((LayoutInflater) context.getActivity().getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.comments_item, null);
+        }
 
         iv = (ImageView) view.findViewById(R.id.imv_com);
         author = (TextView) view.findViewById(R.id.author);

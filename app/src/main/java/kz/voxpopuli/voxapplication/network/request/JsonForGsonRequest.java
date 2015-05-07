@@ -1,5 +1,7 @@
 package kz.voxpopuli.voxapplication.network.request;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.text.Html;
 import android.util.Log;
 
@@ -17,6 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.dialog.TransparentProgressDialog;
 import kz.voxpopuli.voxapplication.events.ErrorEvent;
 import kz.voxpopuli.voxapplication.network.util.ServerErrorContainer;
 
@@ -39,13 +43,18 @@ public class JsonForGsonRequest<T> extends Request<T> {
     private final Map<String, String> headers;
     private Map<String, String> params;
 
-    public JsonForGsonRequest(String url, Map<String, String> params,
+    private TransparentProgressDialog progressDialog;
+
+    public JsonForGsonRequest(Context context, String url, Map<String, String> params,
                  Class<T> clazz, Map<String, String> headers, Response.ErrorListener errorListener) {
         super(Method.POST, url, errorListener);
 
         this.clazz = clazz;
         this.headers = headers;
         this.params = params;
+        progressDialog = new TransparentProgressDialog(context, R.drawable.spinner_white);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     @Override
@@ -65,14 +74,20 @@ public class JsonForGsonRequest<T> extends Request<T> {
                     gson.fromJson(Html.fromHtml(json).toString(), clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
+            progressDialog.dismiss();
+            progressDialog = null;
             return Response.error(new ParseError(e));
         } catch (JsonSyntaxException e) {
+            progressDialog.dismiss();
+            progressDialog = null;
             return Response.error(new ParseError(e));
         }
     }
 
     @Override
     protected void deliverResponse(T response) {
+        progressDialog.dismiss();
+        progressDialog = null;
         if(response != null) {
                 EventBus.getDefault().post(response);
         }

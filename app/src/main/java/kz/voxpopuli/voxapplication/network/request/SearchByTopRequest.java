@@ -1,5 +1,7 @@
 package kz.voxpopuli.voxapplication.network.request;
 
+import android.content.Context;
+
 import com.android.volley.Response;
 
 import java.util.Map;
@@ -14,7 +16,7 @@ public class SearchByTopRequest extends JsonForGsonRequest<SearchByTopWrapper> {
 
     public static final String TOP_MATERIALS_PARAM = "top_materials";
 
-    public SearchByTopRequest(Map<String, String> params, Response.ErrorListener errorListener) {
-        super(VoxProviderUrls.SEARCH_REQUEST, params, SearchByTopWrapper.class, null, errorListener);
+    public SearchByTopRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
+        super(context, VoxProviderUrls.SEARCH_REQUEST, params, SearchByTopWrapper.class, null, errorListener);
     }
 }
