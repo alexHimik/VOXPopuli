@@ -36,6 +36,7 @@ import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.PageAdapter;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
+import kz.voxpopuli.voxapplication.events.SocialNetworkNotConnected;
 import kz.voxpopuli.voxapplication.events.SuccessPostToSocialEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.ArticleContentRequest;
@@ -45,6 +46,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.article.Author;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Content;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Similar;
 import kz.voxpopuli.voxapplication.network.wrappers.article.Tag;
+import kz.voxpopuli.voxapplication.tools.DialogTools;
 
 public class NewsPageFragment extends BaseFragment implements View.OnClickListener {
 
@@ -99,13 +101,17 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         }
     };
 
-
     public void onEvent(ArticleDataWrapper articleDataWrapper) {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         maxWidth = display.getWidth() - ((int) getResources().getDimension(R.dimen.news_padding_txt))*2;
         ((RobotoTextView)centerBatItem).setText(articleDataWrapper.getArticle().getTitle());
         pn = articleDataWrapper.getArticle();
         setNewsPage();
+    }
+
+    public void onEvent(SocialNetworkNotConnected socialNetworkNotConnected) {
+        DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                getString(R.string.unlogined_social_post_alarm));
     }
 
     public void onEvent(SuccessPostToSocialEvent successPostToSocialEvent) {

@@ -39,8 +39,7 @@ public class SocialDialogFragment extends DialogFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        socialNetworkUtils = new SocialNetworkUtils();
-        socialNetworkUtils.initSocialManager(this);
+        socialNetworkUtils = SocialNetworkUtils.getInstance(this);
     }
 
     public void onClick(View v) {

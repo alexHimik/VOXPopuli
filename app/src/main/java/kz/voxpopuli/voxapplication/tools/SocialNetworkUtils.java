@@ -27,6 +27,7 @@ import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.events.ErrorEvent;
 import kz.voxpopuli.voxapplication.events.PersonInformationEvent;
+import kz.voxpopuli.voxapplication.events.SocialNetworkNotConnected;
 import kz.voxpopuli.voxapplication.events.SuccessPostToSocialEvent;
 
 /**
@@ -54,21 +55,16 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     private SocialNetworkManager socialNetworkManager;
     private static SocialNetworkUtils instance;
 
-    private Bundle postingData;
-    private String postingMsg;
+    private SocialNetworkUtils(Fragment fragment) {
+        initSocialManager(fragment);
+    }
 
-    private boolean postingProcess;
-
-//    private SocialNetworkUtils(Fragment fragment) {
-//        initSocialManager(fragment);
-//    }
-//
-//    public static SocialNetworkUtils getInstance(Fragment fragment) {
-//        if(instance == null) {
-//            instance = new SocialNetworkUtils(fragment);
-//        }
-//        return instance;
-//    }
+    public static SocialNetworkUtils getInstance(Fragment fragment) {
+        if(instance == null) {
+            instance = new SocialNetworkUtils(fragment);
+        }
+        return instance;
+    }
 
     public boolean isSocialManagerInitialized() {
         return socialNetworkManager != null;
@@ -95,11 +91,10 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
                 } else {
                     network.requestPostLink(postParams, message, postingComplete);
                 }
-            } else if(network != null && !network.isConnected()) {
-                postingData = postParams;
-                postingMsg = message;
-                postingProcess = true;
-                network.requestLogin();
+            } else {
+                SocialNetworkNotConnected msg = new SocialNetworkNotConnected();
+                msg.setNetworkId(socialNetworkId);
+                EventBus.getDefault().post(msg);
             }
         }
     }
@@ -122,16 +117,8 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     @Override
     public void onLoginSuccess(final int i) {
         SocialNetwork network = socialNetworkManager.getSocialNetwork(i);
-        if(network != null && network.isConnected() && !postingProcess) {
+        if(network != null && network.isConnected()) {
             network.requestCurrentPerson();
-        } else if(postingProcess && postingData != null) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    postArticleLinkToSocial(i, postingData.getString(SocialNetwork.BUNDLE_LINK),
-                            postingData.getString(SocialNetwork.BUNDLE_NAME), postingMsg);
-                }
-            }, 1500);
         }
     }
 
@@ -145,7 +132,7 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
         postSocialPersonInfoEvent(socialPerson, i);
     }
 
-    public void initSocialManager(Fragment fragment) {
+    private void initSocialManager(Fragment fragment) {
         socialNetworkManager = (SocialNetworkManager)fragment.getFragmentManager().
                 findFragmentByTag(SOCIAL_NETWORK_TAG);
         if(socialNetworkManager == null) {
@@ -201,9 +188,6 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
     private OnPostingCompleteListener postingComplete = new OnPostingCompleteListener() {
         @Override
         public void onPostSuccessfully(int socialNetworkID) {
-            postingData = null;
-            postingMsg = null;
-            postingProcess = false;
             EventBus.getDefault().post(new SuccessPostToSocialEvent(socialNetworkID));
         }
 
