@@ -162,7 +162,7 @@ public class EditUserProfileFragment extends BaseFragment {
             UserInfoTools.saveUserLastName(getActivity(),
                     editUserDataWrapper.getUserData().getLastName());
             UserInfoTools.saveUserId(getActivity(),
-                    editUserDataWrapper.getUserData().getId());
+                    Integer.toString(editUserDataWrapper.getUserData().getId()));
             saving = false;
             doLogin();
         }
@@ -172,7 +172,7 @@ public class EditUserProfileFragment extends BaseFragment {
         UserInfoTools.saveUserFirstName(getActivity(), data.getUserData().getFirstName());
         UserInfoTools.saveUserLastName(getActivity(), data.getUserData().getLastName());
         UserInfoTools.saveUserAvatarUrl(getActivity(), data.getUserData().getAvatar());
-        UserInfoTools.saveUserId(getActivity(), data.getUserData().getId());
+        UserInfoTools.saveUserId(getActivity(), Integer.toString(data.getUserData().getId()));
         UserInfoTools.saveUserNick(getActivity(), data.getUserData().getNick());
 
         Toast.makeText(getActivity(), getString(R.string.user_data_saved_msg),

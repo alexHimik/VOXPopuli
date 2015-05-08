@@ -245,6 +245,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             DialogTools.showNetworkErrorDialog(this, getString(R.string.error_dialog_title),
                     getString(R.string.network_unreachable_alarm));
         }
+
     }
 
     private void handleCategoryOrRubricSelection(int fragmentId, String dataKey, Serializable data) {

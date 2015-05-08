@@ -223,7 +223,7 @@ public class LoginFragment extends BaseFragment {
 
     //need for social login
     public void onEvent(EditUserDataWrapper editUserDataWrapper) {
-        UserInfoTools.saveUserId(getActivity(), editUserDataWrapper.getUserData().getId());
+        UserInfoTools.saveUserId(getActivity(), Integer.toString(editUserDataWrapper.getUserData().getId()));
         UserInfoTools.saveUserLoggedInSocially(getActivity(), true);
         ((MainActivity)getActivity()).getSupportFragmentManager().popBackStack();
         ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
@@ -237,7 +237,7 @@ public class LoginFragment extends BaseFragment {
         UserInfoTools.saveUserLogin(getActivity(), loginInput.getText().toString());
         UserInfoTools.saveUserEmail(getActivity(),loginInput.getText().toString());
         UserInfoTools.saveUserPassword(getActivity(), passwordInput.getText().toString());
-        UserInfoTools.saveUserId(getActivity(), data.getUserData().getId());
+        UserInfoTools.saveUserId(getActivity(), Integer.toString(data.getUserData().getId()));
         UserInfoTools.saveUserNick(getActivity(), data.getUserData().getNick());
 
         ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
