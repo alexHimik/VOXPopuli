@@ -75,6 +75,8 @@ public class SocialNetworkUtils implements SocialNetworkManager.OnInitialization
             SocialNetwork network = socialNetworkManager.getSocialNetwork(socialNetworkId);
             if(network != null && !network.isConnected()) {
                 network.requestLogin();
+            } else {
+                network.requestCurrentPerson();
             }
         }
     }

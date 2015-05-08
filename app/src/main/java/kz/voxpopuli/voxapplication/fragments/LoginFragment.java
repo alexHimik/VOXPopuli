@@ -216,9 +216,9 @@ public class LoginFragment extends BaseFragment {
 
         params.put("signature", signature);
 
-            VolleyNetworkProvider.getInstance(LoginFragment.this.getActivity()).addToRequestQueue(
-                    new TransferSocialDataRequest(getActivity(), params,
-                            (MainActivity)LoginFragment.this.getActivity()));
+        VolleyNetworkProvider.getInstance(LoginFragment.this.getActivity()).addToRequestQueue(
+                new TransferSocialDataRequest(getActivity(), params,
+                        (MainActivity)LoginFragment.this.getActivity()));
     }
 
     //need for social login
