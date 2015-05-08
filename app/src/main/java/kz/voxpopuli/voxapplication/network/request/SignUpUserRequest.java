@@ -14,6 +14,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.udata.UserData;
  */
 public class SignUpUserRequest extends JsonForGsonRequest<UserData> {
     public SignUpUserRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
-        super(context, VoxProviderUrls.SIGN_UP_USER_REQUEST, params, UserData.class, null, errorListener);
+        super(context, VoxProviderUrls.SIGN_UP_USER_REQUEST, params, UserData.class, null,
+                errorListener, true);
     }
 }

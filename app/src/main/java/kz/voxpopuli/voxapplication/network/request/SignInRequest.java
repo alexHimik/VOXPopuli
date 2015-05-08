@@ -15,6 +15,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.udata.UserDataWrapper;
 public class SignInRequest extends JsonForGsonRequest<UserDataWrapper> {
 
     public SignInRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
-        super(context, VoxProviderUrls.SIGN_IN_REQUEST, params, UserDataWrapper.class, null, errorListener);
+        super(context, VoxProviderUrls.SIGN_IN_REQUEST, params, UserDataWrapper.class, null,
+                errorListener, true);
     }
 }

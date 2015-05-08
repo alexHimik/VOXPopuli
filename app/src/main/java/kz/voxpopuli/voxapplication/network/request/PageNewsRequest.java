@@ -10,6 +10,6 @@ public class PageNewsRequest extends GsonRequest<PageNewsWrapper> {
 
     public PageNewsRequest(Context context, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.MAIN_PAGE_CONTENT_REQUEST,
-                PageNewsWrapper.class, null, errorListener);
+                PageNewsWrapper.class, null, errorListener, true);
     }
 }

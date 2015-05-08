@@ -44,6 +44,8 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     private String authorAvatar, authorName, authorId;
     private Boolean authorRead = true;
 
+    private View createdFragmentLayout;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -59,29 +61,37 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle data = getArguments();
-        if (data !=null){
+        if (data != null){
             authorAvatar = data.getString("AUTHOR_AVATAR");
             authorName = data.getString("AUTHOR_NAME");
             authorId = data.getString("AUTHOR_ID");
             authorRead = false;
-        }
-        else {
+        } else {
             authorAvatar = UserInfoTools.getUserAvatarUrl(getActivity());
             authorName = UserInfoTools.getUserFirstName(getActivity()) + " " +
                     UserInfoTools.getUserLastName(getActivity());
             authorId = UserInfoTools.getUSerId(getActivity());
             authorRead = true;
         }
+
         View customBar = getActionBarCustomView(inflater);
-        View view = mFadingHelper.createView(inflater);
-        fragmentList = (ListView)view.findViewById(android.R.id.list);
-        bluredBack = (ImageView)view.findViewById(R.id.user_avatar_back);
-        userAvatar = (ImageView)view.findViewById(R.id.user_avatar);
-        userName = (RobotoTextView)view.findViewById(R.id.user_name);
+
+        if(createdFragmentLayout == null) {
+            createdFragmentLayout = mFadingHelper.createView(inflater);
+        }
+
+        mFadingHelper.resetActionBarAlfa();
+        ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
+                mFadingHelper.getmActionBarBackgroundDrawable());
+
+        fragmentList = (ListView)createdFragmentLayout.findViewById(android.R.id.list);
+        bluredBack = (ImageView)createdFragmentLayout.findViewById(R.id.user_avatar_back);
+        userAvatar = (ImageView)createdFragmentLayout.findViewById(R.id.user_avatar);
+        userName = (RobotoTextView)createdFragmentLayout.findViewById(R.id.user_name);
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
 
         initViews();
-        return view;
+        return createdFragmentLayout;
     }
 
     @Override
@@ -140,6 +150,9 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
     public void onEvent(UserCommentsWrapper data) {
         comments.add(new Comment());
         if(data.getUserData() != null) {
+            if(!comments.isEmpty()) {
+                comments.clear();
+            }
             comments.addAll(data.getUserData().getComments());
         }
         adapter.notifyDataSetChanged();

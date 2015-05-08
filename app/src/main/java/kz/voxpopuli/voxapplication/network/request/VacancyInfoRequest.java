@@ -13,6 +13,6 @@ import kz.voxpopuli.voxapplication.network.wrappers.info.InfoDataWrapper;
 public class VacancyInfoRequest extends GsonRequest<InfoDataWrapper> {
     public VacancyInfoRequest(Context context, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.VACANCY_INFO_REQUEST, InfoDataWrapper.class,
-                null, errorListener);
+                null, errorListener, true);
     }
 }

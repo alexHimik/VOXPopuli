@@ -35,13 +35,15 @@ public class GsonRequest<T> extends Request<T> {
     private TransparentProgressDialog progress;
 
     public GsonRequest(Context context, int method, String url, Class<T> clazz,
-                       Map<String, String> headers, Response.ErrorListener errorListener) {
+                       Map<String, String> headers, Response.ErrorListener errorListener, boolean userProgress) {
         super(method, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
-        progress = new TransparentProgressDialog(context, R.drawable.spinner_white);
-        progress.setCancelable(false);
-        progress.show();
+        if(userProgress) {
+            progress = new TransparentProgressDialog(context, R.drawable.spinner_white);
+            progress.setCancelable(false);
+            progress.show();
+        }
     }
 
     @Override
@@ -56,26 +58,37 @@ public class GsonRequest<T> extends Request<T> {
                 ErrorEvent errorEvent = new ErrorEvent(ServerErrorContainer.getErrorMessage(
                         error.getError()), Integer.parseInt(error.getError()));
                 EventBus.getDefault().post(errorEvent);
+
+                if(progress != null) {
+                    progress.dismiss();
+                    progress = null;
+                }
                 return null;
             }
             return Response.success(
                     gson.fromJson(Html.fromHtml(json).toString(), clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
-            progress.dismiss();
-            progress = null;
+            if(progress != null) {
+                progress.dismiss();
+                progress = null;
+            }
             return Response.error(new ParseError(e));
         } catch (JsonSyntaxException e) {
-            progress.dismiss();
-            progress = null;
+            if(progress != null) {
+                progress.dismiss();
+                progress = null;
+            }
             return Response.error(new ParseError(e));
         }
     }
 
     @Override
     protected void deliverResponse(T response) {
-        progress.dismiss();
-        progress = null;
+        if(progress != null) {
+            progress.dismiss();
+            progress = null;
+        }
         EventBus.getDefault().post(response);
     }
 

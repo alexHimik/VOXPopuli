@@ -15,6 +15,6 @@ import kz.voxpopuli.voxapplication.network.wrappers.comments.PostUserCommentWrap
 public class PostUserCommentRequest extends JsonForGsonRequest<PostUserCommentWrapper> {
     public PostUserCommentRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
         super(context, VoxProviderUrls.POST_ARTICLE_COMMENT_REQUEST, params, PostUserCommentWrapper.class,
-                null, errorListener);
+                null, errorListener, true);
     }
 }

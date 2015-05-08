@@ -16,6 +16,6 @@ public class EditUserDataRequest extends JsonForGsonRequest<EditUserDataWrapper>
 
     public EditUserDataRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
         super(context, VoxProviderUrls.USER_DATA_EDIT_REQUEST, params, EditUserDataWrapper.class,
-                null, errorListener);
+                null, errorListener, true);
     }
 }

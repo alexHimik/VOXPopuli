@@ -208,6 +208,7 @@ public class LoginFragment extends BaseFragment {
                 LoginFragment.this.getActivity())));
         params.put("firstName", UserInfoTools.getUserFirstName(LoginFragment.this.getActivity()));
         params.put("lastName", UserInfoTools.getUserLastName(LoginFragment.this.getActivity()));
+        params.put("avatar_url", event.getUserAvatarUrl());
         params.put("", VoxProviderUrls.SALT);
 
         String signature = MD5Hasher.getHash(params);

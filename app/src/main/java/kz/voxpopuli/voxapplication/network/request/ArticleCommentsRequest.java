@@ -15,6 +15,6 @@ public class ArticleCommentsRequest extends GsonRequest<ArticleCommentsWrapper> 
         super(context, Method.GET, VoxProviderUrls.ARTICLE_COMMENTS_REQUEST.replaceAll(
                 VoxProviderUrls.ARTICLE_IDENTIFIER, articleId).replaceAll(
                 VoxProviderUrls.RUBRIC_PAGE_IDENTIFIER, page), ArticleCommentsWrapper.class,
-                null, errorListener);
+                null, errorListener, true);
     }
 }

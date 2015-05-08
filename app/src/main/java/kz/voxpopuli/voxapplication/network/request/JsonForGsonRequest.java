@@ -46,15 +46,17 @@ public class JsonForGsonRequest<T> extends Request<T> {
     private TransparentProgressDialog progressDialog;
 
     public JsonForGsonRequest(Context context, String url, Map<String, String> params,
-                 Class<T> clazz, Map<String, String> headers, Response.ErrorListener errorListener) {
+                 Class<T> clazz, Map<String, String> headers, Response.ErrorListener errorListener, boolean useProgress) {
         super(Method.POST, url, errorListener);
 
         this.clazz = clazz;
         this.headers = headers;
         this.params = params;
-        progressDialog = new TransparentProgressDialog(context, R.drawable.spinner_white);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        if(useProgress) {
+            progressDialog = new TransparentProgressDialog(context, R.drawable.spinner_white);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
     }
 
     @Override
@@ -68,26 +70,37 @@ public class JsonForGsonRequest<T> extends Request<T> {
                 ErrorEvent errorEvent = new ErrorEvent(ServerErrorContainer.getErrorMessage(
                         error.getError()), Integer.parseInt(error.getError()));
                 EventBus.getDefault().post(errorEvent);
+
+                if(progressDialog != null) {
+                    progressDialog.dismiss();
+                    progressDialog = null;
+                }
                 return null;
             }
             return Response.success(
                     gson.fromJson(Html.fromHtml(json).toString(), clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
-            progressDialog.dismiss();
-            progressDialog = null;
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+                progressDialog = null;
+            }
             return Response.error(new ParseError(e));
         } catch (JsonSyntaxException e) {
-            progressDialog.dismiss();
-            progressDialog = null;
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+                progressDialog = null;
+            }
             return Response.error(new ParseError(e));
         }
     }
 
     @Override
     protected void deliverResponse(T response) {
-        progressDialog.dismiss();
-        progressDialog = null;
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
         if(response != null) {
                 EventBus.getDefault().post(response);
         }

@@ -39,13 +39,23 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     private ArticlesAdapter articlesAdapter;
     private List<Article> articles = new LinkedList<>();
 
+    private View fragmentLayout;
+
     private int currentPage = 1;
     private String currentRubricId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View parent = super.onCreateView(inflater, container, savedInstanceState);
+        if(fragmentLayout == null) {
+            fragmentLayout = super.onCreateView(inflater, container, savedInstanceState);
+        }
+
+        View customBar = getActionBarCustomView(inflater);
+        mFadingHelper.resetActionBarAlfa();
+        ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
+                mFadingHelper.getmActionBarBackgroundDrawable());
+
         articlesAdapter = new ArticlesAdapter(this, articles, false);
         fragmentList.setOnItemClickListener(this);
         fragmentList.setAdapter(articlesAdapter);
@@ -53,8 +63,9 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
         swipyRefreshLayout.setColorSchemeColors(getActivity().getResources().getColor(R.color.vox_red),
                 getActivity().getResources().getColor(R.color.vox_red),
                 getActivity().getResources().getColor(R.color.vox_red));
+        ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
         getRubricData(mArguments);
-        return parent;
+        return fragmentLayout;
     }
 
     @Override

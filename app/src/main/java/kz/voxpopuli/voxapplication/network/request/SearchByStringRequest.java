@@ -18,6 +18,7 @@ public class SearchByStringRequest extends JsonForGsonRequest<SearchByStringWrap
     public static final String PAGE_PARAM = "page";
 
     public SearchByStringRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
-        super(context, VoxProviderUrls.SEARCH_REQUEST, params, SearchByStringWrapper.class, null, errorListener);
+        super(context, VoxProviderUrls.SEARCH_REQUEST, params, SearchByStringWrapper.class, null,
+                errorListener, false);
     }
 }

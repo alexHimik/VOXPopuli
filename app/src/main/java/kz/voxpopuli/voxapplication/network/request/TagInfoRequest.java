@@ -15,6 +15,6 @@ public class TagInfoRequest extends GsonRequest<TagDataWrapper> {
     public TagInfoRequest(Context context, String tagId, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.TAG_INFO_REQUEST.replaceAll(
                 VoxProviderUrls.TAG_IDENTIFIER, tagId), TagDataWrapper.class, null,
-                errorListener);
+                errorListener, true);
     }
 }

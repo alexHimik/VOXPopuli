@@ -13,6 +13,7 @@ import kz.voxpopuli.voxapplication.network.wrappers.rubrics.RubricsDataWrapper;
 public class RubricsInfoRequest extends GsonRequest<RubricsDataWrapper> {
 
     public RubricsInfoRequest(Context context, Response.ErrorListener errorListener) {
-        super(context, Method.GET, VoxProviderUrls.RUBRICS_INFO_REQUEST, RubricsDataWrapper.class, null, errorListener);
+        super(context, Method.GET, VoxProviderUrls.RUBRICS_INFO_REQUEST, RubricsDataWrapper.class,
+                null, errorListener, true);
     }
 }
