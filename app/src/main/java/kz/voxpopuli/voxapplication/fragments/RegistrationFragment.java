@@ -27,11 +27,13 @@ import java.util.Map;
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.events.PersonInformationEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.SignUpUserRequest;
 import kz.voxpopuli.voxapplication.network.request.TransferSocialDataRequest;
 import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
+import kz.voxpopuli.voxapplication.network.wrappers.EditUserDataSocialWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.udata.EditUserDataWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.udata.UserData;
 import kz.voxpopuli.voxapplication.tools.DialogTools;
@@ -173,7 +175,7 @@ public class RegistrationFragment extends BaseFragment {
             params.put("signature", signature);
 
             VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
-                    new SignUpUserRequest(getActivity(), params, (MainActivity)getActivity()));
+                    new SignUpUserRequest(getActivity(), params, (MainActivity) getActivity()));
     }
 
     public void onEvent(final PersonInformationEvent event) {
@@ -212,25 +214,27 @@ public class RegistrationFragment extends BaseFragment {
     }
 
     //need for social login
-    public void onEvent(EditUserDataWrapper editUserDataWrapper) {
-        UserInfoTools.saveUserId(getActivity(), editUserDataWrapper.getUserData().getId());
+    public void onEvent(EditUserDataSocialWrapper editUserDataWrapper) {
+        UserInfoTools.saveUserId(getActivity(), Integer.toString(editUserDataWrapper.getUserData().getId()));
         UserInfoTools.saveUserLoggedInSocially(getActivity(), true);
         ((MainActivity)getActivity()).getSupportFragmentManager().popBackStack();
         ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
                 null);
     }
 
-    public void onEvent(UserData data) {
+    public void onEvent(EditUserDataWrapper data) {
         if(data != null) {
             UserInfoTools.saveUserEmail(getActivity(), emailInput.getText().toString());
-            UserInfoTools.saveUserId(getActivity(), Integer.toString(data.getId()));
-            UserInfoTools.saveUserFirstName(getActivity(), data.getFirstName());
-            UserInfoTools.saveUserLastName(getActivity(), data.getLastName());
+            UserInfoTools.saveUserId(getActivity(), Integer.toString(data.getUserData().getId()));
+            UserInfoTools.saveUserFirstName(getActivity(), data.getUserData().getFirstName());
+            UserInfoTools.saveUserLastName(getActivity(), data.getUserData().getLastName());
             UserInfoTools.saveUserPassword(getActivity(), passwirdInput.getText().toString());
             UserInfoTools.saveUserLogin(getActivity(), emailInput.getText().toString());
 
-            ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
-                    null);
+            CategorySelectedEvent cse = new CategorySelectedEvent();
+            cse.setCategoryId(R.id.left_bar_category_all);
+            cse.setCategoryName(getString(R.string.category_name_all));
+            EventBus.getDefault().post(cse);
         }
     }
 
