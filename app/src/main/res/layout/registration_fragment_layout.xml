@@ -73,7 +73,7 @@
                 android:id="@+id/login_password_hider"
                 android:layout_width="@dimen/action_bar_icons_size"
                 android:layout_height="@dimen/action_bar_icons_size"
-                android:background="@drawable/ic_red_checkbox"/>
+                android:background="@drawable/ic_grey_checkbox"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -84,7 +84,7 @@
                 app:textWeight="normal"
                 android:layout_marginLeft="@dimen/padding_16dp"
                 style="@style/gray_info_text.size_14sp"
-                android:text="@string/show_password_string"
+                android:text="@string/hide_password_string"
                 />
         </LinearLayout>
         <com.devspark.robototextview.widget.RobotoTextView

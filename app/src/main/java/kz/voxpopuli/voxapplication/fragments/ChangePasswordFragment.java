@@ -106,7 +106,7 @@ public class ChangePasswordFragment extends BaseFragment {
             UserInfoTools.saveUserLastName(getActivity(),
                     editUserDataWrapper.getUserData().getLastName());
             UserInfoTools.saveUserId(getActivity(),
-                    editUserDataWrapper.getUserData().getId());
+                    Integer.toString(editUserDataWrapper.getUserData().getId()));
             Toast.makeText(getActivity(), getString(R.string.user_data_saved_msg),
                     Toast.LENGTH_SHORT).show();
             getActivity().onBackPressed();

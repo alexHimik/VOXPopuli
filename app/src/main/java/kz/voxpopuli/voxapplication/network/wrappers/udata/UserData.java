@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose;
 public class UserData {
 
     @Expose
-    private String id;
+    private int id;
     @Expose
     private String firstName;
     @Expose
@@ -23,7 +23,7 @@ public class UserData {
      * @return
      * The id
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -32,11 +32,11 @@ public class UserData {
      * @param id
      * The id
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public UserData withId(String id) {
+    public UserData withId(int id) {
         this.id = id;
         return this;
     }

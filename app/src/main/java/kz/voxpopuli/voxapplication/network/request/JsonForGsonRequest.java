@@ -68,6 +68,9 @@ public class JsonForGsonRequest<T> extends Request<T> {
                 ErrorEvent errorEvent = new ErrorEvent(ServerErrorContainer.getErrorMessage(
                         error.getError()), Integer.parseInt(error.getError()));
                 EventBus.getDefault().post(errorEvent);
+
+                progressDialog.dismiss();
+                progressDialog = null;
                 return null;
             }
             return Response.success(

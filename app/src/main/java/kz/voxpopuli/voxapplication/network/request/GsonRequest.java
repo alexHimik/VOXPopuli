@@ -56,6 +56,8 @@ public class GsonRequest<T> extends Request<T> {
                 ErrorEvent errorEvent = new ErrorEvent(ServerErrorContainer.getErrorMessage(
                         error.getError()), Integer.parseInt(error.getError()));
                 EventBus.getDefault().post(errorEvent);
+                progress.dismiss();
+                progress = null;
                 return null;
             }
             return Response.success(

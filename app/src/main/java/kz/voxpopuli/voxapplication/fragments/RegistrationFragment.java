@@ -114,6 +114,7 @@ public class RegistrationFragment extends BaseFragment {
         nameInput = (RobotoEditText)parent.findViewById(R.id.registration_name_input);
         surnameInput = (RobotoEditText)parent.findViewById(R.id.registration_surname_input);
         passwirdInput = (RobotoEditText)parent.findViewById(R.id.registration_password_input);
+        passwirdInput.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         fbSocial = (ImageButton)parent.findViewById(R.id.login_facebook);
         twSocial = (ImageButton)parent.findViewById(R.id.login_twitter);
         gpSocial = (ImageButton)parent.findViewById(R.id.login_google);
@@ -143,12 +144,29 @@ public class RegistrationFragment extends BaseFragment {
 
     private void doUserRegistration() {
         if(TextInputsValidators.isInputEmpty(emailInput) ||
+                TextInputsValidators.isInputEmpty(passwirdInput)) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.empty_field_alarm));
+            return;
+        }
+        if(!TextInputsValidators.isInputEmail(emailInput)) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.wrong_email_format_alarm));
+            return;
+        }
+        if(!TextInputsValidators.isInputLengthEnought(passwirdInput, 5)) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.wrong_password_length));
+            return;
+        }
+        if(TextInputsValidators.isInputEmpty(emailInput) ||
                 TextInputsValidators.isInputEmpty(nameInput) ||
                 TextInputsValidators.isInputEmpty(surnameInput) ||
                 TextInputsValidators.isInputEmpty(passwirdInput)) {
             DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
                     getString(R.string.empty_field_alarm));
-        } else {
+            return;
+        }
             Map<String, String> params = new LinkedHashMap<>();
             params.put("email", emailInput.getText().toString());
             params.put("password", passwirdInput.getText().toString());
@@ -162,13 +180,12 @@ public class RegistrationFragment extends BaseFragment {
 
             VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
                     new SignUpUserRequest(getActivity(), params, (MainActivity)getActivity()));
-        }
     }
 
     public void onEvent(UserData data) {
         if(data != null) {
             UserInfoTools.saveUserEmail(getActivity(), emailInput.getText().toString());
-            UserInfoTools.saveUserId(getActivity(), data.getId());
+            UserInfoTools.saveUserId(getActivity(), Integer.toString(data.getId()));
             UserInfoTools.saveUserFirstName(getActivity(), data.getFirstName());
             UserInfoTools.saveUserLastName(getActivity(), data.getLastName());
             UserInfoTools.saveUserPassword(getActivity(), passwirdInput.getText().toString());
