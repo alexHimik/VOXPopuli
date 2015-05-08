@@ -27,9 +27,12 @@ import java.util.Map;
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
 import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.events.PersonInformationEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
 import kz.voxpopuli.voxapplication.network.request.SignUpUserRequest;
+import kz.voxpopuli.voxapplication.network.request.TransferSocialDataRequest;
 import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
+import kz.voxpopuli.voxapplication.network.wrappers.udata.EditUserDataWrapper;
 import kz.voxpopuli.voxapplication.network.wrappers.udata.UserData;
 import kz.voxpopuli.voxapplication.tools.DialogTools;
 import kz.voxpopuli.voxapplication.tools.MD5Hasher;
@@ -56,8 +59,6 @@ public class RegistrationFragment extends BaseFragment {
     private ImageButton vkSocial;
     private ImageButton passwordHideBtn;
 
-    private SocialNetworkUtils socialNetworkUtils;
-
     private boolean showPassword = true;
 
     @Override
@@ -67,13 +68,6 @@ public class RegistrationFragment extends BaseFragment {
         View customBar = getActionBarCustomView(inflater);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
         return parent;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        socialNetworkUtils = new SocialNetworkUtils();
-        socialNetworkUtils.initSocialManager(this);
     }
 
     @Override
@@ -182,6 +176,50 @@ public class RegistrationFragment extends BaseFragment {
                     new SignUpUserRequest(getActivity(), params, (MainActivity)getActivity()));
     }
 
+    public void onEvent(final PersonInformationEvent event) {
+        if(event.getUserEmail() != null && event.getUserEmail().length() > 0) {
+            UserInfoTools.saveUserLogin(getActivity(), event.getUserEmail());
+            UserInfoTools.saveUserEmail(getActivity(), event.getUserEmail());
+        }
+        if(event.getUserName() != null && event.getUserName().contains(" ")) {
+            UserInfoTools.saveUserFirstName(getActivity(), event.getUserName().split(" ")[0]);
+            UserInfoTools.saveUserLastName(getActivity(), event.getUserName().split(" ")[1]);
+        } else {
+            UserInfoTools.saveUserFirstName(getActivity(), event.getUserName());
+        }
+        UserInfoTools.saveUserSocialProvider(getActivity(), event.getSocialNetworkId());
+        UserInfoTools.saveUserId(getActivity(), event.getUserId());
+        UserInfoTools.saveUserAvatarUrl(getActivity(), event.getUserAvatarUrl());
+
+
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("provider", String.valueOf(SocialNetworkUtils.asneToVoxProviders.get(
+                UserInfoTools.getUserSocialProvider(RegistrationFragment.this.getActivity()))));
+        params.put("social_id", String.valueOf(UserInfoTools.getUserSocialProvider(
+                RegistrationFragment.this.getActivity())));
+        params.put("firstName", UserInfoTools.getUserFirstName(RegistrationFragment.this.getActivity()));
+        params.put("lastName", UserInfoTools.getUserLastName(RegistrationFragment.this.getActivity()));
+        params.put("", VoxProviderUrls.SALT);
+
+        String signature = MD5Hasher.getHash(params);
+        params.remove("");
+
+        params.put("signature", signature);
+
+        VolleyNetworkProvider.getInstance(RegistrationFragment.this.getActivity()).addToRequestQueue(
+                new TransferSocialDataRequest(getActivity(), params,
+                        (MainActivity)RegistrationFragment.this.getActivity()));
+    }
+
+    //need for social login
+    public void onEvent(EditUserDataWrapper editUserDataWrapper) {
+        UserInfoTools.saveUserId(getActivity(), editUserDataWrapper.getUserData().getId());
+        UserInfoTools.saveUserLoggedInSocially(getActivity(), true);
+        ((MainActivity)getActivity()).getSupportFragmentManager().popBackStack();
+        ((MainActivity)getActivity()).handleFragmentSwitching(UserProfileFragment.FRAGMENT_ID,
+                null);
+    }
+
     public void onEvent(UserData data) {
         if(data != null) {
             UserInfoTools.saveUserEmail(getActivity(), emailInput.getText().toString());
@@ -214,13 +252,13 @@ public class RegistrationFragment extends BaseFragment {
             } else if(v.getId() == R.id.right_drawer_item) {
                 doUserRegistration();
             } else if(v.getId() == R.id.login_facebook) {
-                socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
             } else if(v.getId() == R.id.login_twitter) {
-                socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
             } else if(v.getId() == R.id.login_google) {
-                socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
             } else if(v.getId() == R.id.login_vk) {
-                socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
             } else if(v.getId() == R.id.login_password_hider) {
                 togglePasswordVisibility();
             }

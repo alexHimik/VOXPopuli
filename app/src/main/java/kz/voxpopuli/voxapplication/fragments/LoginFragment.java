@@ -67,8 +67,6 @@ public class LoginFragment extends BaseFragment {
     private ImageButton passwordHideBtn;
     private Button createAccountBtn;
 
-    private SocialNetworkUtils socialNetworkUtils;
-
     private boolean showPassword = true;
 
     @Override
@@ -81,13 +79,6 @@ public class LoginFragment extends BaseFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        socialNetworkUtils = new SocialNetworkUtils();
-        socialNetworkUtils.initSocialManager(this);
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
@@ -97,7 +88,6 @@ public class LoginFragment extends BaseFragment {
     public void onStop() {
         EventBus.getDefault().unregister(this);
         super.onStop();
-        //socialNetworkUtils.disconectConnectedNetworks();
     }
 
     @Override
@@ -107,7 +97,7 @@ public class LoginFragment extends BaseFragment {
         leftbarItem = barLayout.findViewById(R.id.left_drawer_item);
         rightBarItem = barLayout.findViewById(R.id.right_drawer_item);
         centerBatItem = barLayout.findViewById(R.id.action_bar_title);
-        leftItemTouch = barLayout.findViewById(R.id.left_drawer_item);
+        leftItemTouch = barLayout.findViewById(R.id.left_drawer_item_touch);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(
                 new ColorDrawable(getResources().getColor(R.color.vox_white)));
         initActionBarItems();
@@ -267,13 +257,13 @@ public class LoginFragment extends BaseFragment {
                 ((MainActivity)getActivity()).handleFragmentSwitching(
                         ForgotPasswordFragment.FRAGMENT_ID, null);
             } else if(v.getId() == R.id.login_facebook) {
-                socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(FacebookSocialNetwork.ID);
             } else if(v.getId() == R.id.login_twitter) {
-                socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(TwitterSocialNetwork.ID);
             } else if(v.getId() == R.id.login_google) {
-                socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(GooglePlusSocialNetwork.ID);
             } else if(v.getId() == R.id.login_vk) {
-                socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
+                CategoryFragment.socialNetworkUtils.requestUserLogin(VkSocialNetwork.ID);
             } else if(v.getId() == R.id.login_password_hider) {
                 togglePasswordVisibility();
             }
