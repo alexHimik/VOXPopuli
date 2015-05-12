@@ -54,7 +54,7 @@ public class GsonRequest<T> extends Request<T> {
         try {
             String json = new String(
                     response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
+                    HttpHeaderParser.parseCharset(response.headers)).replaceAll("&quot;", "'");
             if(json.contains(JsonForGsonRequest.ERROR_KEY)) {
                 JsonForGsonRequest.ServerErrorWrapper error = gson.fromJson(json,
                         JsonForGsonRequest.ServerErrorWrapper.class);
