@@ -16,6 +16,6 @@ public class TransferSocialDataRequest extends JsonForGsonRequest<EditUserDataWr
 
     public TransferSocialDataRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
         super(context, VoxProviderUrls.SEND_SOCIAL_USER_DATA_REQUEST, params,
-                EditUserDataWrapper.class, null, errorListener);
+                EditUserDataWrapper.class, null, errorListener, true);
     }
 }

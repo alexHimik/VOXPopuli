@@ -181,7 +181,7 @@ public abstract class FadingActionBarHelperBase {
 
     public void resetActionBarAlfa() {
         if(mActionBarBackgroundDrawable != null) {
-            mActionBarBackgroundDrawable.setAlpha(255);
+            mActionBarBackgroundDrawable.setAlpha(0);
         }
     }
 
@@ -189,6 +189,14 @@ public abstract class FadingActionBarHelperBase {
         if(mActionBarBackgroundDrawable != null) {
             mActionBarBackgroundDrawable.setAlpha(0);
         }
+    }
+
+    public Drawable getmActionBarBackgroundDrawable() {
+        return mActionBarBackgroundDrawable;
+    }
+
+    public void setmActionBarBackgroundDrawable(Drawable mActionBarBackgroundDrawable) {
+        this.mActionBarBackgroundDrawable = mActionBarBackgroundDrawable;
     }
 
     protected abstract int getActionBarHeight();

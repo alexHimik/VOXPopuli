@@ -17,6 +17,7 @@ public class SearchByTopRequest extends JsonForGsonRequest<SearchByTopWrapper> {
     public static final String TOP_MATERIALS_PARAM = "top_materials";
 
     public SearchByTopRequest(Context context, Map<String, String> params, Response.ErrorListener errorListener) {
-        super(context, VoxProviderUrls.SEARCH_REQUEST, params, SearchByTopWrapper.class, null, errorListener);
+        super(context, VoxProviderUrls.SEARCH_REQUEST, params, SearchByTopWrapper.class, null,
+                errorListener, true);
     }
 }

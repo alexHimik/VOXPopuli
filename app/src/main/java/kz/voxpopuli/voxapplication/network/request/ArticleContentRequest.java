@@ -17,6 +17,6 @@ public class ArticleContentRequest extends GsonRequest<ArticleDataWrapper> {
     public ArticleContentRequest(Context context, String articleId, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.NEWS_PAGE_DATA_REQUEST.replaceAll(
                 VoxProviderUrls.NEW_IDENTIFIER, articleId), ArticleDataWrapper.class, null,
-                errorListener);
+                errorListener, true);
     }
 }

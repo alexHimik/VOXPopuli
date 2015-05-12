@@ -201,6 +201,7 @@ public class RegistrationFragment extends BaseFragment {
                 RegistrationFragment.this.getActivity())));
         params.put("firstName", UserInfoTools.getUserFirstName(RegistrationFragment.this.getActivity()));
         params.put("lastName", UserInfoTools.getUserLastName(RegistrationFragment.this.getActivity()));
+        params.put("avatar_url", event.getUserAvatarUrl());
         params.put("", VoxProviderUrls.SALT);
 
         String signature = MD5Hasher.getHash(params);

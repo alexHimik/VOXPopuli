@@ -15,6 +15,6 @@ public class UserCommentsRequest extends GsonRequest<UserCommentsWrapper> {
     public UserCommentsRequest(Context context, String userId, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.USER_COMMENTS_REQUEST.replaceAll(
                 VoxProviderUrls.USER_ID_IDENTIFIER, userId),
-                UserCommentsWrapper.class, null, errorListener);
+                UserCommentsWrapper.class, null, errorListener, true);
     }
 }

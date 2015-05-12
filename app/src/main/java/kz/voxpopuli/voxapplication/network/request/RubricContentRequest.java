@@ -16,6 +16,6 @@ public class RubricContentRequest extends GsonRequest<RubricContentWrapper> {
         super(context, Method.GET, VoxProviderUrls.RUBRIC_CONTENT_REQUEST.replaceAll(
                 VoxProviderUrls.RUBRIC_ID_IDENTIFIER, rubricId).replaceAll(
                 VoxProviderUrls.RUBRIC_PAGE_IDENTIFIER, String.valueOf(page)),
-                RubricContentWrapper.class, null, errorListener);
+                RubricContentWrapper.class, null, errorListener, true);
     }
 }

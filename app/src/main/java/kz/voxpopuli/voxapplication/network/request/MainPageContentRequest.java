@@ -14,6 +14,6 @@ public class MainPageContentRequest extends GsonRequest<MainPageDataWrapper> {
 
     public MainPageContentRequest(Context context, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.MAIN_PAGE_CONTENT_REQUEST,
-                MainPageDataWrapper.class, null, errorListener);
+                MainPageDataWrapper.class, null, errorListener, true);
     }
 }

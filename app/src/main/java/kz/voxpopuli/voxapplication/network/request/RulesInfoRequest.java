@@ -14,6 +14,6 @@ public class RulesInfoRequest extends GsonRequest<InfoDataWrapper> {
 
     public RulesInfoRequest(Context context, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.RULES_INFO_REQUEST, InfoDataWrapper.class,
-                null, errorListener);
+                null, errorListener, true);
     }
 }

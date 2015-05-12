@@ -13,6 +13,6 @@ import kz.voxpopuli.voxapplication.network.wrappers.info.InfoDataWrapper;
 public class AboutProjectRequest extends GsonRequest<InfoDataWrapper> {
     public AboutProjectRequest(Context context, Response.ErrorListener errorListener) {
         super(context, Method.GET, VoxProviderUrls.ABOUT_INFO_REQUEST, InfoDataWrapper.class,
-                null, errorListener);
+                null, errorListener, true);
     }
 }
