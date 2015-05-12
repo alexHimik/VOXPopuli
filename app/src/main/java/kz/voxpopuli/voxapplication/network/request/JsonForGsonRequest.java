@@ -36,7 +36,7 @@ public class JsonForGsonRequest<T> extends Request<T> {
             String.format("application/x-www-form-urlencoded; charset=%s", PROTOCOL_CHARSET);
 
     public static final String ERROR_KEY = "error";
-    public static final int NETWORK_TIMEOUT_LIMIT = 10000;
+    public static final int NETWORK_TIMEOUT_LIMIT = 5000;
 
     protected final Gson gson = new Gson();
     private final Class<T> clazz;
