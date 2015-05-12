@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.Html;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -39,6 +40,8 @@ public class GsonRequest<T> extends Request<T> {
         super(method, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
+        setRetryPolicy(new DefaultRetryPolicy(JsonForGsonRequest.NETWORK_TIMEOUT_LIMIT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         if(userProgress) {
             progress = new TransparentProgressDialog(context, R.drawable.spinner_white);
             progress.setCancelable(false);
