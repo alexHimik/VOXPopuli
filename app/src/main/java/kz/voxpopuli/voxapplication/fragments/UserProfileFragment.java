@@ -3,6 +3,7 @@ package kz.voxpopuli.voxapplication.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,10 +97,13 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
 
     @Override
     public void onStart() {
+Log.d("QWERT","Start");
         super.onStart();
         EventBus.getDefault().register(this);
+Log.d("QWERT","Volley");
         VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(new UserCommentsRequest(
                getActivity(), authorId, ((MainActivity)getActivity())));
+Log.d("QWERT","Volley 1111");
     }
 
     @Override
@@ -149,11 +153,14 @@ public class UserProfileFragment extends FaddingTitleBaseFragment {
 
     public void onEvent(UserCommentsWrapper data) {
         comments.add(new Comment());
+Log.d("QWERT","11111");
         if(data.getUserData() != null) {
             if(!comments.isEmpty()) {
                 comments.clear();
             }
+Log.d("QWERT","Name="+data.getUserData().getFirstName());
             comments.addAll(data.getUserData().getComments());
+Log.d("QWERT","LL="+comments.size());
         }
         adapter.notifyDataSetChanged();
     }
