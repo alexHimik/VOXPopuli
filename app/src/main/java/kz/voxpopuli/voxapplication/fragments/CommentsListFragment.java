@@ -155,6 +155,9 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
 
     public void onEvent(ArticleCommentsWrapper wrapper) {
         if(wrapper.getArcticleComments().size() > 0) {
+            if(!comments.isEmpty()) {
+                comments.clear();
+            }
             comments.addAll(wrapper.getArcticleComments());
             commentsAdapter.notifyDataSetChanged();
         }

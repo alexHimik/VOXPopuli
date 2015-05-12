@@ -241,7 +241,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     /** error handler for network responses from the Volley */
     @Override
     public void onErrorResponse(VolleyError error) {
-        if(error.getCause() instanceof UnknownHostException) {
+         if(error.getCause() instanceof UnknownHostException) {
             DialogTools.showNetworkErrorDialog(this, getString(R.string.error_dialog_title),
                     getString(R.string.network_unreachable_alarm));
         }
