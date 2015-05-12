@@ -19,6 +19,7 @@ public interface VoxProviderUrls {
     public static final String RUBRIC_CONTENT_REQUEST = "http://www.voxpopuli.kz/api/rubric/%rubricId%/%page%.json";
     public static final String SEARCH_REQUEST = "http://www.voxpopuli.kz/api/search.json";
     public static final String SIGN_IN_REQUEST = "http://www.voxpopuli.kz/api/sign_in.json";
+    public static final String FORGOT_PAS_REQUEST = "http://www.voxpopuli.kz/api/password.json";
     public static final String USER_COMMENTS_REQUEST = "http://www.voxpopuli.kz/api/user/%userId%.json";
     public static final String NEWS_PAGE_DATA_REQUEST = "http://www.voxpopuli.kz/api/news/%newId%.json";
     public static final String USER_DATA_EDIT_REQUEST = "http://www.voxpopuli.kz/api/edit.json";

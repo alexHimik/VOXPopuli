@@ -78,6 +78,9 @@
     <string name="social_dialog_vkont">Вконтакте</string>
 
     <string name="string_search_header" formatted="false">Найдено %amount% новостей</string>
+    <string name="forgot_password" formatted="false">Инструкция по восстановлению пароля выслана на указанный Вами e-mail</string>
+    <string name="forgot_no_email" formatted="false">Не правильный e-mail</string>
+
 
     <string name="empty_field_alarm">Поля ввода не можут быть пустыми.\nПожалуйста, заполните необходимые поля.</string>
     <string name="network_unreachable_alarm">Сетевые подключения недоступны.\nПожалуйста, проверьте настройки подключений или попробуйте позже.</string>
