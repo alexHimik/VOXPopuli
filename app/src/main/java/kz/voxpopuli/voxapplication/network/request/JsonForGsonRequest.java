@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Html;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -35,6 +36,7 @@ public class JsonForGsonRequest<T> extends Request<T> {
             String.format("application/x-www-form-urlencoded; charset=%s", PROTOCOL_CHARSET);
 
     public static final String ERROR_KEY = "error";
+    public static final int NETWORK_TIMEOUT_LIMIT = 5000;
 
     protected final Gson gson = new Gson();
     private final Class<T> clazz;
@@ -50,6 +52,8 @@ public class JsonForGsonRequest<T> extends Request<T> {
         this.clazz = clazz;
         this.headers = headers;
         this.params = params;
+        setRetryPolicy(new DefaultRetryPolicy(NETWORK_TIMEOUT_LIMIT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         if(useProgress) {
             progressDialog = new TransparentProgressDialog(context, R.drawable.spinner_white);
             progressDialog.setCancelable(false);
@@ -62,7 +66,7 @@ public class JsonForGsonRequest<T> extends Request<T> {
         try {
             String json = new String(
                     response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
+                    HttpHeaderParser.parseCharset(response.headers)).replaceAll("&quot;", "'");
             if(json.contains(ERROR_KEY)) {
                 ServerErrorWrapper error = gson.fromJson(json, ServerErrorWrapper.class);
                 ErrorEvent errorEvent = new ErrorEvent(ServerErrorContainer.getErrorMessage(

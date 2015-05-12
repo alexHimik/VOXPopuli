@@ -6,6 +6,7 @@ import android.text.Html;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -40,6 +41,8 @@ public class GsonRequest<T> extends Request<T> {
         super(method, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
+        setRetryPolicy(new DefaultRetryPolicy(JsonForGsonRequest.NETWORK_TIMEOUT_LIMIT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         if(userProgress) {
             progress = new TransparentProgressDialog(context, R.drawable.spinner_white);
             progress.setCancelable(false);
@@ -52,7 +55,7 @@ public class GsonRequest<T> extends Request<T> {
         try {
             String json = new String(
                     response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
+                    HttpHeaderParser.parseCharset(response.headers)).replaceAll("&quot;", "'");
             if(json.contains(JsonForGsonRequest.ERROR_KEY)) {
                 JsonForGsonRequest.ServerErrorWrapper error = gson.fromJson(json,
                         JsonForGsonRequest.ServerErrorWrapper.class);
