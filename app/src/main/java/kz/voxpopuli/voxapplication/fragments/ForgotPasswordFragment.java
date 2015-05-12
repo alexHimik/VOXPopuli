@@ -12,8 +12,21 @@ import android.widget.RelativeLayout;
 import com.devspark.robototextview.widget.RobotoEditText;
 import com.devspark.robototextview.widget.RobotoTextView;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import de.greenrobot.event.EventBus;
 import kz.voxpopuli.voxapplication.R;
+import kz.voxpopuli.voxapplication.activity.MainActivity;
+import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.ArticleCommentsRequest;
+import kz.voxpopuli.voxapplication.network.request.ForgotPasswordRequest;
+import kz.voxpopuli.voxapplication.network.request.SignUpUserRequest;
+import kz.voxpopuli.voxapplication.network.util.VoxProviderUrls;
+import kz.voxpopuli.voxapplication.network.wrappers.ForgotPasswordWrapper;
+import kz.voxpopuli.voxapplication.network.wrappers.comments.PostUserCommentWrapper;
+import kz.voxpopuli.voxapplication.tools.DialogTools;
+import kz.voxpopuli.voxapplication.tools.MD5Hasher;
 
 /**
  * Created by user on 21.04.15.
@@ -37,12 +50,12 @@ public class ForgotPasswordFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
         super.onStop();
     }
 
@@ -73,7 +86,24 @@ public class ForgotPasswordFragment extends BaseFragment {
     }
 
     private void doLoginReset() {
-        emailInput.getText().toString();
+        Map<String, String> params = new LinkedHashMap<>();
+        params.put("email", emailInput.getText().toString());
+        params.put("", VoxProviderUrls.SALT);
+        String signature = MD5Hasher.getHash(params);
+        params.remove("");
+        params.put("signature", signature);
+
+        VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
+                new ForgotPasswordRequest(getActivity(), params, (MainActivity) getActivity()));
+    }
+
+    public void onEvent(ForgotPasswordWrapper forgotdWrapper) {
+        if(forgotdWrapper != null && "OK".equals(forgotdWrapper.getResult())) {
+            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                    getString(R.string.forgot_password));
+        }
+        else DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+                getString(R.string.forgot_no_email));
     }
 
     @Override
