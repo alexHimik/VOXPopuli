@@ -2,21 +2,15 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        config {
-            keyAlias 'voxpopuli'
-            keyPassword 'voxpopuli'
-            storeFile file('/home/user/Documents/VOX/keystores/release_keystore.jks')
-            storePassword 'voxpopuli'
-        }
     }
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
     defaultConfig {
-        renderscriptTargetApi 21
+        renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
         applicationId "kz.voxpopuli.voxapplication"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -26,7 +20,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            signingConfig signingConfigs.config
         }
     }
     packagingOptions {
