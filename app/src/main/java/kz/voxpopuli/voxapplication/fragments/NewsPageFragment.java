@@ -392,7 +392,8 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         LinearLayout lt = new LinearLayout(getActivity());
         lt.setLayoutParams(lp_W_W);
         int padText = (int) getActivity().getResources().getDimension(R.dimen.news_padding_txt);
-        lt.setPadding(padText, padText, padText, padText);
+        int pad1 = (int) getActivity().getResources().getDimension(R.dimen.news_padding_img);
+        lt.setPadding(padText, pad1, padText, pad1);
         lt.addView(tv);
         return lt;
     }
