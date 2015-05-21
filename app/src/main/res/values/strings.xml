@@ -18,7 +18,7 @@
     <string name="vk_app_id">4899846</string>
     <string name="vk_secret">c3cjWSMOXSgfbdWO6jYE</string>
 
-    <string name="vox_url">http://voxpopuli.kz</string>
+    <string name="vox_url">http://www.voxpopuli.kz</string>
 
     <string name="settings_string">Настройки</string>
     <string name="rubrics_header_text">Рубрики</string>

@@ -139,7 +139,7 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     }
 
     public void onEvent(RubricContentWrapper rubricContentWrapper) {
-        Glide.with(this).load(rubricContentWrapper.getRubricImage()).
+        Glide.with(this).load(getString(R.string.vox_url) + rubricContentWrapper.getRubricImage()).
                 centerCrop().into(faddingHeader);
         if(currentPage == 1 && !articles.isEmpty()) {
             articles.clear();
