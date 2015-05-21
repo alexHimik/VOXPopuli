@@ -102,8 +102,9 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus && !UserInfoTools.isUserLoggedIn(getActivity())) {
-                    DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
-                            getString(R.string.unlogined_user_comment_alarm));
+//                    DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+//                            getString(R.string.unlogined_user_comment_alarm));
+                    ((MainActivity)getActivity()).handleFragmentSwitching(LoginFragment.FRAGMENT_ID, null);
                 }
             }
         });
@@ -213,8 +214,9 @@ public class CommentsListFragment extends BaseFragment implements SwipyRefreshLa
             VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(
                     new PostUserCommentRequest(getActivity(), params, (MainActivity)getActivity()));
         } else if(!UserInfoTools.isUserLoggedIn(getActivity())) {
-            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
-                    getString(R.string.unlogined_user_comment_alarm));
+//            DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
+//                    getString(R.string.unlogined_user_comment_alarm));
+            ((MainActivity)getActivity()).handleFragmentSwitching(LoginFragment.FRAGMENT_ID, null);
         } else {
             DialogTools.showInfoDialog(getActivity(), getString(R.string.error_dialog_title),
                     getString(R.string.empty_field_alarm));
