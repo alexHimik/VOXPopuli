@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +23,7 @@ import kz.voxpopuli.voxapplication.activity.MainActivity;
 import kz.voxpopuli.voxapplication.adapter.ArticlesAdapter;
 import kz.voxpopuli.voxapplication.events.CategorySelectedEvent;
 import kz.voxpopuli.voxapplication.network.VolleyNetworkProvider;
+import kz.voxpopuli.voxapplication.network.request.ArticleCommentsRequest;
 import kz.voxpopuli.voxapplication.network.request.MainPageContentRequest;
 import kz.voxpopuli.voxapplication.network.request.RubricContentRequest;
 import kz.voxpopuli.voxapplication.network.request.TagInfoRequest;
@@ -33,7 +36,8 @@ import kz.voxpopuli.voxapplication.tools.SocialNetworkUtils;
 /**
  * Created by user on 09.04.15.
  */
-public class CategoryFragment extends BaseFragment implements ListView.OnItemClickListener {
+public class CategoryFragment extends BaseFragment implements ListView.OnItemClickListener,
+        SwipyRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "CategoryFragment";
     public static final int FRAGMENT_ID = 2;
@@ -41,6 +45,7 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
     public static SocialNetworkUtils socialNetworkUtils;
 
     private ListView lv;
+    private SwipyRefreshLayout refreshLayout;
     private List<Article> articles = new LinkedList<>();
     private ArticlesAdapter articlesAdapter;
 
@@ -51,13 +56,21 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        lv = (ListView)inflater.inflate(R.layout.articles, container, false);
+        View parent = inflater.inflate(R.layout.articles, container, false);
+
+        lv = (ListView)parent.findViewById(R.id.lv_articles);
+        refreshLayout = (SwipyRefreshLayout)parent.findViewById(R.id.swipe_refresh_layout);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorSchemeColors(getActivity().getResources().getColor(R.color.vox_red),
+                getActivity().getResources().getColor(R.color.vox_red),
+                getActivity().getResources().getColor(R.color.vox_red));
+
         articlesAdapter = new ArticlesAdapter(this, articles, true);
         lv.setAdapter(articlesAdapter);
         lv.setOnItemClickListener(this);
         handleCategoryContentGetting();
         socialNetworkUtils = SocialNetworkUtils.getInstance(this);
-        return lv;
+        return parent;
     }
 
     @Override
@@ -113,6 +126,7 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         articlesAdapter.setRedItemsUsing(true);
         articles.addAll(wrapper.getMain().getArticles());
         articlesAdapter.notifyDataSetChanged();
+        refreshLayout.setRefreshing(false);
     }
 
     public void onEvent(RubricContentWrapper wrapper) {
@@ -123,6 +137,7 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         articlesAdapter.setRedItemsUsing(true);
         articles.addAll(wrapper.getArticles());
         articlesAdapter.notifyDataSetChanged();
+        refreshLayout.setRefreshing(false);
     }
 
     public void onEvent(TagDataWrapper tagDataWrapper) {
@@ -134,6 +149,13 @@ public class CategoryFragment extends BaseFragment implements ListView.OnItemCli
         articlesAdapter.setRedItemsUsing(false);
         articles.addAll(tagDataWrapper.getArticles());
         articlesAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRefresh(SwipyRefreshLayoutDirection swipyRefreshLayoutDirection) {
+        if(swipyRefreshLayoutDirection == SwipyRefreshLayoutDirection.TOP) {
+           handleCategoryContentGetting();
+        }
     }
 
     private void handleCategoryContentGetting() {

@@ -83,14 +83,10 @@ public class RubricsFragment extends FaddingTitleBaseFragment implements
     @Override
     public void onRefresh(SwipyRefreshLayoutDirection swipyRefreshLayoutDirection) {
         if(swipyRefreshLayoutDirection == SwipyRefreshLayoutDirection.TOP) {
-            if(currentPage > 1) {
-                currentPage = currentPage - 1;
-                RubricContentRequest request = new RubricContentRequest(getActivity(), currentRubricId, currentPage,
-                        (MainActivity)getActivity());
-                VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
-            } else {
-                swipyRefreshLayout.setRefreshing(false);
-            }
+            currentPage = 1;
+            RubricContentRequest request = new RubricContentRequest(getActivity(), currentRubricId, 1,
+                    (MainActivity)getActivity());
+            VolleyNetworkProvider.getInstance(getActivity()).addToRequestQueue(request);
         } else {
             if(currentPage < 10) {
                 currentPage = currentPage + 1;
