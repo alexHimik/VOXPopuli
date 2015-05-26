@@ -1,14 +1,10 @@
 package kz.voxpopuli.voxapplication.fragments;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -21,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.devspark.robototextview.widget.RobotoTextView;
@@ -56,8 +51,9 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout ll;
     private View parent;
     private RobotoTextView rtw;
-    int maxWidth;
-    Activity actv;
+    private RobotoTextView commentText;
+    private int maxWidth;
+    private  Activity actv;
 
     public ViewGroup.LayoutParams lp_W_W, lp_M_W, lp_M_M;
     private MediaController mediaControls;
@@ -75,6 +71,7 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         ((MainActivity)getActivity()).getSupportActionBar().setCustomView(customBar);
 
         parent = inflater.inflate(R.layout.news_scroll, container, false);
+        commentText = (RobotoTextView)parent.findViewById(R.id.rt);
         rtw = (RobotoTextView) inflater.inflate(R.layout.newsrobot, container, false);
         actv = getActivity();
         ll = (LinearLayout) parent.findViewById(R.id.lineLayout_1);
@@ -330,6 +327,9 @@ public class NewsPageFragment extends BaseFragment implements View.OnClickListen
         iv_com.setTag("com;" + pn.getId());
         iv_com.setClickable(true);
         iv_com.setOnClickListener(this);
+        rv.setTag("com;" + pn.getId());
+        rv.setClickable(true);
+        rv.setOnClickListener(this);
         LinearLayout iv_send = (LinearLayout) v.findViewById(R.id.send);
         iv_send.setTag("send;"+pn.getId());
         iv_send.setClickable(true);

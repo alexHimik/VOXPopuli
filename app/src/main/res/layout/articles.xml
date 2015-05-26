@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lv_articles"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:divider="@null">
-</ListView>
+<com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_above="@id/tt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?attr/actionBarSize"
+    app:direction="top"
+    >
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/lv_articles"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:divider="@null">
+    </ListView>
+</com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
